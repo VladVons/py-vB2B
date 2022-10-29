@@ -5,6 +5,9 @@
         "./Data/In/Price.json"
     ],
     "Comment": "",
+    "Include": [
+        "Task~Price_Vendor.json"
+    ],
     "Plugins": [
         {"Name": "SendMail"},
         {"Name": "Pack_zip", "Enable": false}, 
@@ -20,8 +23,8 @@
         "SaveCache": true
     },
     "Plugin": {
-        "Out_OpenCart3_sql" : {
-            "FileIn": "./Data/Out/OpenCart.json"
+        "MiscIdle": {
+            "Sleep": 1
         },
         "Out_Save_txt" : {
             "Depends": [
@@ -30,6 +33,10 @@
                 "In_Price_brain_net"
             ],
             "Dir": "./Data/Save"
+        },
+        "Out_OpenCart3_sql" : {
+            "Depends": ["Out_OpenCart_json"],
+            "FileIn": "./Data/Out/OpenCart.json"
         },
         "Out_OpenCart_json" : {
             "Depends": [
@@ -44,6 +51,18 @@
                 "PricesJoin"
             ],
             "-File": "./Data/OpenCart.xml"
+        },
+        "PricesJoin": {
+            "Main": "In_Price_brain_net",
+            "Depends": [
+                "In_Price_brain_net",
+                "In_Price_chip_xls", 
+                "In_Price_dclink_xlsx", 
+                "In_Price_erc_xlsx", 
+                "In_Price_kts_csv", 
+                "In_Price_tdb_xlsx",
+                "In_Price_kpi_xls"
+            ]
         },
         "Out_PricesJoin_xlsx": {
             "Depends": ["PricesJoin"],
@@ -61,17 +80,6 @@
                 }
             }
         },
-        "MiscIdle": {
-            "Sleep": 1
-        },
-        "SendMail": {
-            "Depends": ["Pack_zip"],
-            "From": "ua0976646510@gmail.com",
-            "To": ["hint_WebSrv/form/price_list"],
-            "Subject": "Price list generator",
-            "Body": "Hello,\nYou ordered a file\n",
-            "File": ["./Data/PackAll.zip"]
-        },
         "Pack_zip": {
             "Depends": [
                 "-Out_PricesJoin_xlsx",
@@ -84,92 +92,13 @@
             ],
             "File": "./Data/PackAll.zip"
         },
-        "PricesJoin": {
-            "Main": "In_Price_brain_net",
-            "Depends": [
-                "In_Price_brain_net",
-                "In_Price_chip_xls", 
-                "In_Price_dclink_xlsx", 
-                "In_Price_erc_xlsx", 
-                "In_Price_kts_csv", 
-                "In_Price_tdb_xlsx",
-                "In_Price_kpi_xls"
-            ]
-        },
-        "In_Price_brain_net": {
-            "Auth": ["tr41@oster.com.ua", "19710819"],
-            "USD": 37.11,
-            "Margin" : {
-                "Default": 1.1,
-                "Id": {
-                }
-            },
-            "Images": {
-                "Check": false,
-                "Load": false
-            }
-        },
-        "In_Price_chip_xls": {
-            "-File": "./Data/Price/chip.biz.ua.xls",
-            "Skip": 30,
-            "Fields": {
-                "Mpn": 3,
-                "Code": 2,
-                "Name": 5,
-                "Price": 13,
-                "PriceUSD": 12
-            }
-        },
-        "In_Price_dclink_xlsx": {
-            "-File": "./Data/Price/dclink.ua.xlsx",
-            "Skip": 3,
-            "Fields": {
-                "Mpn": 4,
-                "Code": 5,
-                "Name": 6,
-                "Price": 9
-            }
-        },
-        "In_Price_erc_xlsx": {
-            "-File": "./Data/Price/erc.ua.kiev.xlsx",
-            "Skip": 2,
-            "Fields": {
-                "Mpn": 4,
-                "Name": 5,
-                "Price": 7,
-                "Currency": 10
-            }
-        },
-        "In_Price_kpi_xls": {
-            "-File": "./Data/Price/kpi-market.com.xls",
-            "Skip": 11,
-            "Fields": {
-                "Mpn": 1,
-                "Name": 2,
-                "PriceUSD": 3
-            }
-        },
-        "In_Price_kts_csv": {
-            "-File": "./Data/Price/kts.ua.csv",
-            "Encoding": "cp1251",
-            "Skip": 1,
-            "Fields": {
-                "Mpn": 2,
-                "Code": 1,
-                "Name": 4,
-                "Price": 5,
-                "PriceUSD": 6
-            }
-        },
-        "In_Price_tdb_xlsx": {
-            "-File": "./Data/Price/tdb.ua.xlsx",
-            "Skip": 3,
-            "Fields": {
-                "Mpn": 4,
-                "Code": 1,
-                "Name": 5,
-                "PriceUSD": 7
-            }
+        "SendMail": {
+            "Depends": ["Pack_zip"],
+            "From": "ua0976646510@gmail.com",
+            "To": ["vladvons@gmail.com"],
+            "Subject": "Price list generator",
+            "Body": "Hello,\nYou ordered a file\n",
+            "File": ["./Data/PackAll.zip"]
         }
     }
 }

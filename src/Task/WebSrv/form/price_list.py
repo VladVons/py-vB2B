@@ -4,9 +4,8 @@
 
 
 import os
-import asyncio
 from wtforms.fields import StringField, FileField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Email
 #
 from Inc.PluginTask import Plugin
 from Inc.UtilP.FS import DirRemove
@@ -20,12 +19,17 @@ from ..Common import FileWriter
 class TForm(TFormBase):
     Title = 'Price list'
 
-    EMail = StringField(validators = [DataRequired()], render_kw = {'placeholder': 'eMail'})
+    EMail = StringField(validators = [DataRequired(), Email('eMail check')], render_kw = {'placeholder': 'eMail'})
     File = FileField(validators=[DataRequired()])
     Submit = SubmitField('ok')
 
     async def _Render(self):
-        if (not self.validate()) or (not self.File.data):
+        if (not await self.PostToForm()):
+            return
+
+        if (not self.validate()):
+            Err = self.File.errors + self.EMail.errors
+            self.Data.Message = ','.join(Err)
             return
 
         Parent = self.Parent.Parent
@@ -46,7 +50,9 @@ class TForm(TFormBase):
         await Plugin.Post(Parent, {
             'To': 'TQueue',
             'Type': 'Add',
-            'Call': TCall(TPrice().Run, [{'SendMail': {'To': self.EMail.data}}])
+            'Call': TCall(TPrice().Run, [{
+                'SendMail': {'To': [self.EMail.data]}
+            }])
         })
 
         self.Data.Message = f'Check for a while {self.EMail.data}'

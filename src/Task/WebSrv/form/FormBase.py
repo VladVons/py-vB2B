@@ -35,7 +35,8 @@ class TFormBase(Form):
         self.Data.clear()
         Post = await self.Request.post()
         for Key, Val in Post.items():
-            self.Data[Key] =  Val.strip()
+            if (isinstance(Val, str)):
+                self.Data[Key] =  Val.strip()
         return bool(Post)
 
     async def Render(self) -> web.Response:
