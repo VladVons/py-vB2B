@@ -1,0 +1,31 @@
+{% extends "inc/layout.tpl.html" %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<form method="post" action="/form/price_list?{{Data.Query}}" enctype="multipart/form-data">
+    <table style="width:100%">
+        <tr>
+            <td>
+                {{ Form.EMail() }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ Form.File() }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ Data.Message }}&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ Form.Submit(class="btn") }}
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

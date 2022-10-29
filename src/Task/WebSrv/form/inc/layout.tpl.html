@@ -1,0 +1,28 @@
+<!doctype html>
+<!--
+Author:      VladVons
+License:     GNU, see LICENSE for more details
+-->
+
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/style.css?q=3.2" type="text/css">
+        <meta charset="UTF-8">
+        <title>{{ Form.Title }}</title>
+        <!--Layout.tpl head begin-->
+        {% block head %}{% endblock %}
+        <!--Layout.tpl head end-->
+    </head>
+    <body>
+        <h3><a href="/">Home</a>/{{ Form.Title }}</h3>
+        <div id="content">
+            <!--Layout.tpl content begin-->
+            {% block content %}{% endblock %}
+            <!--Layout.tpl content end-->
+        </div>
+        <div class="space"/>
+        <div id="footer" class="app-footer">
+            <a href="{{ Form.Info.get('HomePage') }}">{{ '%s, %s, %s' % (Form.Info.get('HomePage'), Form.Info.get('Version'), Form.Info.get('Date')) }}</a>
+        </div>
+    </body>
+</html>

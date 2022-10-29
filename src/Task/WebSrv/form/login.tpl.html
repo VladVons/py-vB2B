@@ -1,0 +1,30 @@
+{% extends "inc/layout.tpl.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/css/login.css?q=3.2" type="text/css">
+{% endblock %}
+
+{% block content %}
+<form method="post" action="/form/login?{{Data.Query}}">
+    <div class="login">
+        <div class="login-screen">
+            <div class="app-title">
+                 <h1>{{ Form.Title }}</h1>
+            </div>
+            <div class="login-form">
+                <div class="control-group">
+                {{ Form.UserName(class='login-field') }}
+                </div>
+                <div class="control-group">
+                {{ Form.Password(class='login-field') }}
+                </div>
+                <div class="control-group">
+                    {{ Data.Message }}
+                </div>
+                {{ Form.Submit(class="btn") }}
+                <br>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+*.log
+*.pyc
+*.jpg
+*.dat
+*.xml
+*.txt
+*.xls
+*.xlsx
+*.odt
+*.sql
+*.pdf
+*.zip
+__pycache__
+.idea
+*/Data/Image/
+ProjFiles/
