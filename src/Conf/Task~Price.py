@@ -1,11 +1,12 @@
-import os
+from Inc.UtilP.Misc import GetEnvWithWarn
+from IncP.Log import Log
 
 
 SendMail = {
     'SmtpAuth': {
         'hostname': 'smtp.gmail.com',
-        'username': os.getenv('Env_SmtpUser'),
-        'password': os.getenv('Env_SmtpPassw'),
+        'username': GetEnvWithWarn('Env_SmtpUser', Log),
+        'password': GetEnvWithWarn('Env_SmtpPassw', Log),
         'port': 465,
         'use_tls': True
     }

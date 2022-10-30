@@ -108,7 +108,7 @@ class TWebSrv():
             while True:
                 await asyncio.sleep(60)
         finally:
-                await Runner.cleanup()
+            await Runner.cleanup()
 
     async def Run(self):
         ConfClientMaxizeFile = self.Conf.get('ClientMaxizeFile', 1024**2)
@@ -131,4 +131,3 @@ class TWebSrv():
 
         aiohttp_jinja2.setup(App, loader=jinja2.FileSystemLoader(self.DirRoot + '/' + self.DirForm))
         await self._Run(App)
-
