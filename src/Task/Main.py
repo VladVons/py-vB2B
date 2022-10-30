@@ -47,7 +47,7 @@ class TTask():
         Log.Print(1, 'i', f'Run() {self.Info["App"]}')
 
         TimeStart = time.time()
-        if (Options.Service):
+        if (not Options.Service):
             Name = 'PluginsSrv'
         else:
             Name = 'PluginsApp'

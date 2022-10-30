@@ -4,6 +4,7 @@
 
 
 import os
+import asyncio
 from aiohttp import web
 from aiohttp_session.cookie_storage import EncryptedCookieStorage
 import aiohttp_jinja2
@@ -92,6 +93,23 @@ class TWebSrv():
         Form = await self.Form.Create(aRequest, 'index')
         return await Form.Render()
 
+    async def _Run(self, aApp: web.Application):
+        Port = self.Conf.get('Port', 8080)
+        Log.Print(1, 'i', 'WebSrv on port %s' % (Port))
+
+        ## pylint: disable-next=protected-access
+        ##await web._run_app(App, host = '0.0.0.0', port = Port+1, shutdown_timeout = 60.0,  keepalive_timeout = 75.0)
+
+        Runner = web.AppRunner(aApp)
+        try:
+            await Runner.setup()
+            Site = web.TCPSite(Runner, host = '0.0.0.0', port = Port)
+            await Site.start()
+            while True:
+                await asyncio.sleep(60)
+        finally:
+                await Runner.cleanup()
+
     async def Run(self):
         ConfClientMaxizeFile = self.Conf.get('ClientMaxizeFile', 1024**2)
         App = web.Application(client_max_size = ConfClientMaxizeFile)
@@ -112,8 +130,5 @@ class TWebSrv():
         App.middlewares.append(Middleware)
 
         aiohttp_jinja2.setup(App, loader=jinja2.FileSystemLoader(self.DirRoot + '/' + self.DirForm))
+        await self._Run(App)
 
-        Port = self.Conf.get('Port', 8080)
-        Log.Print(1, 'i', 'WebSrv on port %s' % (Port))
-        # pylint: disable-next=protected-access
-        await web._run_app(App, host = '0.0.0.0', port = Port, shutdown_timeout = 60.0,  keepalive_timeout = 75.0)
