@@ -2,10 +2,12 @@
 # Author: Vladimir Vons <VladVons@gmail.com>
 # License: GNU, see LICENSE for more details
 
-
+from Inc.WebSrv.WebSrv import TWebSrvConf
 from .Main import TWebSrv
 
 
 def Main(aConf) -> tuple:
-    Obj = TWebSrv(aConf)
-    return (Obj, Obj.Run())
+    SrvConf = aConf.get('SrvConf', {})
+    SrvConf = TWebSrvConf(**SrvConf)
+    Obj = TWebSrv(SrvConf, aConf)
+    return (Obj, Obj.RunApp())

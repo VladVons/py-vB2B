@@ -24,7 +24,7 @@ class TForm(TFormBase):
         if (not self.validate()):
             return
 
-        Conf = self.Parent.Parent.Conf
+        Conf = self.Parent.Conf
         if (self.UserName.data != Conf.get('User')) and (self.Password.data != Conf.get('Password')):
             self.Data.Message = 'Authorization failed for %s' % (self.UserName.data)
             return

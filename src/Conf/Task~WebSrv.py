@@ -1,7 +1,10 @@
-Port = 8080
+SrvConf = {
+    'Port': 8080,
+    'ClientMaxizeFile': 10_000_000
+}
+
 User = 'user01'
 Password = '2010'
-ClientMaxizeFile = 10_000_000
 
 DirPrice = './Data/In'
 #PricesJoin_xlsx = './Data/Out/PricesJoin.xlsx'
