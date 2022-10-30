@@ -19,7 +19,7 @@ class TTask():
         self.Info = GetInfo()
 
     def InitLog(self):
-        AppName = self.Info['App']
+        AppName = self.Info['app_name']
         FileLog = f'/var/log/{AppName}/{AppName}.log'
         if (not os.path.exists(FileLog)) or (not os.access(FileLog, os.W_OK)):
             FileLog = f'{AppName}.log'
@@ -29,7 +29,7 @@ class TTask():
         Log.AddEcho(TEchoConsoleEx())
 
     def InitOptions(self):
-        Usage = f'usage: {self.Info["App"]} [options] arg'
+        Usage = f'usage: {self.Info["app_name"]} [options] arg'
         Parser = argparse.ArgumentParser(usage = Usage)
         Parser.add_argument('-s', '--Service', help = 'run as service', action = 'store_true')
         Parser.add_argument('-i', '--Info', help = 'information', action = 'store_true')
@@ -44,10 +44,10 @@ class TTask():
             print('\n'.join(List))
             return
 
-        Log.Print(1, 'i', f'Run() {self.Info["App"]}')
+        Log.Print(1, 'i', f'Run() {self.Info["app_name"]}')
 
         TimeStart = time.time()
-        if (not Options.Service):
+        if (Options.Service):
             Name = 'PluginsSrv'
         else:
             Name = 'PluginsApp'
