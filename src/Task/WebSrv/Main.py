@@ -23,7 +23,7 @@ class TWebSrv(TWebSrvBase):
         return await self._FormCreate(aRequest, Name)
 
     async def RunApp(self):
-        Log.Print(1, 'i', f'WebSrv.RunApp() on port {self.SrvConf.Port}')
+        Log.Print(1, 'i', f'WebSrv.RunApp() on port {self._SrvConf.Port}')
 
         App = self.CreateApp()
         self.Conf.ErroMiddleware = {

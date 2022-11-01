@@ -10,6 +10,7 @@ import asyncio
 from IncP import GetInfo
 from Task.Main import TTask
 
+
 def Run():
     Info = GetInfo()
     PyNeed = (3, 9, 0)

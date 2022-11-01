@@ -14,7 +14,7 @@ class TMain(TFileBase):
     async def Run(self):
         Info = [
             f'{Key}: {Val}'
-            for Key, Val in GetInfo().items()
+            for Key, Val in sorted(GetInfo().items())
         ]
 
         ConfTask, _ = Plugin.GetConf('Task.Price')
