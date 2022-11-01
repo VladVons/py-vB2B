@@ -2,7 +2,7 @@
 # Author: Vladimir Vons <VladVons@gmail.com>
 # License: GNU, see LICENSE for more details
 
-from Inc.WebSrv.WebSrv import TWebSrvConf
+from Inc.UtilP.WebSrv.WebSrv import TWebSrvConf
 from .Main import TWebSrv
 
 

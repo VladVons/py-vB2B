@@ -5,7 +5,7 @@
 
 from aiohttp import web
 #
-from Inc.WebSrv.WebSrv import TWebSrvBase
+from Inc.UtilP.WebSrv.WebSrv import TWebSrvBase
 from IncP.Log import Log
 from .Session import Session
 from .Routes import rErr_404
