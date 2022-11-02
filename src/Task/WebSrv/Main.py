@@ -7,9 +7,8 @@ from aiohttp import web
 #
 from Inc.UtilP.WebSrv.WebSrv import TWebSrvBase
 from IncP.Log import Log
+from .form.info import TForm
 from .Session import Session
-from .Routes import rErr_404
-
 
 class TWebSrv(TWebSrvBase):
     async def _FormCreateUser(self, aRequest: web.Request) -> web.Response:
@@ -22,11 +21,19 @@ class TWebSrv(TWebSrvBase):
 
         return await self._FormCreate(aRequest, Name)
 
+    @staticmethod
+    async def _Err_404(aRequest: web.Request):
+        #https://docs.aiohttp.org/en/stable/web_advanced.html
+        #Routes = web.RouteTableDef()
+
+        Form = TForm(aRequest, 'info.tpl.html')
+        Form.Data['Info'] = 'Page not found'
+        Res = await Form.Render()
+        Res.set_status(404, Form.Data['Info'])
+        return Res
+
     async def RunApp(self):
         Log.Print(1, 'i', f'WebSrv.RunApp() on port {self._SrvConf.Port}')
 
-        App = self.CreateApp()
-        self.Conf.ErroMiddleware = {
-            404: rErr_404
-        }
+        App = self.CreateApp(aErroMiddleware = {404: self._Err_404})
         await self.Run(App)

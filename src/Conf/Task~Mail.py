@@ -1,12 +1,14 @@
-import os
+from Inc.UtilP.Misc import GetEnvWithWarn
+from IncP.Log import Log
+
 
 MaxTasks = 1
 Sleep = 1
 
 SmtpAuth = {
     'hostname': 'smtp.gmail.com',
-    'username': os.getenv('Env_SmtpUser'),
-    'password': os.getenv('Env_SmtpPassw'),
+    'username': GetEnvWithWarn('Env_SmtpUser'),
+    'password': GetEnvWithWarn('Env_SmtpPassw'),
     'port': 465,
     'use_tls': True
 }
