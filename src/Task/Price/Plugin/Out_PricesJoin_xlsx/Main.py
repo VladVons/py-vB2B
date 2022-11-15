@@ -52,7 +52,7 @@ class TMain(TFileBase):
                 Value = Rec[FieldNo]
                 Cell = WS.cell(RowNo, FieldNo + 1)
                 Cell.value = Value
-                if (Field.startswith('Price_')):
+                if (Field.startswith('In_Price_')):
                     if (Value == Price):
                         Cell.font = Font(bold = True)
                     elif (ConfRatio):

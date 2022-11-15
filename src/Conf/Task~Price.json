@@ -9,15 +9,14 @@
         "Task~Price_Vendor.json"
     ],
     "Plugins": [
-        {"Name": "SendMail", "Enable": false},
-        {"Name": "Pack_zip", "Enable": false}, 
+        {"Name": "SendMail", "Enable": true},
+        {"Name": "Pack_zip", "Enable": true}, 
         {"Name": "Out_OpenCart_json", "Enable": false}, 
         {"Name": "Out_OpenCart3_sql", "Enable": false}, 
         {"Name": "Out_OpenCart_xml", "Enable": false}, 
-        {"Name": "Out_PricesJoin_xlsx", "Enable": false}, 
+        {"Name": "Out_PricesJoin_xlsx", "Enable": true}, 
         {"Name": "Out_Save_txt", "Enable": false},
-        {"Name": "Out_Tree_txt"}
-
+        {"Name": "Out_Tree_txt", "Enable": true}
     ],
     "Common": {
         "SleepLoop": 0.01,
@@ -25,6 +24,9 @@
         "SaveCache": true
     },
     "Plugin": {
+        "Margin": {
+            "Depends": ["In_Price_brain_net"]
+        },
         "MiscIdle": {
             "Sleep": 1
         },
@@ -87,7 +89,7 @@
         },
         "Pack_zip": {
             "Depends": [
-                "-Out_PricesJoin_xlsx",
+                "Out_PricesJoin_xlsx",
                 "Out_OpenCart_json", 
                 "Out_OpenCart3_sql", 
                 "Out_OpenCart_xml"

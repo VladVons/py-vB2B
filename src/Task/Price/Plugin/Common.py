@@ -108,6 +108,18 @@ class TCategoryBase(TFileDbl):
             Res.append(Text)
         return '\n'.join(Res)
 
+    def LoadFileMargin(self, aFile: str) -> dict:
+        Res = {}
+        with open(aFile, 'r', encoding='utf-8') as F:
+            for Line in F.readlines():
+                Arr = Line.split('-')
+                if (len(Arr) == 2):
+                    Val = Arr[1].strip()
+                    if (Val.isdigit()):
+                        Id = Arr[0].strip().split(',')[0]
+                        Margin = int(Val) / 100 + 1
+                        Res[Id] = Margin
+        return Res
     def SubMargin(self) -> dict:
         def ToChildRecurs(aCategory: list[int, int], aMargin: float) -> dict:
             nonlocal CategoryTree, Margins
@@ -125,6 +137,13 @@ class TCategoryBase(TFileDbl):
         ConfMargin = self.Parent.Conf.get('Margin', {})
         if (ConfMargin):
             Margins = ConfMargin.get('Id', {})
+            MarginFile = ConfMargin.get('File')
+            if (MarginFile):
+                if (os.path.exists(MarginFile)):
+                    MarginEx = self.LoadFileMargin(MarginFile)
+                    Margins.update(MarginEx)
+                else:
+                    Log.Print(1, 'e', f'File not exists {MarginFile}')
             CategoryTree = self._GetTree()
             Root = [[Id, 0] for Id, _Cnt in CategoryTree[1]]
             Res = ToChildRecurs(Root, ConfMargin.get('Default', 1.0))
