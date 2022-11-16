@@ -17,7 +17,7 @@ class TMain(TFileBase):
         Reparsed = minidom.parseString(Rough)
         return Reparsed.toprettyxml(indent = '\t')
 
-    async def Save(self, aDbPrice: TDbPrice, aDbCategory: TDbCategory, aCategoryMargins: dict):
+    async def Save(self, aDbPrice: TDbPrice, aDbPriceJoin: TDbPrice, aDbCategory: TDbCategory, aCategoryMargins: dict):
         Root = ET.Element('Price')
         Element = ET.SubElement(Root, 'Catalog')
 
@@ -49,9 +49,12 @@ class TMain(TFileBase):
             'Id': 'Code',
             'Name': 'Name',
             'CategoryId': 'CategoryID',
-            'Image': 'Image',
-            'Price': 'PriceIn'
+            'Image': 'Image'
         }
+
+        BT = aDbPriceJoin.BeeTree.get('Mpn')
+        if (not BT):
+            BT = aDbPriceJoin.SearchAdd('Mpn')
 
         Element = ET.SubElement(Root, 'Items')
         for Rec in aDbPrice:
@@ -60,9 +63,20 @@ class TMain(TFileBase):
                 ItemB = ET.SubElement(ItemA, Val)
                 ItemB.text = str(Rec.GetField(Key)).translate(TableEscape)
 
+            Mpn = Rec.GetField('Mpn')
+            RecNo = BT.Search(Mpn)
+            if (RecNo >= 0):
+                PriceMin = aDbPriceJoin.RecGo(RecNo).GetField('Price')
+            else:
+                PriceMin = Rec.GetField('Price')
             CategoryId = Rec.GetField('CategoryId')
+            Price = PriceMin * aCategoryMargins.get(CategoryId, 1)
+
+            ItemB = ET.SubElement(ItemA, 'PriceIn')
+            ItemB.text = str(PriceMin)
+
             ItemB = ET.SubElement(ItemA, 'PriceOut')
-            ItemB.text = '%0.2f' % (Rec.GetField('Price') * aCategoryMargins.get(CategoryId, 1))
+            ItemB.text = '%0.2f' % (Price)
 
             ItemB = ET.SubElement(ItemA, 'Quantity')
             ItemB.text = '1'

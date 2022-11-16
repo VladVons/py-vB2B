@@ -12,6 +12,7 @@ class TOut_OpenCart_xml(TPluginBase):
         Main = TMain(self)
         await Main.Save(
             self.GetParamDependsIdx('TDbPrice'),
+            self.GetParamDependsIdx('TDbPriceJoin'),
             self.GetParamDependsIdx('TDbCategory'),
             self.GetParamDependsIdx('Margins')
         )

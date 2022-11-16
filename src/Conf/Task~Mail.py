@@ -7,8 +7,8 @@ Sleep = 1
 
 SmtpAuth = {
     'hostname': 'smtp.gmail.com',
-    'username': GetEnvWithWarn('Env_SmtpUser'),
-    'password': GetEnvWithWarn('Env_SmtpPassw'),
+    'username': GetEnvWithWarn('Env_SmtpUser', Log),
+    'password': GetEnvWithWarn('Env_SmtpPassw', Log),
     'port': 465,
     'use_tls': True
 }
