@@ -48,7 +48,7 @@ class TFileDbl(TFileBase):
             await self._Load()
             if (self.Parent.Conf.get('SaveCache')):
                 os.makedirs(os.path.dirname(File), exist_ok=True)
-                self.Dbl.Save(File)
+                self.Dbl.Save(File, True)
         Log.Print(1, 'i', f'Done {File}. Records {self.Dbl.GetSize()}')
 
 
@@ -56,7 +56,7 @@ class TPriceBase(TFileDbl):
     def __init__(self, aParent):
         super().__init__(aParent)
         self.Dbl = TDbPrice()
-        self.DelMpn = ''.maketrans('', '', ' -/_.&@()#+')
+        self.DelMpn = ''.maketrans('', '', ' -/_.&@()#+"')
 
     async def _Load(self):
         raise NotImplementedError()

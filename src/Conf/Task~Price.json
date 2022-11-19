@@ -9,14 +9,15 @@
         "Task~Price_Vendor.json"
     ],
     "Plugins": [
-        {"Name": "SendMail", "Enable": true},
-        {"Name": "Pack_zip", "Enable": true}, 
-        {"Name": "Out_OpenCart_json", "Enable": false}, 
-        {"Name": "Out_OpenCart3_sql", "Enable": false}, 
-        {"Name": "Out_OpenCart_xml", "Enable": false}, 
-        {"Name": "Out_PricesJoin_xlsx", "Enable": true}, 
+        {"Name": "SendMail", "Enable": false},
+        {"Name": "Pack_zip", "Enable": false}, 
+        {"Name": "Out_OpenCart_json", "Enable": false},
+        {"Name": "Out_OpenCart3_sql", "Enable": false},
+        {"Name": "Out_OpenCart_xml", "Enable": false},
+        {"Name": "Out_PricesJoin_xlsx", "Enable": false},
         {"Name": "Out_Save_txt", "Enable": false},
-        {"Name": "Out_Tree_txt", "Enable": true}
+        {"Name": "Out_Tree_txt", "Enable": false},
+        {"Name": "OpenCart3_DB", "Enable": true}
     ],
     "Common": {
         "SleepLoop": 0.01,
@@ -40,6 +41,17 @@
                 "In_Price_brain_net"
             ],
             "Dir": "./Data/Save"
+        },
+        "OpenCart3_DB" : {
+            "Depends": ["Out_OpenCart3_sql"],
+            "FileIn": "./Data/Out/OpenCart3.sql",
+            "Auth": {
+                "host": "127.0.0.1",
+                "db": "oc3_oster",
+                "user": "admin",
+                "password": "admin"
+            },
+            "DirImage": "/var/www/enabled/php81.lan/public_html/image/catalog/products"
         },
         "Out_OpenCart3_sql" : {
             "Depends": ["Out_OpenCart_json"],

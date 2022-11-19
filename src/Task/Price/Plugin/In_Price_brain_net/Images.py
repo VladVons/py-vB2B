@@ -10,9 +10,13 @@ from IncP.Log import Log
 
 
 class TImages():
-    def __init__(self, aParent):
+    def __init__(self, aParent, aDir: str = None):
         self.Parent = aParent
-        self.Dir = '%s/%s/Image' % (aParent.Parent.Conf.get('DirData'), self.Parent.Api.GetModName(__file__))
+
+        if (aDir):
+            self.Dir = aDir
+        else:
+            self.Dir = '%s/%s/Image' % (aParent.Parent.Conf.get('DirData'), self.Parent.Api.GetModName(__file__))
 
     def GetDirPath(self, aProductCode: str) -> str:
         return f'{self.Dir}/{aProductCode[-2]}/{aProductCode[-1]}'

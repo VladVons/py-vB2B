@@ -1,0 +1,23 @@
+#https://www.codementor.io/@ufukafak/how-to-run-a-python-script-in-linux-with-systemd-1nh2x3hi0e
+
+[Unit]
+Description=vB2B service
+After=network.target
+
+[Service]
+Type=simple
+
+EnvironmentFile=/etc/default/vB2B
+#Environment="Env_SmtpUser="ua0976646510"
+
+WorkingDirectory=/home/vladvons/Projects/py/py-vB2B/src
+User=vladvons
+
+#ExecStart=/bin/bash -c './vB2B.sh'
+ExecStart=/home/vladvons/VirtEnv/python3.10/bin/python3 -B vB2B.py -s
+
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target

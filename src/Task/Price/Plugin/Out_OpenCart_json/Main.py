@@ -32,6 +32,7 @@ class TMain(TFileBase):
         TransField =     {
             'Mpn': 'Mpn',
             'Id': 'Id',
+            'Code': 'Code',
             'Name': 'Name',
             'CategoryId': 'CategoryId',
             'Image': 'Image',

@@ -1,6 +1,0 @@
-# defaults for /etc/init.d/vB2B
-
-#ENABLED=1
-USER=vladvons
-#WORKDIR=/usr/lib/vB2B
-#LOG=/var/log/vB2B.log

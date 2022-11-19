@@ -118,11 +118,11 @@ class TSql():
         @DSplit
         def Product(aData: list, _aMax: int) -> str:
             Values = [
-                f'({Row["Id"]}, 1, 1, {Row["PriceOut"]}, {Row["Mpn"]}, "{self.Now}", "{self.Now}")'
+                f'({Row["Id"]}, 1, 1, {Row["PriceOut"]}, "{Row["Mpn"]}", "{Row["Code"]}", "{self.Now}", "{self.Now}")'
                 for Row in aData
             ]
             return f'''
-                INSERT IGNORE INTO {self.Prefix}product (product_id, status, quantity, price, mpn, date_added, date_modified)
+                INSERT IGNORE INTO {self.Prefix}product (product_id, status, quantity, price, mpn, sku, date_added, date_modified)
                     VALUES {", ".join(Values)}
                     ON DUPLICATE KEY UPDATE
                         price = VALUES(price),
