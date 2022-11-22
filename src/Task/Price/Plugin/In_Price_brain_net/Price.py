@@ -5,7 +5,8 @@
 
 from Inc.Util.Obj import GetNotNone
 from IncP.Download import TCheckUrls
-from ..Common import TDbCategory, TPriceBase
+from ..Category import TDbCategory
+from ..Common import TPriceBase
 
 
 class TPrice(TPriceBase):

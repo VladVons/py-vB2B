@@ -6,7 +6,8 @@
 import os
 import json
 #
-from ..Common import TFileBase, TDbPrice, TDbCategory
+from ..Category import TDbCategory
+from ..Common import TFileBase, TDbPrice
 
 
 class TMain(TFileBase):

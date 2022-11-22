@@ -3,7 +3,8 @@
 # License: GNU, see LICENSE for more details
 
 
-from ..Common import TFileBase, TCategoryBase
+from ..Category import TCategoryBase
+from ..Common import TFileBase
 from ..CommonDb import TDbCategory
 
 

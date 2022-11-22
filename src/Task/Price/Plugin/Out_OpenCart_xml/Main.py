@@ -7,7 +7,8 @@ import os
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 #
-from ..Common import TFileBase, TDbPrice, TDbCategory
+from ..Common import TFileBase
+from ..CommonDb import TDbPrice, TDbCategory
 
 
 class TMain(TFileBase):

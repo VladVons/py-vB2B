@@ -14,9 +14,6 @@ from ..Common import TFileBase
 
 
 class TDbApp(TADb):
-    def __init__(self, aAuth: dict):
-        self.Auth = aAuth
-
     async def Connect(self):
         await self.Close()
         self.Pool = await aiomysql.create_pool(**self.Auth)
@@ -43,7 +40,7 @@ class TSqlImage():
                 Values = Row.split(',')
                 if (len(Values) >= FieldNo):
                     Code = Values[FieldNo].strip('" ')
-                    Path = self.Images.GetDirPath(Code) + '/' + Code + '.jpg'
+                    Path = self.Images.GetFilePath(Code)
                     if (not os.path.exists(Path)):
                         self.Missed.append(Code)
 
@@ -64,4 +61,6 @@ class TMain(TFileBase):
             if (Line) and (not Line.startswith('#')):
                 await DbApp.Exec(Line)
                 SqlImage.ParseProduct(Line)
-        await SqlImage.Save()
+
+        if (self.Parent.Conf.GetKey('LoadImage', True)):
+            await SqlImage.Save()

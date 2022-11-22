@@ -34,8 +34,12 @@ class TApi(TApiBase):
     def GetUrlProduct(self, aProductId: int) -> str:
         return f'{self.Url}/product/{aProductId}/{self.Token}?lang={self.Lang}'
 
+    @staticmethod
+    def GetImageBase(aProductCode: str) -> str:
+        return f'{aProductCode[-2]}/{aProductCode[-1]}/{aProductCode}'
+
     def GetUrlImage(self, aProductCode: str) -> str:
-        return f'{self.Web}/static/images/prod_img/{aProductCode[-2]}/{aProductCode[-1]}/{aProductCode}_big.jpg'
+        return f'{self.Web}/static/images/prod_img/{self.GetImageBase(aProductCode)}_big.jpg'
 
     def GetUrlStocks(self) -> str:
         return f'{self.Url}/stocks/{self.Token}?lang={self.Lang}'

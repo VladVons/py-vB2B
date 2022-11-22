@@ -4,7 +4,7 @@
 
 
 from ..CommonDb import TDbPrice
-from ..Common import TCategoryBase
+from ..Category import TCategoryBase
 
 
 class TCategory(TCategoryBase):

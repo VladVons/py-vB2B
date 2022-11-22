@@ -12,7 +12,7 @@
         {"Name": "SendMail", "Enable": false},
         {"Name": "Pack_zip", "Enable": false}, 
         {"Name": "Out_OpenCart_json", "Enable": false},
-        {"Name": "Out_OpenCart3_sql", "Enable": false},
+        {"Name": "Out_OpenCart3_sql", "Enable": true},
         {"Name": "Out_OpenCart_xml", "Enable": false},
         {"Name": "Out_PricesJoin_xlsx", "Enable": false},
         {"Name": "Out_Save_txt", "Enable": false},
@@ -51,11 +51,13 @@
                 "user": "admin",
                 "password": "admin"
             },
-            "DirImage": "/var/www/enabled/php81.lan/public_html/image/catalog/products"
+            "DirImage": "/home/vladvons/Projects/lampp/mnt/www/enabled/php81.lan/public_html/image/catalog/products",
+            "LoadImage": false
         },
         "Out_OpenCart3_sql" : {
             "Depends": ["Out_OpenCart_json"],
-            "FileIn": "./Data/Out/OpenCart.json"
+            "FileIn": "./Data/Out/OpenCart.json",
+            "SiteImage":"catalog/products"
         },
         "Out_OpenCart_json" : {
             "Depends": [

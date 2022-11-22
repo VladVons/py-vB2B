@@ -12,6 +12,7 @@ from IncP.Log import Log
 class TImages():
     def __init__(self, aParent, aDir: str = None):
         self.Parent = aParent
+        self.Suffix = '_big.jpg'
 
         if (aDir):
             self.Dir = aDir
@@ -29,15 +30,15 @@ class TImages():
 
     async def _OnSend(self, aRecSes: TRecSes, aRes: dict):
         if (aRes['Status'] == 200):
-            Suffix = '_big.jpg'
-            Code = os.path.basename(aRecSes.Url).replace(Suffix, '')
+            Code = os.path.basename(aRecSes.Url).replace(self.Suffix, '')
             File = self.GetFilePath(Code)
             if (not os.path.exists(File)):
                 if (__debug__):
-                    Log.Print(1, 'i', 'Task: %4s, Url: %s' % (aRecSes.TaskNo, aRecSes.Url))
-                os.makedirs(self.GetDirPath(Code), exist_ok=True)
-                with open(File, 'wb') as File:
-                    File.write(aRes['Data'])
+                    Log.Print(1, 'i', 'Task: %4s, Url: %s -> %s' % (aRecSes.TaskNo, aRecSes.Url, File))
+                Dir = self.GetDirPath(Code)
+                os.makedirs(Dir, exist_ok=True)
+                with open(File, 'wb') as F:
+                    F.write(aRes['Data'])
         else:
             Log.Print(1, 'e', 'Err %s' % (aRecSes.Url))
 
