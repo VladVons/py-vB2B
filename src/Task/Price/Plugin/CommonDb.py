@@ -36,7 +36,8 @@ class TDbCategory(TDbList):
         super().__init__([
             ('CategoryId', int),
             ('ParentId', int),
-            ('Name', str)
+            ('Name', str),
+            ('Descr', str)
         ])
 
 class TDbPriceJoin(TDbList):

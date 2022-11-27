@@ -28,7 +28,6 @@ class TCategory(TCategoryBase):
         Section = aConfCategories.get('Exclude', [])
         ExcludeId += ToList(self.GetIdByName(Section))
 
-
         Res = self.Dbl.New()
         for Rec in self.Dbl:
             CategoryId = Rec.GetField('CategoryId')

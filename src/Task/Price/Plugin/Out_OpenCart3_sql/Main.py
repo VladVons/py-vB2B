@@ -56,6 +56,7 @@ class TSql():
         Res.append(f'DELETE FROM {self.Conf.Prefix}product;')
         Res.append(f'DELETE FROM {self.Conf.Prefix}product_to_category;')
         Res.append(f'DELETE FROM {self.Conf.Prefix}product_to_store;')
+        Res.append(f'DELETE FROM {self.Conf.Prefix}seo_url WHERE query LIKE "product_%";')
         Res.append(f'DELETE FROM {self.Conf.Prefix}module WHERE code = "featured";')
         return '\n'.join(Res)
 
@@ -65,6 +66,7 @@ class TSql():
         Res.append(f'DELETE FROM {self.Conf.Prefix}category;')
         Res.append(f'DELETE FROM {self.Conf.Prefix}category_description;')
         Res.append(f'DELETE FROM {self.Conf.Prefix}category_to_store;')
+        Res.append(f'DELETE FROM {self.Conf.Prefix}seo_url WHERE query LIKE "category_%";')
         Res.append(f'DELETE FROM {self.Conf.Prefix}category_path;')
         return '\n'.join(Res)
 
