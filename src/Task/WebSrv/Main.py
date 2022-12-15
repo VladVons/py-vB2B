@@ -14,8 +14,9 @@ class TWebSrv(TWebSrvBase):
     async def _FormCreateUser(self, aRequest: web.Request) -> web.Response:
         Name = aRequest.match_info.get('Name')
 
+        Public = ['grafana']
         await Session.Update(aRequest)
-        if (not Session.Data.get('UserId')) and (Name != 'login'):
+        if (not Session.Data.get('UserId')) and (Name != 'login') and (not Name in Public):
             Redirect = 'login?url=%s' % (Name)
             raise web.HTTPFound(location = Redirect)
 
