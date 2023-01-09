@@ -1,12 +1,12 @@
-from Inc.DataClass import DataClass, _Repr
+import json
 
 
-@DataClass
-class TUser():
-    Name: str
-    Age: int
+def Test1():
+    File = 'fo_last_web_export_22_12_24_12_28.json'
+    with open(File) as F:
+        Data = json.load(F)
+    print(Data)
 
-User = TUser('Vlad', 51)
-print(User)
-print(_Repr(User))
+Test1()
+
 
