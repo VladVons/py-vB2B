@@ -3,7 +3,7 @@
 # License: GNU, see LICENSE for more details
 
 
-from Inc.DB.DbList import TDbList
+from Inc.Db.DbList import TDbList
 
 
 class TDbProduct(TDbList):

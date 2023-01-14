@@ -5,7 +5,7 @@
 
 import sys
 #
-from Inc.DB.DbList import TDbRec
+from Inc.Db.DbList import TDbRec
 from ..Common import TFileDbl
 from ..CommonDb import TDbPriceJoin
 

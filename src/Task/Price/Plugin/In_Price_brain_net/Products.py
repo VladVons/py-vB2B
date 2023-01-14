@@ -5,7 +5,7 @@
 
 import os
 #
-from Inc.DB.DbList import TDbList
+from Inc.Db.DbList import TDbList
 from Inc.Util.Obj import GetNotNone, DeepGet
 from IncP.Download import TRecSes, TDownload
 from IncP.Log import Log
