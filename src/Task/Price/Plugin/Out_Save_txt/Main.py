@@ -22,7 +22,7 @@ class TMain(TFileBase):
                 Data = ''
                 ClassPath = GetClassPath(ParamVal)
                 if ('/TDbList' in ClassPath):
-                    ParamVal.ReprLen = 40
+                    ParamVal.OptReprLen = 40
                     Data = str(ParamVal)
                 elif (type(ParamVal) in [dict, list]):
                     Data = json.dumps(ParamVal, indent=2)
