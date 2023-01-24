@@ -7,12 +7,12 @@ import os
 from wtforms.fields import StringField, FileField, SubmitField
 from wtforms.validators import DataRequired, Email
 #
-from Inc.PluginTask import Plugin
 from Inc.UtilP.FS import DirRemove
 from Inc.UtilP.Zip import Extract
 from Inc.UtilP.WebSrv.Common import FileWriter
 from Task.Price.Main import TPrice
 from Task.Queue.Main import TCall
+from Task import Plugin
 from .FormBase import TFormBase
 
 

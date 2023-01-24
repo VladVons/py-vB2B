@@ -6,9 +6,9 @@
 import sys
 import asyncio
 #
-from Inc.PluginTask import Plugin
 from IncP.Log import Log
 from Task.Queue.Main import TCall
+from Task import Plugin
 from .FormBase import TFormBase
 
 

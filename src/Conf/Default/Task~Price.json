@@ -1,0 +1,125 @@
+{
+    "DirData": "./Data",
+    "Conf": [
+        "./Data/Conf", 
+        "./Data/In/Price.json"
+    ],
+    "Comment": "",
+    "Include": [
+        "Task~Price_Vendor.json"
+    ],
+    "Plugins": [
+        {"Name": "SendMail", "Enable": false},
+        {"Name": "Pack_zip", "Enable": false}, 
+        {"Name": "Out_OpenCart_json", "Enable": false},
+        {"Name": "Out_OpenCart3_sql", "Enable": true},
+        {"Name": "Out_OpenCart_xml", "Enable": false},
+        {"Name": "Out_PricesJoin_xlsx", "Enable": false},
+        {"Name": "Out_Save_txt", "Enable": false},
+        {"Name": "Out_Tree_txt", "Enable": false},
+        {"Name": "OpenCart3_DB", "Enable": true}
+    ],
+    "Common": {
+        "SleepLoop": 0.01,
+        "USD": 37.1,
+        "SaveCache": true
+    },
+    "Plugin": {
+        "Margin": {
+            "Depends": ["In_Price_brain_net"]
+        },
+        "MiscIdle": {
+            "Sleep": 1
+        },
+        "Out_Tree_txt" : {
+            "Depends": ["In_Price_brain_net"]
+        },
+        "Out_Save_txt" : {
+            "Depends": [
+                "In_Price_kts_csv", 
+                "In_Price_kpi_xls", 
+                "In_Price_brain_net"
+            ],
+            "Dir": "./Data/Save"
+        },
+        "OpenCart3_DB" : {
+            "Depends": ["Out_OpenCart3_sql"],
+            "FileIn": "./Data/Out/OpenCart3.sql",
+            "Auth": {
+                "host": "127.0.0.1",
+                "db": "oc3_oster",
+                "user": "admin",
+                "password": "098iop"
+            },
+            "DirImage": "/home/vladvons/Projects/lampp/mnt/www/enabled/php81.lan/public_html/image/catalog/products",
+            "LoadImage": false
+        },
+        "Out_OpenCart3_sql" : {
+            "Depends": ["Out_OpenCart_json"],
+            "FileIn": "./Data/Out/OpenCart.json",
+            "SiteImage":"catalog/products"
+        },
+        "Out_OpenCart_json" : {
+            "Depends": [
+                "In_Price_brain_net", 
+                "PricesJoin"
+            ],
+            "-File": "./Data/OpenCart.json"
+        },
+        "Out_OpenCart_xml" : {
+            "Depends": [
+                "In_Price_brain_net", 
+                "PricesJoin"
+            ],
+            "-File": "./Data/OpenCart.xml"
+        },
+        "PricesJoin": {
+            "Main": "In_Price_brain_net",
+            "Depends": [
+                "In_Price_brain_net",
+                "In_Price_chip_xls", 
+                "In_Price_dclink_xlsx", 
+                "In_Price_erc_xlsx", 
+                "In_Price_kts_csv", 
+                "In_Price_tdb_xlsx",
+                "In_Price_kpi_xls"
+            ]
+        },
+        "Out_PricesJoin_xlsx": {
+            "Depends": ["PricesJoin"],
+            "-File": "./Data/PriceJoin.xlsx",
+            "Prices": true,
+            "Ratio": false,
+            "Format": "#,#0.0",
+            "Field": {
+                "Width": {
+                    "Id": 0,
+                    "CategoryId": 0,
+                    "Available": 0,
+                    "Mpn": 20,
+                    "Name": 60
+                }
+            }
+        },
+        "Pack_zip": {
+            "Depends": [
+                "Out_PricesJoin_xlsx",
+                "Out_OpenCart_json", 
+                "Out_OpenCart3_sql", 
+                "Out_OpenCart_xml"
+            ],
+            "Files": [
+                "./Data/Out"
+            ],
+            "File": "./Data/PackAll.zip"
+        },
+        "SendMail": {
+            "Depends": ["Pack_zip"],
+            "From": "ua0976646510@gmail.com",
+            "To": ["vladvons@gmail.com"],
+            "Subject": "Price list generator",
+            "Body": "Hello,\nYou ordered a file\n",
+            "File": ["./Data/PackAll.zip"]
+        }
+    }
+}

@@ -4,9 +4,9 @@
 
 
 from Inc.Util.Obj import DeepGet, Filter
-from Inc.PluginTask import Plugin
 from Inc.UtilP.Mail import TMail, TMailSmtp, TMailSend
 from IncP import GetInfo
+from Task import Plugin
 from ..Common import TFileBase
 
 
