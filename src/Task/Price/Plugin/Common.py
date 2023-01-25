@@ -5,12 +5,11 @@
 
 import os
 #
-from Inc.Db.DbList import TDbList
+from Inc.Db.DbList import TDbList, TDbRec
 from Inc.Util.Obj import DeepGet, GetClassPath
 from Inc.UtilP.Time import TASleep
 from IncP.Download import TDownload
 from IncP.Log import Log
-from .CommonDb import TDbPrice
 
 
 class TFileBase():
@@ -25,12 +24,21 @@ class TFileBase():
 
 
 class TFileDbl(TFileBase):
-    def __init__(self, aParent):
+    def __init__(self, aParent, aDbl: TDbList):
         super().__init__(aParent)
-        self.Dbl = TDbList()
+        self.Dbl = aDbl
 
     async def _Load(self):
         raise NotImplementedError()
+
+    def Copy(self, aName: str, aRow: dict, aRec: TDbRec):
+        Field = self.Dbl.Fields[aName]
+        Val = aRow.get(aName)
+        if (Val is None):
+            Val = Field[2]
+        elif (not isinstance(Val, Field[1])):
+            Val = Field[1](Val)
+        aRec.SetField(aName, Val)
 
     async def Load(self):
         File = self.GetFile()
@@ -39,7 +47,7 @@ class TFileDbl(TFileBase):
             self.Dbl.Load(File)
         else:
             ClassPath = GetClassPath(self)
-            if (any(x in ClassPath for x in ['_xls', '_csv', '_ods'])):
+            if (any(x in ClassPath for x in ['_xls', '_xlsx', '_csv', '_ods'])):
                 SrcFile = self.Parent.GetFile()
                 if (not os.path.exists(SrcFile)):
                     Log.Print(1, 'e', f'File not found {SrcFile}. Skip')
@@ -52,18 +60,12 @@ class TFileDbl(TFileBase):
         Log.Print(1, 'i', f'Done {File}. Records {self.Dbl.GetSize()}')
 
 
-class TPriceBase(TFileDbl):
-    def __init__(self, aParent):
-        super().__init__(aParent)
-        self.Dbl = TDbPrice()
+class TTranslate():
+    def __init__(self):
         self.DelMpn = ''.maketrans('', '', ' -/_.&@()#+"')
-
-    async def _Load(self):
-        raise NotImplementedError()
 
     def GetMpn(self, aVal) -> str:
         return aVal.translate(self.DelMpn).upper().strip()
-
 
 
 class TApiBase():

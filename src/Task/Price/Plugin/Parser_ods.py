@@ -5,10 +5,10 @@
 
 from pyexcel_ods import get_data
 #
-from .Common import TPriceBase
+from .Common import TFileDbl
 
 
-class TPrice_ods(TPriceBase):
+class TParser_ods(TFileDbl):
     async def _Load(self):
         ConfFile = self.Parent.GetFile()
         Data = get_data(ConfFile)

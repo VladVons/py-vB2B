@@ -4,10 +4,11 @@
 
 
 from openpyxl import load_workbook
-from .Common import TPriceBase
+#
+from .Common import TFileDbl
 
 
-class TPrice_xlsx(TPriceBase):
+class TParser_xlsx(TFileDbl):
     async def _Load(self):
         ConfFile = self.Parent.GetFile()
         WB = load_workbook(ConfFile, read_only = True, data_only = True)

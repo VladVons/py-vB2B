@@ -12,7 +12,7 @@ from ..CommonDb import TDbPriceJoin
 
 class TMain(TFileDbl):
     def __init__(self, aParent, aPrices: dict):
-        super().__init__(aParent)
+        super().__init__(aParent, TDbPriceJoin())
         self.Prices = aPrices
 
     def MinPrice(self, aMpn: str, aRec: TDbRec):
@@ -30,16 +30,14 @@ class TMain(TFileDbl):
         aRec.SetField('Match', Match)
 
     async def _Load(self):
-        DblRes = TDbPriceJoin()
-
         for Name, DbPrice in self.Prices.items():
-            DblRes.Fields.Add(Name, float)
+            self.Dbl.Fields.Add(Name, float)
             DbPrice.SearchAdd('Mpn')
 
         ConfMain = self.Parent.Conf.get('Main')
         DblMain = self.Prices[ConfMain]
         for RecNo, Rec in enumerate(DblMain):
-            RecNew = DblRes.RecAdd()
+            RecNew = self.Dbl.RecAdd()
             RecNew.SetAsRec(Rec, ['Id', 'Code', 'Mpn', 'Name'])
             Mpn = Rec.GetField('Mpn')
             if (Mpn):
@@ -47,5 +45,3 @@ class TMain(TFileDbl):
                 DblMain.RecNo = RecNo
             RecNew.Flush()
             await self.Sleep.Update()
-
-        self.Dbl = DblRes

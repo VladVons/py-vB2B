@@ -5,10 +5,10 @@
 
 import csv
 #
-from .Common import TPriceBase
+from .Common import TFileDbl
 
 
-class TPrice_csv(TPriceBase):
+class TParser_csv(TFileDbl):
     async def _Load(self):
         ConfFile = self.Parent.GetFile()
         ConfEncoding = self.Parent.Conf.get('Encoding', 'cp1251')

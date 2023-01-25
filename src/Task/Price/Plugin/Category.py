@@ -12,8 +12,7 @@ from .CommonDb import TDbPrice, TDbCategory
 
 class TCategoryBase(TFileDbl):
     def __init__(self, aParent):
-        super().__init__(aParent)
-        self.Dbl = TDbCategory()
+        super().__init__(aParent, TDbCategory())
 
     async def _Load(self):
         raise NotImplementedError()

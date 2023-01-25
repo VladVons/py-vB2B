@@ -3,27 +3,26 @@
 # License: GNU, see LICENSE for more details
 
 
-from ..Common import ToFloat
-from ..Price_xls import TPrice_xls
+from ..Common import ToFloat, TTranslate
+from ..CommonDb import TDbPrice
+from ..Parser_xls import TParser_xls
 
 
-class TPrice(TPrice_xls):
+class TPrice(TParser_xls):
     def __init__(self, aParent):
-        super().__init__(aParent)
+        super().__init__(aParent, TDbPrice())
         self.USD = self.Parent.Conf.get('USD', 0)
+        self.Trans = TTranslate()
 
     def _Fill(self, aRow: dict):
         if (aRow.get('Price') or aRow.get('PriceUSD')):
             Rec = self.Dbl.RecAdd()
 
-            Val = self.GetMpn(str(aRow.get('Mpn', '')))
+            Val = self.Trans.GetMpn(str(aRow.get('Mpn', '')))
             Rec.SetField('Mpn', Val)
 
-            Val = str(aRow.get('Code'))
-            Rec.SetField('Code', Val)
-
-            Val = str(aRow.get('Name'))
-            Rec.SetField('Name', Val)
+            self.Copy('Code', aRow, Rec)
+            self.Copy('Name', aRow, Rec)
 
             Price = aRow.get('Price')
             PriceUSD = aRow.get('PriceUSD')

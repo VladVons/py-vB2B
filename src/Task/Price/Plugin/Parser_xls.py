@@ -5,10 +5,10 @@
 
 from xlrd import open_workbook
 #
-from .Common import TPriceBase
+from .Common import TFileDbl
 
 
-class TPrice_xls(TPriceBase):
+class TParser_xls(TFileDbl):
     async def _Load(self):
         ConfFile = self.Parent.GetFile()
         WB = open_workbook(ConfFile)

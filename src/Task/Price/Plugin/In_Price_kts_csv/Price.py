@@ -3,27 +3,26 @@
 # License: GNU, see LICENSE for more details
 
 
-from ..Common import ToFloat
-from ..Price_csv import TPrice_csv
+from ..Common import ToFloat, TTranslate
+from ..CommonDb import TDbPrice
+from ..Parser_csv import TParser_csv
 
 
-class TPrice(TPrice_csv):
+class TPrice(TParser_csv):
     def __init__(self, aParent):
-        super().__init__(aParent)
+        super().__init__(aParent, TDbPrice())
         self.USD = aParent.Conf.get('USD', 0)
+        self.Trans = TTranslate()
 
     def _Fill(self, aRow: dict):
         if (aRow.get('Price') or aRow.get('PriceUSD')):
             Rec = self.Dbl.RecAdd()
 
-            Val = self.GetMpn(aRow.get('Mpn', ''))
+            Val = self.Trans.GetMpn(aRow.get('Mpn', ''))
             Rec.SetField('Mpn', Val)
 
-            Val = aRow.get('Code')
-            Rec.SetField('Code', Val)
-
-            Val = aRow.get('Name')
-            Rec.SetField('Name', Val)
+            self.Copy('Code', aRow, Rec)
+            self.Copy('Name', aRow, Rec)
 
             Price = aRow.get('Price')
             PriceUSD = aRow.get('PriceUSD')

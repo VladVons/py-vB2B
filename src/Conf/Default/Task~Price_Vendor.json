@@ -1,78 +1,17 @@
 {
     "Plugin": {
-        "In_Price_brain_net": {
-            "Auth": ["tr41@oster.com.ua", "19710819"],
-            "USD": 37.11,
-            "Margin" : {
-                "Default": 1.1,
-                "Id": {
-                }
-            },
-            "Images": {
-                "Check": false,
-                "Load": false
-            }
-        },
-        "In_Price_chip_xls": {
-            "-File": "./Data/Price/chip.biz.ua.xls",
-            "Skip": 30,
-            "Fields": {
-                "Mpn": 3,
-                "Code": 2,
-                "Name": 5,
-                "Price": 13,
-                "PriceUSD": 12
-            }
-        },
-        "In_Price_dclink_xlsx": {
-            "-File": "./Data/Price/dclink.ua.xlsx",
-            "Skip": 3,
-            "Fields": {
-                "Mpn": 4,
-                "Code": 5,
-                "Name": 6,
-                "Price": 9
-            }
-        },
-        "In_Price_erc_xlsx": {
-            "-File": "./Data/Price/erc.ua.kiev.xlsx",
-            "Skip": 2,
-            "Fields": {
-                "Mpn": 4,
-                "Name": 5,
-                "Price": 7,
-                "Currency": 10
-            }
-        },
-        "In_Price_kpi_xls": {
-            "-File": "./Data/Price/kpi-market.com.xls",
-            "Skip": 11,
-            "Fields": {
-                "Mpn": 1,
-                "Name": 2,
-                "PriceUSD": 3
-            }
-        },
-        "In_Price_kts_csv": {
-            "-File": "./Data/Price/kts.ua.csv",
-            "Encoding": "cp1251",
+        "In_Price_pl01_xlsx": {
             "Skip": 1,
             "Fields": {
-                "Mpn": 2,
-                "Code": 1,
-                "Name": 4,
-                "Price": 5,
-                "PriceUSD": 6
-            }
-        },
-        "In_Price_tdb_xlsx": {
-            "-File": "./Data/Price/tdb.ua.xlsx",
-            "Skip": 3,
-            "Fields": {
-                "Mpn": 4,
-                "Code": 1,
-                "Name": 5,
-                "PriceUSD": 7
+                "Model": 3,
+                "CPU": 4,
+                "Case": 5,
+                "Disk": 6,
+                "RAM": 7,
+                "OS": 8,
+                "DVD": 9,
+                "VGA": 10,
+                "Price": 11
             }
         }
     }

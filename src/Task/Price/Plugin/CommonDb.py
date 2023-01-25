@@ -50,3 +50,24 @@ class TDbPriceJoin(TDbList):
             ('Match', int),
             ('Price', float)
         ])
+
+class TDbCompPC(TDbList):
+    def __init__(self):
+        super().__init__([
+            ('Model', str),
+            ('Case', str),
+            ('CPU', str),
+            ('DiskSize', int),
+            ('Disk', str),
+            ('RamSize', int),
+            ('OS', str),
+            ('VGA', str),
+            ('DVD', str),
+            ('Price', float)
+        ])
+
+class TDbCompPricePl(TDbList):
+    def __init__(self):
+        super().__init__([
+            ('Model', str)
+        ])

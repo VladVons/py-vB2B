@@ -1,8 +1,8 @@
 {
-    "DirData": "./Data",
+    "DirData": "./Data/Oster",
     "Conf": [
-        "./Data/Conf", 
-        "./Data/In/Price.json"
+        "./Data/Oster/Conf", 
+        "./Data/Oster/In/Price.json"
     ],
     "Comment": "",
     "Include": [
@@ -40,23 +40,23 @@
                 "In_Price_kpi_xls", 
                 "In_Price_brain_net"
             ],
-            "Dir": "./Data/Save"
+            "Dir": "./Data/Oster/Save"
         },
         "OpenCart3_DB" : {
             "Depends": ["Out_OpenCart3_sql"],
-            "FileIn": "./Data/Out/OpenCart3.sql",
+            "FileIn": "./Data/Oster/Out/OpenCart3.sql",
             "Auth": {
                 "host": "127.0.0.1",
                 "db": "oc3_oster",
                 "user": "admin",
-                "password": "admin"
+                "password": "098iop"
             },
             "DirImage": "/home/vladvons/Projects/lampp/mnt/www/enabled/php81.lan/public_html/image/catalog/products",
             "LoadImage": false
         },
         "Out_OpenCart3_sql" : {
             "Depends": ["Out_OpenCart_json"],
-            "FileIn": "./Data/Out/OpenCart.json",
+            "FileIn": "./Data/Oster/Out/OpenCart.json",
             "SiteImage":"catalog/products"
         },
         "Out_OpenCart_json" : {
@@ -64,14 +64,14 @@
                 "In_Price_brain_net", 
                 "PricesJoin"
             ],
-            "-File": "./Data/OpenCart.json"
+            "-File": "./Data/Oster/OpenCart.json"
         },
         "Out_OpenCart_xml" : {
             "Depends": [
                 "In_Price_brain_net", 
                 "PricesJoin"
             ],
-            "-File": "./Data/OpenCart.xml"
+            "-File": "./Data/Oster/OpenCart.xml"
         },
         "PricesJoin": {
             "Main": "In_Price_brain_net",
@@ -87,7 +87,7 @@
         },
         "Out_PricesJoin_xlsx": {
             "Depends": ["PricesJoin"],
-            "-File": "./Data/PriceJoin.xlsx",
+            "-File": "./Data/Oster/PriceJoin.xlsx",
             "Prices": true,
             "Ratio": false,
             "Format": "#,#0.0",
@@ -109,9 +109,9 @@
                 "Out_OpenCart_xml"
             ],
             "Files": [
-                "./Data/Out"
+                "./Data/Oster/Out"
             ],
-            "File": "./Data/PackAll.zip"
+            "File": "./Data/Oster/PackAll.zip"
         },
         "SendMail": {
             "Depends": ["Pack_zip"],
@@ -119,7 +119,7 @@
             "To": ["vladvons@gmail.com"],
             "Subject": "Price list generator",
             "Body": "Hello,\nYou ordered a file\n",
-            "File": ["./Data/PackAll.zip"]
+            "File": ["./Data/Oster/PackAll.zip"]
         }
     }
 }

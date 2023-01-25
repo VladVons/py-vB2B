@@ -6,10 +6,15 @@
 from Inc.Util.Obj import GetNotNone
 from IncP.Download import TCheckUrls
 from ..Category import TDbCategory
-from ..Common import TPriceBase
+from ..Common import TFileDbl, TTranslate
+from ..CommonDb import TDbPrice
 
 
-class TPrice(TPriceBase):
+class TPrice(TFileDbl):
+    def __init__(self, aParent):
+        super().__init__(aParent, TDbPrice())
+        self.Trans = TTranslate()
+
     async def CheckImages(self):
         ProductCodes = self.Dbl.ExportList('Code')
         Urls = [self.Parent.Api.GetUrlImage(x) for x in ProductCodes]
@@ -48,7 +53,7 @@ class TPrice(TPriceBase):
             int(GetNotNone(aRow, 'CategoryID', 0)),
             int(GetNotNone(aRow, 'ProductID', 0)),
             Code,
-            self.GetMpn(GetNotNone(aRow, 'Article', '')),
+            self.Trans.GetMpn(GetNotNone(aRow, 'Article', '')),
             GetNotNone(aRow, 'Name', ''),
             round(GetNotNone(aRow, 'PriceUSD', 0) * self.Parent.Conf.get('USD'), 2),
             GetNotNone(aRow, 'Available', 0),
