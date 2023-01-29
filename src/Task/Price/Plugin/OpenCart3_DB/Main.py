@@ -7,7 +7,7 @@ import os
 import re
 import aiomysql
 #
-from Inc.UtilP.Db.ADb import TADb
+from Inc.UtilP.Db.ADb import TADb, TDbExecPool
 from ..In_Price_brain_net import TIn_Price_brain_net
 from ..In_Price_brain_net.Images import TImages
 from ..Common import TFileBase
@@ -59,7 +59,7 @@ class TMain(TFileBase):
         for Line in Lines:
             Line = Line.strip()
             if (Line) and (not Line.startswith('#')):
-                await DbApp.Exec(Line)
+                await TDbExecPool(DbApp.Pool).Exec(Line)
                 SqlImage.ParseProduct(Line)
 
         if (self.Parent.Conf.GetKey('LoadImage', True)):
