@@ -5,7 +5,7 @@
 
 import os
 #
-from Inc.Db.DbList import TDbList, TDbRec
+from Inc.Db.DbList import TDbListSafe, TDbRecSafe
 from Inc.Util.Obj import DeepGet, GetClassPath
 from Inc.UtilP.Time import TASleep
 from IncP.Download import TDownload
@@ -24,14 +24,14 @@ class TFileBase():
 
 
 class TFileDbl(TFileBase):
-    def __init__(self, aParent, aDbl: TDbList):
+    def __init__(self, aParent, aDbl: TDbListSafe):
         super().__init__(aParent)
         self.Dbl = aDbl
 
     async def _Load(self):
         raise NotImplementedError()
 
-    def Copy(self, aName: str, aRow: dict, aRec: TDbRec):
+    def Copy(self, aName: str, aRow: dict, aRec: TDbRecSafe):
         Field = self.Dbl.Fields[aName]
         Val = aRow.get(aName)
         if (Val is None):

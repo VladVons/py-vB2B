@@ -5,7 +5,7 @@
 
 import sys
 #
-from Inc.Db.DbList import TDbRec
+from Inc.Db.DbList import TDbRecSafe
 from ..Common import TFileDbl
 from ..CommonDb import TDbPriceJoin
 
@@ -15,7 +15,7 @@ class TMain(TFileDbl):
         super().__init__(aParent, TDbPriceJoin())
         self.Prices = aPrices
 
-    def MinPrice(self, aMpn: str, aRec: TDbRec):
+    def MinPrice(self, aMpn: str, aRec: TDbRecSafe):
         Match = 0
         MinPrice = sys.maxsize
         for Name, DbPrice in self.Prices.items():

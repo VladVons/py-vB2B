@@ -5,7 +5,7 @@
 
 import os
 #
-from Inc.Db.DbList import TDbList
+from Inc.Db.DbList import TDbListSafe
 from Inc.Util.Obj import GetNotNone
 from IncP.Download import TRecSes, TDownload
 from IncP.Log import Log
@@ -44,7 +44,7 @@ class TProduct():
     async def Load(self, aFile: str, aPrice: TPrice):
         Log.Print(1, 'i', 'Get product %s' % (aFile))
         if (os.path.exists(aFile)):
-            self.Dbl = TDbList().Load(aFile)
+            self.Dbl = TDbListSafe().Load(aFile)
         else:
             Products = aPrice.Dbl.ExportList('Id')
             await self.Run(Products)

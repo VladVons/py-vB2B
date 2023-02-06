@@ -5,7 +5,7 @@
 
 import os
 #
-from Inc.Db.DbList import TDbList
+from Inc.Db.DbList import TDbListSafe
 from Inc.Util.Obj import GetNotNone, DeepGet
 from IncP.Download import TRecSes, TDownload
 from IncP.Log import Log
@@ -18,7 +18,7 @@ class TProducts():
         self.Parent = aParent
         self._Count = 0
         self._Images = TImages(aParent)
-        self.Dbl = TDbList([
+        self.Dbl = TDbListSafe([
             ('CategoryId', int),
             ('ParentId', int),
             ('Id', int),
@@ -83,7 +83,7 @@ class TProducts():
             File = f'{aFile}_{CategoryId}.dat'
             print(f'Load {File} {Rec.GetField("Name")}')
             if (os.path.exists(File)):
-                Dbl = TDbList().Load(File)
+                Dbl = TDbListSafe().Load(File)
                 #print('---x1', File, Dbl.GetSize())
                 #print(Dbl)
             else:
@@ -100,7 +100,7 @@ class TProducts():
             Res.append(Dbl)
         return Res
 
-    async def Run(self, aCategoryId: int, aTasks: int = 3) -> TDbList:
+    async def Run(self, aCategoryId: int, aTasks: int = 3) -> TDbListSafe:
         Data = await self.Parent.Api.GetProducts(aCategoryId, 0)
         if (not Data):
             Log.Print(1, 'e', 'Cant get products from category %s' % (aCategoryId))

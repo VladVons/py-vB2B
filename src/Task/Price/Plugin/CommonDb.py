@@ -3,10 +3,10 @@
 # License: GNU, see LICENSE for more details
 
 
-from Inc.Db.DbList import TDbList
+from Inc.Db.DbList import TDbListSafe
 
 
-class TDbProduct(TDbList):
+class TDbProduct(TDbListSafe):
     def __init__(self):
         super().__init__([
             ('CategoryId', int),
@@ -18,7 +18,7 @@ class TDbProduct(TDbList):
             ('Image', str)
         ])
 
-class TDbPrice(TDbList):
+class TDbPrice(TDbListSafe):
     def __init__(self):
         super().__init__([
             ('CategoryId', int),
@@ -31,7 +31,7 @@ class TDbPrice(TDbList):
             ('Image', str)
         ])
 
-class TDbCategory(TDbList):
+class TDbCategory(TDbListSafe):
     def __init__(self):
         super().__init__([
             ('CategoryId', int),
@@ -40,7 +40,7 @@ class TDbCategory(TDbList):
             ('Descr', str)
         ])
 
-class TDbPriceJoin(TDbList):
+class TDbPriceJoin(TDbListSafe):
     def __init__(self):
         super().__init__([
             ('Id', int),
@@ -51,7 +51,7 @@ class TDbPriceJoin(TDbList):
             ('Price', float)
         ])
 
-class TDbCompPC(TDbList):
+class TDbCompPC(TDbListSafe):
     def __init__(self):
         super().__init__([
             ('Model', str),
@@ -66,7 +66,7 @@ class TDbCompPC(TDbList):
             ('Price', float)
         ])
 
-class TDbCompPricePl(TDbList):
+class TDbCompPricePl(TDbListSafe):
     def __init__(self):
         super().__init__([
             ('Model', str)

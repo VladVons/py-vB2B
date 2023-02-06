@@ -1,6 +1,6 @@
 import re
 from collections import defaultdict
-from Inc.Db.DbList import TDbList
+from Inc.Db.DbList import TDbListSafe
 
 def Test_1():
     eMail = 'this is my eMail vlad_vons1@gmaill.com I love it. Also davydvons@gmail.com is good'
