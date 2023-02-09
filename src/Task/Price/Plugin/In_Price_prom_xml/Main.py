@@ -1,0 +1,64 @@
+# Created: 2023.02.08
+# Author: Vladimir Vons <VladVons@gmail.com>
+# License: GNU, see LICENSE for more details
+
+
+from Inc.Util.Str import ToInt, ToFloat
+from ..CommonDb import TDbCategory, TDbProductEx
+from ..Parser_xml import TParser_xml
+
+
+class TCategory(TParser_xml):
+    def __init__(self, aParent):
+        super().__init__(aParent, TDbCategory())
+
+    def _Fill(self, aRow):
+        Rec = self.Dbl.RecAdd()
+
+        Val = aRow.getAttribute('id')
+        Rec.SetField('category_id', ToInt(Val))
+
+        Val = aRow.getAttribute('parentId')
+        Rec.SetField('parent_id', ToInt(Val))
+
+        Val = aRow.firstChild.data
+        Rec.SetField('name', Val)
+
+        Rec.Flush()
+
+class TProduct(TParser_xml):
+    def __init__(self, aParent):
+        super().__init__(aParent, TDbProductEx())
+
+    def _Fill(self, aRow):
+        Rec = self.Dbl.RecAdd()
+
+        Val = aRow.getAttribute('id')
+        Rec.SetField('id', ToInt(Val))
+
+        Val = aRow.getElementsByTagName('categoryId')[0].firstChild.data
+        Rec.SetField('category_id', ToInt(Val))
+
+        Val = aRow.getElementsByTagName('name')[0].firstChild.data
+        Rec.SetField('name', Val)
+
+        Val = aRow.getElementsByTagName('vendorCode')[0].firstChild.data
+        Rec.SetField('mpn', Val)
+
+        Val = aRow.getElementsByTagName('price')[0].firstChild.data
+        Rec.SetField('price', ToFloat(Val))
+
+        Data = aRow.getElementsByTagName('description')[0].firstChild
+        if (Data):
+            Val = Data.data
+            Rec.SetField('descr', Val)
+
+        Data = aRow.getElementsByTagName('image')
+        Val = [x.firstChild.data for x in Data]
+        Rec.SetField('image', Val)
+
+        Data = aRow.getElementsByTagName('param')
+        Val = {x.getAttribute('name'): x.firstChild.data for x in Data}
+        Rec.SetField('feature', Val)
+
+        Rec.Flush()

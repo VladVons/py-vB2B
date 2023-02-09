@@ -5,7 +5,7 @@
 
 import re
 #
-from ..Common import ToFloat
+from Inc.Util.Str import ToFloat
 from ..CommonDb import TDbCompPC
 from ..Parser_xlsx import TParser_xlsx
 
@@ -18,30 +18,30 @@ class TPrice(TParser_xlsx):
         self.ReRam = re.compile(r'(\d+)\s*(gb)', re.IGNORECASE)
 
     def _Fill(self, aRow: dict):
-        if (aRow.get('Price')):
+        if (aRow.get('price')):
             Rec = self.Dbl.RecAdd()
 
-            self.Copy('Model', aRow, Rec)
-            self.Copy('CPU', aRow, Rec)
-            self.Copy('Case', aRow, Rec)
-            self.Copy('DVD', aRow, Rec)
-            self.Copy('VGA', aRow, Rec)
-            self.Copy('OS', aRow, Rec)
+            self.Copy('model', aRow, Rec)
+            self.Copy('cpu', aRow, Rec)
+            self.Copy('case', aRow, Rec)
+            self.Copy('dvd', aRow, Rec)
+            self.Copy('vga', aRow, Rec)
+            self.Copy('os', aRow, Rec)
 
-            Val = ToFloat(aRow.get('Price'))
-            Rec.SetField('Price', Val)
+            Val = ToFloat(aRow.get('price'))
+            Rec.SetField('price', Val)
 
-            Val = aRow.get('Disk', '')
+            Val = aRow.get('disk', '')
             Data = self.ReDisk.findall(Val)
             if (Data):
                 Data = Data[0]
-                Rec.SetField('DiskSize', int(Data[0]))
-                Rec.SetField('Disk', Data[2])
+                Rec.SetField('disk_size', int(Data[0]))
+                Rec.SetField('disk', Data[2])
 
-            Val = aRow.get('RAM', '')
+            Val = aRow.get('ram', '')
             Data = self.ReRam.findall(Val)
             if (Data):
                 Data = Data[0]
-                Rec.SetField('RamSize', int(Data[0]))
+                Rec.SetField('ram_size', int(Data[0]))
 
             Rec.Flush()

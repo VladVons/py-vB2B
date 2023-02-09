@@ -12,12 +12,12 @@ from .Main import TEMail, TMailConf
 def Main(aConf) -> tuple:
     Obj = TEMail(
         TMailSmtp(
-            username = DeepGet(aConf, 'SmtpAuth.username'),
-            password = DeepGet(aConf, 'SmtpAuth.password')
+            username = DeepGet(aConf, 'smtp_auth.username'),
+            password = DeepGet(aConf, 'smtp_auth.password')
         ),
         TMailConf(
-            MaxTasks = aConf.get('MaxTasks', 1),
-            Sleep = aConf.get('Sleep', 3),
+            MaxTasks = aConf.get('max_tasks', 1),
+            Sleep = aConf.get('sleep', 3),
             Always = True
         )
     )

@@ -17,11 +17,11 @@ from ..CommonDb import TDbPriceJoin, TDbPrice
 
 class TMain(TFileBase):
     def Head(self, aDbl: TDbPrice, aWS, aHeadRow: dict):
-        ConfFormat = self.Parent.Conf.GetKey('Format', '#,##0.00')
-        ConfFieldWidth = self.Parent.Conf.GetKey('Field.Width', {})
+        ConfFormat = self.Parent.Conf.GetKey('format', '#,##0.00')
+        ConfFieldWidth = self.Parent.Conf.GetKey('field.width', {})
 
         for Key, (No, Field, _) in aDbl.Fields.items():
-            aWS.cell(aHeadRow['Title'], No + 1).value = Key
+            aWS.cell(aHeadRow['title'], No + 1).value = Key
             CD = aWS.column_dimensions[get_column_letter(No + 1)]
 
             Width = ConfFieldWidth.get(Key)
@@ -31,23 +31,23 @@ class TMain(TFileBase):
                 else:
                     CD.width = Width
 
-            if (Key.startswith('Price')):
+            if (Key.startswith('price')):
                 CD.number_format = ConfFormat
 
-        Field = aDbl.Fields.get('Price')
+        Field = aDbl.Fields.get('price')
         #aWS.column_dimensions[get_column_letter(Field[0] + 1)].font = Font(bold=True)
-        aWS.freeze_panes = aWS.cell(aHeadRow['Data'], Field[0] + 2)
+        aWS.freeze_panes = aWS.cell(aHeadRow['data'], Field[0] + 2)
 
     async def Save(self, aDbPriceJoin: TDbPriceJoin, aPrices: list[TDbPrice]):
         WB = Workbook()
         WS = WB.active
 
-        HeadRow = {'Title': 1, 'Data': 2}
+        HeadRow = {'title': 1, 'data': 2}
         self.Head(aDbPriceJoin, WS, HeadRow)
 
-        ConfRatio = self.Parent.Conf.GetKey('Ratio')
-        for RowNo, Rec in enumerate(aDbPriceJoin, HeadRow['Data']):
-            Price = Rec.GetField('Price')
+        ConfRatio = self.Parent.Conf.GetKey('ratio')
+        for RowNo, Rec in enumerate(aDbPriceJoin, HeadRow['data']):
+            Price = Rec.GetField('price')
             for FieldNo, Field in enumerate(aDbPriceJoin.Fields):
                 Value = Rec[FieldNo]
                 Cell = WS.cell(RowNo, FieldNo + 1)
@@ -60,18 +60,18 @@ class TMain(TFileBase):
                         Cell.comment = Comment(Text, '', 20)
             await self.Sleep.Update()
 
-        ConfPrices = self.Parent.Conf.GetKey('Prices', True)
+        ConfPrices = self.Parent.Conf.GetKey('prices', True)
         if (ConfPrices):
-            aDbPriceJoin.SearchAdd('Mpn')
+            aDbPriceJoin.SearchAdd('mpn')
             for Plugin, Dbl in aPrices.items():
                 WS = WB.create_sheet(title = Plugin)
                 self.Head(Dbl, WS, HeadRow)
-                for RowNo, Rec in enumerate(Dbl, HeadRow['Data']):
-                    Mpn = Rec.GetField('Mpn')
+                for RowNo, Rec in enumerate(Dbl, HeadRow['data']):
+                    Mpn = Rec.GetField('mpn')
                     for FieldNo, Field in enumerate(Dbl.Fields):
                         Cell = WS.cell(RowNo, FieldNo + 1)
                         Cell.value = Rec[FieldNo]
-                        if (Field == 'Price') and (aDbPriceJoin.Search('Mpn', Mpn) >= 0):
+                        if (Field == 'price') and (aDbPriceJoin.Search('mpn', Mpn) >= 0):
                             Cell.font = Font(bold = True)
                     await self.Sleep.Update()
 

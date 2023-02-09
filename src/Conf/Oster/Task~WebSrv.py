@@ -1,14 +1,14 @@
-SrvConf = {
-    'Port': 8080,
-    'ClientMaxizeFile': 10_000_000
+srv_conf = {
+    'port': 8080,
+    'client_max_size_file': 10_000_000
 }
 
-User = 'user01'
-Password = '2010'
+user = 'user01'
+password = '2010'
 
-DirPrice = './Data/In'
+dir_price = './Data/In'
 #PricesJoin_xlsx = './Data/Out/PricesJoin.xlsx'
 #OpenCart_xml    = './Data/Out/OpenCart.xml'
 #OpenCart3_sql   = './Data/Out/OpenCart3.sql'
 #OpenCart_json   = './Data/Out/OpenCart.json'
-PackAll_zip = './Data/PackAll.zip'
+pack_all_zip = './Data/PackAll.zip'

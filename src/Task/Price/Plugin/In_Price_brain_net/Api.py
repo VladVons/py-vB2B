@@ -52,8 +52,8 @@ class TApi(TApiBase):
 
     @staticmethod
     def GetResult(aRes: dict) -> object:
-        if (aRes['Status'] == 200):
-            Data = aRes['Data']
+        if (aRes['status'] == 200):
+            Data = aRes['data']
             if (Data.get('status', 0) == 1):
                 for x in ['result', 'url']:
                     aRes = Data.get(x)
@@ -77,8 +77,8 @@ class TApi(TApiBase):
     async def GetImage(self, aProductCode: str) -> bytes:
         Url = self.GetUrlImage(aProductCode)
         Res = await self.Download.SendOne(TRecSes(Url))
-        if (Res['Status'] == 200):
-            return Res['Data']
+        if (Res['status'] == 200):
+            return Res['data']
 
     async def GetCategories(self) -> list:
         Url = self.GetUrlCategories()

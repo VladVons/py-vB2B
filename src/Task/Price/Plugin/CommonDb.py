@@ -6,68 +6,91 @@
 from Inc.Db.DbList import TDbListSafe
 
 
-class TDbProduct(TDbListSafe):
+class TDbListEx(TDbListSafe):
+     pass
+
+# class TDbListEx(TDbList):
+#     def __init__(self, aFields):
+#         aFields = [Name for Name, Type in aFields]
+#         super().__init__(aFields)
+
+
+class TDbProduct(TDbListEx):
     def __init__(self):
         super().__init__([
-            ('CategoryId', int),
-            ('Id', int),
-            ('Code', str),
-            ('Mpn', str),
-            ('Name', str),
-            ('Price', float),
-            ('Image', str)
+            ('category_id', int),
+            ('id', int),
+            ('code', str),
+            ('mpn', str),
+            ('name', str),
+            ('price', float),
+            ('image', str)
         ])
 
-class TDbPrice(TDbListSafe):
+class TDbProductEx(TDbListEx):
     def __init__(self):
         super().__init__([
-            ('CategoryId', int),
-            ('Id', int),
-            ('Code', str),
-            ('Mpn', str),
-            ('Name', str),
-            ('Price', float),
-            ('Available', int),
-            ('Image', str)
+            ('category_id', int),
+            ('id', int),
+            ('code', str),
+            ('mpn', str),
+            ('name', str),
+            ('price', float),
+            ('image', list),
+            ('feature', dict),
+            ('vendor', str),
+            ('descr', str)
         ])
 
-class TDbCategory(TDbListSafe):
+class TDbPrice(TDbListEx):
     def __init__(self):
         super().__init__([
-            ('CategoryId', int),
-            ('ParentId', int),
-            ('Name', str),
-            ('Descr', str)
+            ('category_id', int),
+            ('id', int),
+            ('code', str),
+            ('mpn', str),
+            ('name', str),
+            ('price', float),
+            ('available', int),
+            ('image', str)
         ])
 
-class TDbPriceJoin(TDbListSafe):
+class TDbCategory(TDbListEx):
     def __init__(self):
         super().__init__([
-            ('Id', int),
-            ('Code', str),
-            ('Mpn', str),
-            ('Name', str),
-            ('Match', int),
-            ('Price', float)
+            ('category_id', int),
+            ('parent_id', int),
+            ('name', str)
         ])
 
-class TDbCompPC(TDbListSafe):
+class TDbPriceJoin(TDbListEx):
     def __init__(self):
         super().__init__([
-            ('Model', str),
-            ('Case', str),
-            ('CPU', str),
-            ('DiskSize', int),
-            ('Disk', str),
-            ('RamSize', int),
-            ('OS', str),
-            ('VGA', str),
-            ('DVD', str),
-            ('Price', float)
+            ('id', int),
+            ('code', str),
+            ('mpn', str),
+            ('name', str),
+            ('match', int),
+            ('price', float)
         ])
 
-class TDbCompPricePl(TDbListSafe):
+class TDbCompPC(TDbListEx):
     def __init__(self):
         super().__init__([
-            ('Model', str)
+            ('model', str),
+            ('case', str),
+            ('cpu', str),
+            ('disk_size', int),
+            ('disk', str),
+            ('ram_size', int),
+            ('os', str),
+            ('vga', str),
+            ('dvd', str),
+            ('price', float)
+        ])
+
+class TDbCompPricePl(TDbListEx):
+    def __init__(self):
+        super().__init__([
+            ('model', str)
         ])

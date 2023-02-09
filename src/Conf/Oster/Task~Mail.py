@@ -2,15 +2,15 @@ from Inc.UtilP.Misc import GetEnvWithWarn
 from IncP.Log import Log
 
 
-MaxTasks = 1
-Sleep = 1
+max_tasks = 1
+sleep = 1
 
-SmtpAuth = {
+smtp_auth = {
     'hostname': 'smtp.gmail.com',
-    'username': GetEnvWithWarn('Env_SmtpUser', Log),
-    'password': GetEnvWithWarn('Env_SmtpPassw', Log),
+    'username': GetEnvWithWarn('env_smtp_user', Log),
+    'password': GetEnvWithWarn('env_smtp_passw', Log),
     'port': 465,
     'use_tls': True
 }
 
-From = 'ua0976646510@gmail.com'
+from = 'ua0976646510@gmail.com'

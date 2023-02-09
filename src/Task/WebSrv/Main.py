@@ -12,11 +12,11 @@ from .Session import Session
 
 class TWebSrv(TWebSrvBase):
     async def _FormCreateUser(self, aRequest: web.Request) -> web.Response:
-        Name = aRequest.match_info.get('Name')
+        Name = aRequest.match_info.get('name')
 
         Public = ['grafana']
         await Session.Update(aRequest)
-        if (not Session.Data.get('UserId')) and (Name != 'login') and (not Name in Public):
+        if (not Session.Data.get('user_id')) and (Name != 'login') and (not Name in Public):
             Redirect = 'login?url=%s' % (Name)
             raise web.HTTPFound(location = Redirect)
 
@@ -28,9 +28,9 @@ class TWebSrv(TWebSrvBase):
         #Routes = web.RouteTableDef()
 
         Form = TForm(aRequest, 'info.tpl.html')
-        Form.Data['Info'] = 'Page not found'
+        Form.Data['info'] = 'Page not found'
         Res = await Form.Render()
-        Res.set_status(404, Form.Data['Info'])
+        Res.set_status(404, Form.Data['info'])
         return Res
 
     async def RunApp(self):

@@ -18,19 +18,19 @@ class TCategory(TCategoryBase):
                     Res += Val
             return Res
 
-        Section = aConfCategories.get('IncludeId', [])
+        Section = aConfCategories.get('include_id', [])
         IncludeId = ToList(Section)
-        Section = aConfCategories.get('ExcludeId', [])
+        Section = aConfCategories.get('exclude_id', [])
         ExcludeId = ToList(Section)
 
-        Section = aConfCategories.get('Include', [])
+        Section = aConfCategories.get('include', [])
         IncludeId += ToList(self.GetIdByName(Section))
-        Section = aConfCategories.get('Exclude', [])
+        Section = aConfCategories.get('exclude', [])
         ExcludeId += ToList(self.GetIdByName(Section))
 
         Res = self.Dbl.New()
         for Rec in self.Dbl:
-            CategoryId = Rec.GetField('CategoryId')
+            CategoryId = Rec.GetField('category_Ii')
             if (CategoryId in ExcludeId):
                 continue
 
@@ -39,7 +39,7 @@ class TCategory(TCategoryBase):
         self.Dbl = Res
 
     def Filter_FromConfig(self):
-        ConfCategories = self.Parent.Conf.get('Categories')
+        ConfCategories = self.Parent.Conf.get('categories')
         if (ConfCategories):
             self._Filter_ById(ConfCategories)
 
@@ -48,7 +48,7 @@ class TCategory(TCategoryBase):
 
         Res = self.Dbl.New()
         for Rec in self.Dbl:
-            Id = Rec.GetField('CategoryId')
+            Id = Rec.GetField('category_id')
             if (HashFinal.get(Id, 0) > 0):
                 Res.RecAdd(Rec).Flush()
         self.Dbl = Res

@@ -16,29 +16,29 @@ class TMain(TFileBase):
         Category = []
         for Rec in aDbCategory:
             Data = {
-                'Id': Rec.GetField('CategoryId'),
-                'ParentId': Rec.GetField('ParentId'),
-                'Name': Rec.GetField('Name')
+                'id': Rec.GetField('category_id'),
+                'parent_id': Rec.GetField('parent_id'),
+                'name': Rec.GetField('name')
             }
             Category.append(Data)
             await self.Sleep.Update()
 
         # TransField =     {
-        #     'Mpn': 'Articul',
-        #     'Id': 'Code',
-        #     'Name': 'Name',
-        #     'CategoryId': 'CategoryID',
-        #     'Image': 'Image',
-        #     'Price': 'PriceIn'
+        #     'mpn': 'articul',
+        #     'id': 'code',
+        #     'name': 'name',
+        #     'category_id': 'category_id',
+        #     'image': 'image',
+        #     'price': 'priceIn'
         # }
         TransField =     {
-            'Mpn': 'Mpn',
-            'Id': 'Id',
-            'Code': 'Code',
-            'Name': 'Name',
-            'CategoryId': 'CategoryId',
-            'Image': 'Image',
-            'Price': 'PriceIn'
+            'mpn': 'mpn',
+            'id': 'id',
+            'code': 'code',
+            'name': 'name',
+            'category_id': 'category_id',
+            'image': 'image',
+            'price': 'price_in'
         }
 
         Products = []
@@ -46,14 +46,14 @@ class TMain(TFileBase):
             Data = {}
             for Key, Val in TransField.items():
                 Data[Val] = Rec.GetField(Key)
-            CategoryId = Rec.GetField('CategoryId')
-            Data['PriceOut'] = round(Rec.GetField('Price') * aCategoryMargins.get(CategoryId, 1), 1)
-            Data['Quantity'] = 1
+            CategoryId = Rec.GetField('category_id')
+            Data['price_out'] = round(Rec.GetField('price') * aCategoryMargins.get(CategoryId, 1), 1)
+            Data['quantity'] = 1
             Products.append(Data)
 
             await self.Sleep.Update()
 
-        Data = {'Categories': Category, 'Products': Products}
+        Data = {'categories': Category, 'products': Products}
 
         ConfFile = self.Parent.GetFile()
         os.makedirs(os.path.dirname(ConfFile), exist_ok=True)

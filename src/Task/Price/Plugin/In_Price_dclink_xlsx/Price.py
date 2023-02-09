@@ -3,7 +3,8 @@
 # License: GNU, see LICENSE for more details
 
 
-from ..Common import ToFloat, TTranslate
+from Inc.Util.Str import ToFloat
+from ..Common import TTranslate
 from ..CommonDb import TDbPrice
 from ..Parser_xlsx import TParser_xlsx
 
@@ -14,16 +15,16 @@ class TPrice(TParser_xlsx):
         self.Trans = TTranslate()
 
     def _Fill(self, aRow: dict):
-        if (aRow.get('Price')):
+        if (aRow.get('price')):
             Rec = self.Dbl.RecAdd()
 
-            Val = self.Trans.GetMpn(str(aRow.get('Mpn', '')))
-            Rec.SetField('Mpn', Val)
+            Val = self.Trans.GetMpn(str(aRow.get('mpn', '')))
+            Rec.SetField('mpn', Val)
 
-            self.Copy('Code', aRow, Rec)
-            self.Copy('Name', aRow, Rec)
+            self.Copy('code', aRow, Rec)
+            self.Copy('name', aRow, Rec)
 
-            Val = ToFloat(aRow.get('Price'))
-            Rec.SetField('Price', Val)
+            Val = ToFloat(aRow.get('price'))
+            Rec.SetField('price', Val)
 
             Rec.Flush()

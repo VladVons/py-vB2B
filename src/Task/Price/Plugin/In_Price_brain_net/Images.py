@@ -17,7 +17,7 @@ class TImages():
         if (aDir):
             self.Dir = aDir
         else:
-            self.Dir = '%s/%s/Image' % (aParent.Parent.Conf.get('DirData'), self.Parent.Api.GetModName(__file__))
+            self.Dir = '%s/%s/Image' % (aParent.Parent.Conf.get('dir_data'), self.Parent.Api.GetModName(__file__))
 
     def GetDirPath(self, aProductCode: str) -> str:
         return f'{self.Dir}/{aProductCode[-2]}/{aProductCode[-1]}'
@@ -29,7 +29,7 @@ class TImages():
         return [self.Parent.Api.GetUrlImage(x) for x in aProductCodes]
 
     async def _OnSend(self, aRecSes: TRecSes, aRes: dict):
-        if (aRes['Status'] == 200):
+        if (aRes['status'] == 200):
             Code = os.path.basename(aRecSes.Url).replace(self.Suffix, '')
             File = self.GetFilePath(Code)
             if (not os.path.exists(File)):
@@ -38,9 +38,9 @@ class TImages():
                 Dir = self.GetDirPath(Code)
                 os.makedirs(Dir, exist_ok=True)
                 with open(File, 'wb') as F:
-                    F.write(aRes['Data'])
+                    F.write(aRes['data'])
         else:
-            Log.Print(1, 'e', 'Err %s' % (aRecSes.Url))
+            Log.Print(1, 'e', 'err %s' % (aRecSes.Url))
 
     async def LoadUrls(self, aUrls: list[str], aTasks: int = 3):
         Download = TDownload(self._OnSend)

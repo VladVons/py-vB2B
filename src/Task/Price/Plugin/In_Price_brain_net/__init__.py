@@ -25,7 +25,7 @@ class TIn_Price_brain_net(TPluginBase):
         FilesCheck = [Category.GetFile(), Price.GetFile()]
         Files = FilesExist(FilesCheck)
         if (sum(Files) < len(FilesCheck)):
-            User, Passw = self.Conf.get('Auth')
+            User, Passw = self.Conf.get('auth')
             if (not await self.Api.Auth(User, Passw)):
                 Log.Print(1, 'e', 'Auth error')
                 return
@@ -36,7 +36,7 @@ class TIn_Price_brain_net(TPluginBase):
         await Price.Load()
         Price.Filter_HasCategory(Category)
 
-        ConfImagesCheck = self.Conf.GetKey('Images.Check')
+        ConfImagesCheck = self.Conf.GetKey('images.check')
         if (ConfImagesCheck):
             await Price.CheckImages()
 

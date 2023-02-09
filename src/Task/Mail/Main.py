@@ -52,8 +52,8 @@ class TEMail():
 
     async def _DoPost(self, _aOwner, aMsg):
         if (aMsg.get('To') == self.__class__.__name__):
-            if (aMsg.get('Type') == 'Add'):
-                self.Add(aMsg.get('MailSend'))
+            if (aMsg.get('type') == 'add'):
+                self.Add(aMsg.get('mail_send'))
 
     def Add(self, aMailSend: TMailSend):
         self._Queue.put_nowait(aMailSend)

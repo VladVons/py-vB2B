@@ -1,78 +1,102 @@
 {
-    "Plugin": {
+    "plugin": {
         "In_Price_brain_net": {
-            "Auth": ["tr41@oster.com.ua", "19710819"],
-            "USD": 37.11,
-            "Margin" : {
-                "Default": 1.1,
-                "Id": {
+            "auth": ["tr41@oster.com.ua", "19710819"],
+            "usd": 37.11,
+            "margin" : {
+                "default": 1.1,
+                "id": {
                 }
             },
-            "Images": {
-                "Check": false,
-                "Load": false
+            "images": {
+                "check": false,
+                "load": false
             }
         },
         "In_Price_chip_xls": {
-            "-File": "./Data/Oster/Price/chip.biz.ua.xls",
-            "Skip": 30,
-            "Fields": {
-                "Mpn": 3,
-                "Code": 2,
-                "Name": 5,
-                "Price": 13,
-                "PriceUSD": 12
+            "-file": "./Data/Oster/Price/chip.biz.ua.xls",
+            "sheet": {
+                "default": {
+                    "skip": 30,
+                    "fields": {
+                        "mpn": 3,
+                        "code": 2,
+                        "name": 5,
+                        "price": 13,
+                        "price_usd": 12
+                    }
+                }
             }
         },
         "In_Price_dclink_xlsx": {
-            "-File": "./Data/Oster/Price/dclink.ua.xlsx",
-            "Skip": 3,
-            "Fields": {
-                "Mpn": 4,
-                "Code": 5,
-                "Name": 6,
-                "Price": 9
+            "-file": "./Data/Oster/Price/dclink.ua.xlsx",
+            "sheet": {
+                "default": {
+                    "skip": 3,
+                    "fields": {
+                        "mpn": 4,
+                        "code": 5,
+                        "name": 6,
+                        "price": 9
+                    }
+                }
             }
         },
         "In_Price_erc_xlsx": {
-            "-File": "./Data/Oster/Price/erc.ua.kiev.xlsx",
-            "Skip": 2,
-            "Fields": {
-                "Mpn": 4,
-                "Name": 5,
-                "Price": 7,
-                "Currency": 10
+            "-file": "./Data/Oster/Price/erc.ua.kiev.xlsx",
+            "sheet": {
+                "default": {
+                    "skip": 2,
+                    "fields": {
+                        "mpn": 4,
+                        "name": 5,
+                        "rice": 7,
+                        "currency": 10
+                    }
+                }
             }
         },
         "In_Price_kpi_xls": {
-            "-File": "./Data/Oster/Price/kpi-market.com.xls",
-            "Skip": 11,
-            "Fields": {
-                "Mpn": 1,
-                "Name": 2,
-                "PriceUSD": 3
+            "-file": "./Data/Oster/Price/kpi-market.com.xls",
+            "sheet": {
+                "default": {
+                    "skip": 11,
+                    "fields": {
+                        "mpn": 1,
+                        "name": 2,
+                        "price_usd": 3
+                    }
+                }
             }
         },
         "In_Price_kts_csv": {
-            "-File": "./Data/Oster/Price/kts.ua.csv",
-            "Encoding": "cp1251",
-            "Skip": 1,
-            "Fields": {
-                "Mpn": 2,
-                "Code": 1,
-                "Name": 4,
-                "Price": 5,
-                "PriceUSD": 6
+            "-file": "./Data/Oster/Price/kts.ua.csv",
+            "encoding": "cp1251",
+            "sheet": {
+                "default": {
+                    "skip": 1,
+                    "fields": {
+                        "mpn": 2,
+                        "code": 1,
+                        "name": 4,
+                        "price": 5,
+                        "price_usd": 6
+                    }
+                }
             }
         },
         "In_Price_tdb_xlsx": {
-            "-File": "./Data/Oster/Price/tdb.ua.xlsx",
-            "Skip": 3,
-            "Fields": {
-                "Mpn": 4,
-                "Code": 1,
-                "Name": 5,
-                "PriceUSD": 7
+            "-file": "./Data/Oster/Price/tdb.ua.xlsx",
+            "sheet": {
+                "default": {
+                    "skip": 3,
+                    "fields": {
+                        "mpn": 4,
+                        "code": 1,
+                        "name": 5,
+                        "price_usd": 7
+                    }
+                }
             }
         }
     }

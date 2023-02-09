@@ -9,20 +9,20 @@ from .Common import TFileDbl
 
 
 class TParser_xls(TFileDbl):
+    def _InitEngine(self, aFile: str):
+        return open_workbook(aFile)
+
     async def _Load(self):
-        ConfFile = self.Parent.GetFile()
-        WB = open_workbook(ConfFile)
-
-        Sheet = self.Parent.Conf.get('Sheet')
-        if (Sheet):
-            WS = WB.sheet_by_name(Sheet)
+        if (self._Sheet == 'default'):
+            WS = self._Engine.sheet_by_index(0)
         else:
-            WS = WB.sheet_by_index(0)
+            WS = self._Engine.sheet_by_name(self._Sheet)
 
-        ConfFields = self.Parent.Conf.get('Fields')
-        ConfSkip = self.Parent.Conf.get('Skip', 0)
+        Conf = self.GetConfSheet()
+        ConfFields = Conf.get('fields')
+        ConfSkip = Conf.get('skip', 0)
         for i in range(ConfSkip, WS.nrows):
-            Data = {'No': i}
+            Data = {'no': i}
             for Field, FieldIdx in ConfFields.items():
                 Val = WS.cell(i, FieldIdx - 1).value
                 Data[Field] = Val

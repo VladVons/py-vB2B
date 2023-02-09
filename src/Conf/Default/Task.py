@@ -1,3 +1,3 @@
-Debug = False
+debug = False
 #
-PluginsApp = 'Price'
+plugins_app = 'Price'

@@ -7,23 +7,22 @@ from openpyxl import load_workbook
 #
 from .Common import TFileDbl
 
-
 class TParser_xlsx(TFileDbl):
+    def _InitEngine(self, aFile: str):
+        return load_workbook(aFile, read_only = True, data_only = True)
+
     async def _Load(self):
-        ConfFile = self.Parent.GetFile()
-        WB = load_workbook(ConfFile, read_only = True, data_only = True)
-
-        ConfSheet = self.Parent.Conf.get('Sheet')
-        if (ConfSheet):
-            WS = WB[ConfSheet]
+        if (self._Sheet == 'default'):
+            WSheet = self._Engine.active
         else:
-            WS = WB.active
+            WSheet = self._Engine[self._Sheet]
 
-        ConfFields = self.Parent.Conf.get('Fields')
-        ConfSkip = self.Parent.Conf.get('Skip', 0)
-        for RowNo, Row in enumerate(WS.rows):
+        Conf = self.GetConfSheet()
+        ConfFields = Conf.get('fields')
+        ConfSkip = Conf.get('skip', 0)
+        for RowNo, Row in enumerate(WSheet.rows):
             if (RowNo >= ConfSkip):
-                Data = {'No': RowNo}
+                Data = {'no': RowNo}
                 for Field, FieldIdx in ConfFields.items():
                     Val = Row[FieldIdx - 1].value
                     Data[Field] = Val

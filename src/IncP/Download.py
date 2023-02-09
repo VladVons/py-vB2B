@@ -79,10 +79,10 @@ class TDownload():
 
             if (Response.content_type == 'application/json'):
                 Data = json.loads(Data)
-            Res = {'Data': Data, 'Status': Response.status, 'Time': round(time.time() - TimeAt, 2)}
+            Res = {'data': Data, 'status': Response.status, 'time': round(time.time() - TimeAt, 2)}
         except (aiohttp.ClientConnectorError, aiohttp.ClientError, aiohttp.InvalidURL, asyncio.TimeoutError) as E:
             Log.Print(1, 'e', 'Url %s, %s' % (aRecSes.Url, E))
-            Res = {'Data': E, 'Status': -1, 'Time': round(time.time() - TimeAt, 2)}
+            Res = {'data': E, 'status': -1, 'time': round(time.time() - TimeAt, 2)}
 
         if (self.CallBack):
             Res = await self.CallBack(aRecSes, Res)

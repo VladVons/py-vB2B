@@ -39,7 +39,7 @@ class TForm(TFormBase):
             self.Data.Message = f'Not a zip file {self.File.data.file}'
             return
 
-        ConfDirPrice = self.Parent.Conf.get('DirPrice')
+        ConfDirPrice = self.Parent.Conf.get('dir_price')
         if (os.path.exists(ConfDirPrice)):
             DirRemove(ConfDirPrice)
         else:
@@ -48,10 +48,10 @@ class TForm(TFormBase):
         Extract(FileDownload, ConfDirPrice)
 
         await Plugin.Post(self, {
-            'To': 'TQueue',
-            'Type': 'Add',
-            'Call': TCall(TPrice().Run, [{
-                'SendMail': {'To': [self.EMail.data]}
+            'to': 'TQueue',
+            'type': 'add',
+            'call': TCall(TPrice().Run, [{
+                'send_mail': {'to': [self.EMail.data]}
             }])
         })
 

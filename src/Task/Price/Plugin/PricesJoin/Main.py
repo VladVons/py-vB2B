@@ -19,29 +19,29 @@ class TMain(TFileDbl):
         Match = 0
         MinPrice = sys.maxsize
         for Name, DbPrice in self.Prices.items():
-            RecNo = DbPrice.Search('Mpn', aMpn)
+            RecNo = DbPrice.Search('mpn', aMpn)
             if (RecNo >= 0):
-                Price = DbPrice.RecGo(RecNo).GetField('Price')
+                Price = DbPrice.RecGo(RecNo).GetField('price')
                 if (Price > 0):
                     Match += 1
                     MinPrice = min(MinPrice, Price)
                     aRec.SetField(Name, Price)
-        aRec.SetField('Price', MinPrice)
-        aRec.SetField('Match', Match)
+        aRec.SetField('price', MinPrice)
+        aRec.SetField('match', Match)
 
     async def _Load(self):
         for Name, DbPrice in self.Prices.items():
             self.Dbl.Fields.Add(Name, float)
-            DbPrice.SearchAdd('Mpn')
+            DbPrice.SearchAdd('mpn')
 
-        ConfMain = self.Parent.Conf.get('Main')
+        ConfMain = self.Parent.Conf.get('main')
         DblMain = self.Prices[ConfMain]
         for RecNo, Rec in enumerate(DblMain):
             RecNew = self.Dbl.RecAdd()
-            RecNew.SetAsRec(Rec, ['Id', 'Code', 'Mpn', 'Name'])
-            Mpn = Rec.GetField('Mpn')
+            RecNew.SetAsRec(Rec, ['id', 'code', 'mpn', 'name'])
+            Mpn = Rec.GetField('mpn')
             if (Mpn):
-                self.MinPrice(Rec.GetField('Mpn'), RecNew)
+                self.MinPrice(Rec.GetField('mpn'), RecNew)
                 DblMain.RecNo = RecNo
             RecNew.Flush()
             await self.Sleep.Update()

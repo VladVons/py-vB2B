@@ -13,7 +13,7 @@ from ..Common import TFileBase
 
 class TMain(TFileBase):
     async def Load(self):
-        ConfFiles = self.Parent.Conf.get('Files')
+        ConfFiles = self.Parent.Conf.get('files')
         Files = []
         for File in ConfFiles:
             if (os.path.exists(File)):

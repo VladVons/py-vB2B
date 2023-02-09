@@ -20,9 +20,9 @@ class TCategoryBase(TFileDbl):
     def _GetTree(self) -> dict:
         Res = {}
         for Rec in self.Dbl:
-            ParentId = Rec.GetField('ParentId')
+            ParentId = Rec.GetField('parent_id')
             Data = Res.get(ParentId, [])
-            Data.append([Rec.GetField('CategoryId'), 0])
+            Data.append([Rec.GetField('category_id'), 0])
             Res[ParentId] = Data
         return Res
 
@@ -45,10 +45,10 @@ class TCategoryBase(TFileDbl):
         TreeDepth = ToChildRecurs(Root, 0)
 
         Res = []
-        self.Dbl.SearchAdd('CategoryId')
+        self.Dbl.SearchAdd('category_id')
         for Id, Depth in TreeDepth:
-            RecNo = self.Dbl.Search('CategoryId', Id)
-            Text = '  ' * Depth + '%s, %s' % (Id, self.Dbl.RecGo(RecNo).GetField('Name'))
+            RecNo = self.Dbl.Search('category_id', Id)
+            Text = '  ' * Depth + '%s, %s' % (Id, self.Dbl.RecGo(RecNo).GetField('name'))
             Res.append(Text)
         return '\n'.join(Res)
 
@@ -78,10 +78,10 @@ class TCategoryBase(TFileDbl):
                     Res.update(ResChild)
             return Res
 
-        ConfMargin = self.Parent.Conf.get('Margin', {})
+        ConfMargin = self.Parent.Conf.get('margin', {})
         if (ConfMargin):
-            Margins = ConfMargin.get('Id', {})
-            MarginFile = ConfMargin.get('File')
+            Margins = ConfMargin.get('id', {})
+            MarginFile = ConfMargin.get('file')
             if (MarginFile):
                 if (os.path.exists(MarginFile)):
                     MarginEx = self.LoadFileMargin(MarginFile)
@@ -90,7 +90,7 @@ class TCategoryBase(TFileDbl):
                     Log.Print(1, 'e', f'File not exists {MarginFile}')
             CategoryTree = self._GetTree()
             Root = [[Id, 0] for Id, _Cnt in CategoryTree[1]]
-            Res = ToChildRecurs(Root, ConfMargin.get('Default', 1.0))
+            Res = ToChildRecurs(Root, ConfMargin.get('default', 1.0))
             return Res
 
     def SubTreeId(self, aCategories: list[int]) -> dict:
@@ -145,7 +145,7 @@ class TCategoryBase(TFileDbl):
     def ToPrice(self, aDbPrice: TDbPrice) -> dict:
         ProductsInCategory = {}
         for Rec in aDbPrice.Dbl:
-            CategoryId = Rec.GetField('CategoryId')
+            CategoryId = Rec.GetField('category_id')
             ProductsInCategory[CategoryId] = ProductsInCategory.get(CategoryId, 0) + 1
 
         _CategoryTree, CategoryCount, _Res = self.SubCount(ProductsInCategory)
@@ -154,7 +154,7 @@ class TCategoryBase(TFileDbl):
     def GetIdByName(self, aNames: list[str]) -> list[int]:
         Res = []
         for Rec in self.Dbl:
-            Name = Rec.GetField('Name').lower()
+            Name = Rec.GetField('name').lower()
             if (any(x in Name for x in aNames)):
-                Res.append(Rec.GetField('CategoryId'))
+                Res.append(Rec.GetField('category_id'))
         return Res

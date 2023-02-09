@@ -6,7 +6,7 @@
 import os
 #
 from Inc.Db.DbList import TDbListSafe, TDbRecSafe
-from Inc.Util.Obj import DeepGet, GetClassPath
+from Inc.Util.Obj import DeepGet, DeepGetByList, GetClassPath
 from Inc.UtilP.Time import TASleep
 from IncP.Download import TDownload
 from IncP.Log import Log
@@ -15,11 +15,11 @@ from IncP.Log import Log
 class TFileBase():
     def __init__(self, aParent):
         self.Parent = aParent
-        self.Sleep = TASleep(self.Parent.Conf.get('SleepLoop', 0), 500)
+        self.Sleep = TASleep(self.Parent.Conf.get('sleep_loop', 0), 500)
 
     def GetFile(self) -> str:
         TopClass = GetClassPath(self).split('/')[-1]
-        Res = self.Parent.Parent.Conf.GetKey('DirData') + '/' + self.Parent.Name + '/' + TopClass + '.dat'
+        Res = self.Parent.Parent.Conf.GetKey('dir_data') + '/' + self.Parent.Name + '/' + TopClass + '.dat'
         return Res
 
 
@@ -27,6 +27,11 @@ class TFileDbl(TFileBase):
     def __init__(self, aParent, aDbl: TDbListSafe):
         super().__init__(aParent)
         self.Dbl = aDbl
+        self._Engine = None
+        self._Sheet = 'default'
+
+    def _InitEngine(self, aFile: str):
+        raise NotImplementedError()
 
     async def _Load(self):
         raise NotImplementedError()
@@ -40,6 +45,17 @@ class TFileDbl(TFileBase):
             Val = Field[1](Val)
         aRec.SetField(aName, Val)
 
+    def GetConfSheet(self) -> dict:
+        return DeepGetByList(self.Parent.Conf, ['sheet', self._Sheet])
+
+    def InitEngine(self, aEngine = None):
+        if (aEngine):
+            self._Engine = aEngine
+        else:
+            ConfFile = self.Parent.GetFile()
+            self._Engine = self._InitEngine(ConfFile)
+        return self._Engine
+
     async def Load(self):
         File = self.GetFile()
         Log.Print(1, 'i', f'Load {File}')
@@ -47,18 +63,23 @@ class TFileDbl(TFileBase):
             self.Dbl.Load(File)
         else:
             ClassPath = GetClassPath(self)
-            if (any(x in ClassPath for x in ['_xls', '_xlsx', '_csv', '_ods'])):
+            if (any(x in ClassPath for x in ['_xls', '_xlsx', '_ods', '_csv',  '_xml'])):
                 SrcFile = self.Parent.GetFile()
                 if (not os.path.exists(SrcFile)):
                     Log.Print(1, 'e', f'File not found {SrcFile}. Skip')
                     return
 
+            if (not self._Engine):
+                raise Exception(f'InitEngine() missed while parsing {File}')
+
             await self._Load()
-            if (self.Parent.Conf.get('SaveCache')):
+            if (self.Parent.Conf.get('save_cache')):
                 os.makedirs(os.path.dirname(File), exist_ok=True)
                 self.Dbl.Save(File, True)
         Log.Print(1, 'i', f'Done {File}. Records {self.Dbl.GetSize()}')
 
+    def SetSheet(self, aName: str = ''):
+        self._Sheet = aName
 
 class TTranslate():
     def __init__(self):
@@ -106,22 +127,9 @@ class TPluginBase():
         return None
 
     def GetFile(self) -> str:
-        Res = self.Conf.GetKey('File')
+        Res = self.Conf.GetKey('file')
         if (not Res):
             Split = self.Name.split('_')
             File = '/'.join(Split[:-1]) + '.' + Split[-1]
-            Res = self.Parent.Conf.GetKey('DirData') + '/' + File
+            Res = self.Parent.Conf.GetKey('dir_data') + '/' + File
         return Res
-
-
-def ToFloat(aVal: str) -> float:
-    if (not aVal):
-        aVal = 0
-    elif (isinstance(aVal, str)):
-        aVal = aVal.replace(',', '.').replace(' ', '')
-
-    try:
-        aVal = float(aVal)
-    except ValueError:
-        aVal = 0.0
-    return aVal

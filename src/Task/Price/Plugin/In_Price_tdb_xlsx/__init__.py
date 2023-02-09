@@ -10,5 +10,6 @@ from ..Common import TPluginBase
 class TIn_Price_tdb_xlsx(TPluginBase):
     async def Run(self):
         Price = TPrice(self)
+        Price.InitEngine()
         await Price.Load()
         return {'TDbPrice': Price.Dbl}

@@ -1,1 +1,1 @@
-Sleep = 5
+sleep = 5

@@ -1,32 +1,36 @@
 {
-    "DirData": "./Data/Pl",
-    "Conf": [
+    "dir_data": "./Data/Pl",
+    "conf": [
         "./Data/Pl/Conf", 
         "./Data/Pl/In/Price.json"
     ],
-    "Comment": "Used PC Poland",
-    "Include": [
+    "comment": "Used PC Poland",
+    "include": [
         "Task~Price_Vendor.json"
     ],
-    "Plugins": [
-        {"Name": "PricesPl"},
-        {"Name": "Out_Save_txt"}
+    "plugins": [
+        {"name": "PricesPl", "enable": false},
+        {"name": "Out_Save_txt", "enable": true},
+        {"name": "In_Price_prom_xml", "enable": false}
     ],
-    "Common": {
-        "SleepLoop": 0.01,
-        "SaveCache": false
+    "common": {
+        "sleep_loop": 0.01,
+        "save_cache": false
     },
-    "Plugin": {
+    "plugin": {
         "PricesPl": {
-            "Depends": [
+            "depends": [
                 "In_Price_pl01_xlsx"
             ]
         },
         "Out_Save_txt" : {
-            "Depends": [
-                "In_Price_pl01_xlsx"
+            "depends": [
+                "In_Price_pl01_xlsx",
+                "In_Price_prom_xml"
             ],
-            "Dir": "./Data/Pl/Save"
+            "dir": "./Data/Pl/Save"
+        },
+        "In_Price_prom_xml": {
         }
     }
 }

@@ -1,4 +1,4 @@
 Debug = False
 #
-PluginsApp = 'Price'
-PluginsSrv = 'WebSrv -Mail Queue Idle'
+plugins_app = 'Price'
+plugins_srv = 'WebSrv -Mail Queue Idle'

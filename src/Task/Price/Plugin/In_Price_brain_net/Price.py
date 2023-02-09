@@ -23,10 +23,10 @@ class TPrice(TFileDbl):
         _ImagesErr = {Code: Url for Code, Url, Ok in zip(ProductCodes, Urls, Res) if not Ok}
 
         for Rec in self.Dbl:
-            Code = Rec.GetField('Code')
+            Code = Rec.GetField('code')
             Url = Images.get(Code)
             if (Url):
-                Rec.SetField('Image', Url)
+                Rec.SetField('image', Url)
                 Rec.Flush()
             else:
                 #Log.Print(1, 'e', 'Url error %s' % (ImagesErr.get(Code)))
@@ -34,16 +34,16 @@ class TPrice(TFileDbl):
             await self.Sleep.Update()
 
     def Filter_HasCategory(self, aDbCategory: TDbCategory):
-        aDbCategory.Dbl.SearchAdd('CategoryId')
+        aDbCategory.Dbl.SearchAdd('category_id')
 
         Res = self.Dbl.New()
         for Rec in self.Dbl:
-            CategoryId = Rec.GetField('CategoryId')
-            RecNo = aDbCategory.Dbl.Search('CategoryId', CategoryId)
+            CategoryId = Rec.GetField('category_id')
+            RecNo = aDbCategory.Dbl.Search('category_id', CategoryId)
             if (RecNo >= 0):
                 Res.RecAdd(Rec).Flush()
             else:
-                #Log.Print(1, 'i', '%s, Cant find category %s %s for product %s' % (ErrCnt + 1, CategoryId, Rec.GetField('Name'), Rec.GetField('Id')))
+                #Log.Print(1, 'i', '%s, Cant find category %s %s for product %s' % (ErrCnt + 1, CategoryId, Rec.GetField('name'), Rec.GetField('id')))
                 pass
         self.Dbl = Res
 
@@ -55,7 +55,7 @@ class TPrice(TFileDbl):
             Code,
             self.Trans.GetMpn(GetNotNone(aRow, 'Article', '')),
             GetNotNone(aRow, 'Name', ''),
-            round(GetNotNone(aRow, 'PriceUSD', 0) * self.Parent.Conf.get('USD'), 2),
+            round(GetNotNone(aRow, 'PriceUSD', 0) * self.Parent.Conf.get('usd'), 2),
             GetNotNone(aRow, 'Available', 0),
             self.Parent.Api.GetUrlImage(Code)
         ])
@@ -63,7 +63,7 @@ class TPrice(TFileDbl):
 
     async def _Load(self):
         Data = await self.Parent.Api.GetPriceList(14)
-        if (Data['Status'] == 200):
-            for _Key, Row in Data['Data'].items():
+        if (Data['status'] == 200):
+            for _Key, Row in Data['data'].items():
                 self._Fill(Row)
                 await self.Sleep.Update()

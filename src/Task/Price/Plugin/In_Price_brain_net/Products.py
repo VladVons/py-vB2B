@@ -19,15 +19,15 @@ class TProducts():
         self._Count = 0
         self._Images = TImages(aParent)
         self.Dbl = TDbListSafe([
-            ('CategoryId', int),
-            ('ParentId', int),
-            ('Id', int),
-            ('Code', str),
-            ('Mpn', str),
-            ('Ean', str),
-            ('Name', str),
-            ('Price', float),
-            ('Image', str)
+            ('category_id', int),
+            ('parent_id', int),
+            ('id', int),
+            ('code', str),
+            ('mpn', str),
+            ('ean', str),
+            ('name', str),
+            ('price', float),
+            ('image', str)
         ])
 
         self._CategoryId = None
@@ -50,8 +50,8 @@ class TProducts():
         Rec.Flush()
 
     async def _OnSend(self, aRecSes: TRecSes, aRes: dict):
-        if (aRes['Status'] != 200):
-            Log.Print(1, 'e', 'ErrA. Url: %s, Status: %s' % (aRecSes.Url, aRes['Status']))
+        if (aRes['status'] != 200):
+            Log.Print(1, 'e', 'ErrA. Url: %s, Status: %s' % (aRecSes.Url, aRes['status']))
             return
 
         if (DeepGet(aRes, 'Data.status') != 1):
@@ -76,12 +76,12 @@ class TProducts():
     async def Load(self, aFile: str, aCategory: TCategory) -> list:
         Res = []
         for Rec in aCategory.Dbl:
-            if (Rec.GetField('ParentId') <= 1):
+            if (Rec.GetField('parent_id') <= 1):
                 continue
 
-            CategoryId = Rec.GetField('CategoryId')
+            CategoryId = Rec.GetField('category_id')
             File = f'{aFile}_{CategoryId}.dat'
-            print(f'Load {File} {Rec.GetField("Name")}')
+            print(f'Load {File} {Rec.GetField("name")}')
             if (os.path.exists(File)):
                 Dbl = TDbListSafe().Load(File)
                 #print('---x1', File, Dbl.GetSize())
@@ -90,13 +90,13 @@ class TProducts():
                 Products = TProducts(self.Parent)
                 await Products.Run(CategoryId, 3)
                 Dbl = Products.Dbl
-                Dbl.Tag = Rec.GetField('Name')
+                Dbl.Tag = Rec.GetField('name')
                 if (Dbl.GetSize() > 0):
-                    Dbl.Sort(['Name'])
+                    Dbl.Sort(['name'])
                     Dbl.Save(File)
 
-            if (self.Parent.Conf.get('Images')):
-                await self.LoadImages(Dbl.ExportPair('Code', 'Image'))
+            if (self.Parent.Conf.get('images')):
+                await self.LoadImages(Dbl.ExportPair('code', 'cmage'))
             Res.append(Dbl)
         return Res
 

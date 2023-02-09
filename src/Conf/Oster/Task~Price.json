@@ -1,81 +1,81 @@
 {
-    "DirData": "./Data/Oster",
-    "Conf": [
+    "dir_data": "./Data/Oster",
+    "conf": [
         "./Data/Oster/Conf", 
         "./Data/Oster/In/Price.json"
     ],
-    "Comment": "",
-    "Include": [
+    "comment": "",
+    "include": [
         "Task~Price_Vendor.json"
     ],
-    "Plugins": [
-        {"Name": "SendMail", "Enable": false},
-        {"Name": "Pack_zip", "Enable": false}, 
-        {"Name": "Out_OpenCart_json", "Enable": false},
-        {"Name": "Out_OpenCart3_sql", "Enable": true},
-        {"Name": "Out_OpenCart_xml", "Enable": false},
-        {"Name": "Out_PricesJoin_xlsx", "Enable": false},
-        {"Name": "Out_Save_txt", "Enable": false},
-        {"Name": "Out_Tree_txt", "Enable": false},
-        {"Name": "OpenCart3_DB", "Enable": true}
+    "plugins": [
+        {"name": "SendMail", "enable": true},
+        {"name": "Pack_zip", "enable": true}, 
+        {"name": "Out_OpenCart_json", "enable": true},
+        {"name": "Out_OpenCart3_sql", "enable": true},
+        {"name": "Out_OpenCart_xml", "enable": true},
+        {"name": "Out_PricesJoin_xlsx", "enable": true},
+        {"name": "Out_Save_txt", "enable": true},
+        {"name": "Out_Tree_txt", "enable": true},
+        {"name": "OpenCart3_DB", "enable": true}
     ],
-    "Common": {
-        "SleepLoop": 0.01,
-        "USD": 37.1,
-        "SaveCache": true
+    "common": {
+        "sleep_loop": 0.01,
+        "usd": 37.1,
+        "save_cache": true
     },
-    "Plugin": {
-        "Margin": {
-            "Depends": ["In_Price_brain_net"]
+    "plugin": {
+        "margin": {
+            "depends": ["In_Price_brain_net"]
         },
         "MiscIdle": {
-            "Sleep": 1
+            "sleep": 1
         },
         "Out_Tree_txt" : {
-            "Depends": ["In_Price_brain_net"]
+            "depends": ["In_Price_brain_net"]
         },
         "Out_Save_txt" : {
-            "Depends": [
+            "depends": [
                 "In_Price_kts_csv", 
                 "In_Price_kpi_xls", 
                 "In_Price_brain_net"
             ],
-            "Dir": "./Data/Oster/Save"
+            "dir": "./Data/Oster/Save"
         },
         "OpenCart3_DB" : {
-            "Depends": ["Out_OpenCart3_sql"],
-            "FileIn": "./Data/Oster/Out/OpenCart3.sql",
-            "Auth": {
+            "depends": ["Out_OpenCart3_sql"],
+            "file_in": "./Data/Oster/Out/OpenCart3.sql",
+            "auth": {
                 "host": "127.0.0.1",
                 "db": "oc3_oster",
                 "user": "admin",
                 "password": "098iop"
             },
-            "DirImage": "/home/vladvons/Projects/lampp/mnt/www/enabled/php81.lan/public_html/image/catalog/products",
-            "LoadImage": false
+            "dir_image": "/home/vladvons/Projects/lampp/mnt/www/enabled/php81.lan/public_html/image/catalog/products",
+            "load_image": false
         },
         "Out_OpenCart3_sql" : {
-            "Depends": ["Out_OpenCart_json"],
-            "FileIn": "./Data/Oster/Out/OpenCart.json",
-            "SiteImage":"catalog/products"
+            "depends": ["Out_OpenCart_json"],
+            "file_in": "./Data/Oster/Out/OpenCart.json",
+            "site_image":"catalog/products"
         },
         "Out_OpenCart_json" : {
-            "Depends": [
+            "depends": [
                 "In_Price_brain_net", 
                 "PricesJoin"
             ],
-            "-File": "./Data/Oster/OpenCart.json"
+            "-file": "./Data/Oster/OpenCart.json"
         },
         "Out_OpenCart_xml" : {
-            "Depends": [
+            "depends": [
                 "In_Price_brain_net", 
                 "PricesJoin"
             ],
-            "-File": "./Data/Oster/OpenCart.xml"
+            "-file": "./Data/Oster/OpenCart.xml"
         },
         "PricesJoin": {
-            "Main": "In_Price_brain_net",
-            "Depends": [
+            "main": "In_Price_brain_net",
+            "depends": [
                 "In_Price_brain_net",
                 "In_Price_chip_xls", 
                 "In_Price_dclink_xlsx", 
@@ -86,40 +86,40 @@
             ]
         },
         "Out_PricesJoin_xlsx": {
-            "Depends": ["PricesJoin"],
-            "-File": "./Data/Oster/PriceJoin.xlsx",
-            "Prices": true,
-            "Ratio": false,
-            "Format": "#,#0.0",
-            "Field": {
-                "Width": {
-                    "Id": 0,
-                    "CategoryId": 0,
-                    "Available": 0,
-                    "Mpn": 20,
-                    "Name": 60
+            "depends": ["PricesJoin"],
+            "-file": "./Data/Oster/PriceJoin.xlsx",
+            "prices": true,
+            "ratio": false,
+            "format": "#,#0.0",
+            "field": {
+                "width": {
+                    "id": 0,
+                    "category_id": 0,
+                    "available": 0,
+                    "mpn": 20,
+                    "name": 60
                 }
             }
         },
         "Pack_zip": {
-            "Depends": [
+            "depends": [
                 "Out_PricesJoin_xlsx",
                 "Out_OpenCart_json", 
                 "Out_OpenCart3_sql", 
                 "Out_OpenCart_xml"
             ],
-            "Files": [
+            "files": [
                 "./Data/Oster/Out"
             ],
-            "File": "./Data/Oster/PackAll.zip"
+            "file": "./Data/Oster/PackAll.zip"
         },
         "SendMail": {
-            "Depends": ["Pack_zip"],
-            "From": "ua0976646510@gmail.com",
-            "To": ["vladvons@gmail.com"],
-            "Subject": "Price list generator",
-            "Body": "Hello,\nYou ordered a file\n",
-            "File": ["./Data/Oster/PackAll.zip"]
+            "depends": ["Pack_zip"],
+            "mail_from": "ua0976646510@gmail.com",
+            "mail_to": ["vladvons@gmail.com"],
+            "mail_subject": "Price list generator",
+            "mail_body": "Hello,\nYou ordered a file\n",
+            "file": ["./Data/Oster/PackAll.zip"]
         }
     }
 }

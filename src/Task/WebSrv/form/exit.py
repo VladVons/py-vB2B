@@ -23,9 +23,9 @@ class TForm(TFormBase):
     async def _Render(self):
         Wait = 3
         await Plugin.Post(self, {
-            'To': 'TQueue',
-            'Type': 'Add',
-            'Call': TCall(self.Exit, [Wait])
+            'to': 'TQueue',
+            'type': 'add',
+            'call': TCall(self.Exit, [Wait])
         })
 
         self.Data.Info = f'Is about to exit() application in {Wait} sec'

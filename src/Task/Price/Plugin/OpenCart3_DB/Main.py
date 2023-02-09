@@ -47,20 +47,20 @@ class TSqlImage():
 
 class TMain(TFileBase):
     async def Run(self):
-        Auth = self.Parent.Conf.GetKey('Auth')
+        Auth = self.Parent.Conf.GetKey('auth')
         DbApp = TDbApp(Auth)
         await DbApp.Connect()
 
-        FileIn = self.Parent.Conf.GetKey('FileIn')
+        FileIn = self.Parent.Conf.GetKey('file_in')
         with open(FileIn, 'r', encoding='utf-8') as File:
             Lines = File.readlines()
 
-        SqlImage = TSqlImage(self.Parent.Conf.GetKey('DirImage'))
+        SqlImage = TSqlImage(self.Parent.Conf.GetKey('dir_image'))
         for Line in Lines:
             Line = Line.strip()
             if (Line) and (not Line.startswith('#')):
                 await TDbExecPool(DbApp.Pool).Exec(Line)
                 SqlImage.ParseProduct(Line)
 
-        if (self.Parent.Conf.GetKey('LoadImage', True)):
+        if (self.Parent.Conf.GetKey('load_image', True)):
             await SqlImage.Save()

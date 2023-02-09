@@ -3,7 +3,8 @@
 # License: GNU, see LICENSE for more details
 
 
-from ..Common import ToFloat, TTranslate
+from Inc.Util.Str import ToFloat
+from ..Common import TTranslate
 from ..CommonDb import TDbPrice
 from ..Parser_csv import TParser_csv
 
@@ -11,25 +12,25 @@ from ..Parser_csv import TParser_csv
 class TPrice(TParser_csv):
     def __init__(self, aParent):
         super().__init__(aParent, TDbPrice())
-        self.USD = aParent.Conf.get('USD', 0)
+        self.USD = aParent.Conf.get('usd', 0)
         self.Trans = TTranslate()
 
     def _Fill(self, aRow: dict):
-        if (aRow.get('Price') or aRow.get('PriceUSD')):
+        if (aRow.get('price') or aRow.get('price_usd')):
             Rec = self.Dbl.RecAdd()
 
-            Val = self.Trans.GetMpn(aRow.get('Mpn', ''))
-            Rec.SetField('Mpn', Val)
+            Val = self.Trans.GetMpn(aRow.get('mpn', ''))
+            Rec.SetField('mpn', Val)
 
-            self.Copy('Code', aRow, Rec)
-            self.Copy('Name', aRow, Rec)
+            self.Copy('code', aRow, Rec)
+            self.Copy('name', aRow, Rec)
 
-            Price = aRow.get('Price')
-            PriceUSD = aRow.get('PriceUSD')
+            Price = aRow.get('price')
+            PriceUSD = aRow.get('price_usd')
             if (Price):
-                Rec.SetField('Price', ToFloat(Val))
+                Rec.SetField('price', ToFloat(Val))
             else:
                 Val = round(ToFloat(PriceUSD) * self.USD, 2)
-                Rec.SetField('Price', Val)
+                Rec.SetField('price', Val)
 
             Rec.Flush()

@@ -19,8 +19,8 @@ class TMain(TFileBase):
         return Reparsed.toprettyxml(indent = '\t')
 
     async def Save(self, aDbPrice: TDbPrice, aDbPriceJoin: TDbPrice, aDbCategory: TDbCategory, aCategoryMargins: dict):
-        Root = ET.Element('Price')
-        Element = ET.SubElement(Root, 'Catalog')
+        Root = ET.Element('price')
+        Element = ET.SubElement(Root, 'catalog')
 
         TableEscape = ''.maketrans({
             #'<': '&lt;',
@@ -39,47 +39,47 @@ class TMain(TFileBase):
         TableId = {1: 0}
 
         for Rec in aDbCategory:
-            ParentId = Rec.GetField('ParentId')
-            ItemA = ET.SubElement(Element, 'Category', ID = str(Rec.GetField('CategoryId')), ParentID = str(TableId.get(ParentId, ParentId)))
-            ItemA.text = Rec.GetField('Name').translate(TableEscape)
+            ParentId = Rec.GetField('parent_id')
+            ItemA = ET.SubElement(Element, 'category', ID = str(Rec.GetField('category_id')), ParentID = str(TableId.get(ParentId, ParentId)))
+            ItemA.text = Rec.GetField('name').translate(TableEscape)
 
             await self.Sleep.Update()
 
         TransField = {
-            'Mpn': 'Articul',
-            'Id': 'Code',
-            'Name': 'Name',
-            'CategoryId': 'CategoryID',
-            'Image': 'Image'
+            'mpn': 'articul',
+            'id': 'code',
+            'name': 'name',
+            'category_id': 'category_id',
+            'image': 'image'
         }
 
-        BT = aDbPriceJoin.BeeTree.get('Mpn')
+        BT = aDbPriceJoin.BeeTree.get('mpn')
         if (not BT):
-            BT = aDbPriceJoin.SearchAdd('Mpn')
+            BT = aDbPriceJoin.SearchAdd('mpn')
 
-        Element = ET.SubElement(Root, 'Items')
+        Element = ET.SubElement(Root, 'items')
         for Rec in aDbPrice:
-            ItemA = ET.SubElement(Element, 'Item')
+            ItemA = ET.SubElement(Element, 'item')
             for Key, Val in TransField.items():
                 ItemB = ET.SubElement(ItemA, Val)
                 ItemB.text = str(Rec.GetField(Key)).translate(TableEscape)
 
-            Mpn = Rec.GetField('Mpn')
+            Mpn = Rec.GetField('mpn')
             RecNo = BT.Search(Mpn)
             if (RecNo >= 0):
-                PriceMin = aDbPriceJoin.RecGo(RecNo).GetField('Price')
+                PriceMin = aDbPriceJoin.RecGo(RecNo).GetField('price')
             else:
-                PriceMin = Rec.GetField('Price')
-            CategoryId = Rec.GetField('CategoryId')
+                PriceMin = Rec.GetField('price')
+            CategoryId = Rec.GetField('category_id')
             Price = PriceMin * aCategoryMargins.get(CategoryId, 1)
 
-            ItemB = ET.SubElement(ItemA, 'PriceIn')
+            ItemB = ET.SubElement(ItemA, 'price_in')
             ItemB.text = str(PriceMin)
 
-            ItemB = ET.SubElement(ItemA, 'PriceOut')
+            ItemB = ET.SubElement(ItemA, 'price_out')
             ItemB.text = '%0.2f' % (Price)
 
-            ItemB = ET.SubElement(ItemA, 'Quantity')
+            ItemB = ET.SubElement(ItemA, 'quantity')
             ItemB.text = '1'
 
             await self.Sleep.Update()

@@ -9,18 +9,22 @@ from .Common import TFileDbl
 
 
 class TParser_csv(TFileDbl):
+    def _InitEngine(self, aFile: str):
+        return True
+
     async def _Load(self):
+        Conf = self.GetConfSheet()
+        ConfFields = Conf.get('fields')
+        ConfSkip = Conf.get('skip', 3)
+        ConfEncoding = Conf.get('encoding', 'cp1251')
         ConfFile = self.Parent.GetFile()
-        ConfEncoding = self.Parent.Conf.get('Encoding', 'cp1251')
+
         with open(ConfFile, 'r',  encoding=ConfEncoding, errors='ignore') as File:
-            Rows = csv.reader(File, delimiter = ',')
-
-            ConfSkip = self.Parent.Conf.get('Skip', 0)
+            Data = csv.reader(File, delimiter = ',')
             for _i in range(ConfSkip):
-                next(Rows)
+                next(Data)
 
-            ConfFields = self.Parent.Conf.get('Fields')
-            for RowNo, Row in enumerate(Rows, ConfSkip):
+            for RowNo, Row in enumerate(Data, ConfSkip):
                 Data = {'No': RowNo}
                 for Field, FieldIdx in ConfFields.items():
                     Val = Row[FieldIdx - 1]

@@ -9,22 +9,22 @@ from .Common import TFileDbl
 
 
 class TParser_ods(TFileDbl):
+    def _InitEngine(self, aFile: str):
+        return get_data(aFile)
+
     async def _Load(self):
-        ConfFile = self.Parent.GetFile()
-        Data = get_data(ConfFile)
-
-        ConfSheet = self.Parent.Conf.get('Sheet')
-        if (ConfSheet):
-            Sheet = ConfSheet
+        if (self._Sheet == 'default'):
+            Sheet = list(self._Engine.keys())[0]
         else:
-            Sheet = list(Data.keys())[0]
+            Sheet = self._Sheet
 
-        ConfSkip = self.Parent.Conf.get('Skip', 0)
-        Rows = Data.get(Sheet)
+        Conf = self.GetConfSheet()
+        ConfSkip = Conf.get('skip', 0)
+        ConfFields = Conf.get('fields')
 
-        ConfFields = self.Parent.Conf.get('Fields')
+        Rows = self._Engine.get(Sheet)
         for i in range(ConfSkip, len(Rows)):
-            Data = {'No': i}
+            Data = {'no': i}
             for Field, (FieldIdx, _) in ConfFields.items():
                 Val = Rows[i][FieldIdx - 1]
                 Data[Field] = Val
