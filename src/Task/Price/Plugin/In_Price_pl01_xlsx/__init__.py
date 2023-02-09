@@ -10,7 +10,7 @@ from ..Common import TPluginBase
 class TIn_Price_pl01_xlsx(TPluginBase):
     async def Run(self):
         Price = TPrice(self)
-        Engine = Price.InitEngine()
+        Price.InitEngine()
         Price.SetSheet('KOMPUTERY')
         await Price.Load()
 

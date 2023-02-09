@@ -31,7 +31,7 @@ class TFileDbl(TFileBase):
         self._Sheet = 'default'
 
     def _InitEngine(self, aFile: str):
-        raise NotImplementedError()
+        return False
 
     async def _Load(self):
         raise NotImplementedError()

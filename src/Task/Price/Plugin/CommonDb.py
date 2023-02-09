@@ -7,7 +7,8 @@ from Inc.Db.DbList import TDbListSafe
 
 
 class TDbListEx(TDbListSafe):
-     pass
+    pass
+
 
 # class TDbListEx(TDbList):
 #     def __init__(self, aFields):
