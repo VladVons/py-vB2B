@@ -12,6 +12,60 @@ from IncP.Download import TDownload
 from IncP.Log import Log
 
 
+class TTranslate():
+    def __init__(self):
+        self.DelMpn = ''.maketrans('', '', ' -/_.&@()#+"')
+
+    def GetMpn(self, aVal) -> str:
+        return aVal.translate(self.DelMpn).upper().strip()
+
+
+class TApiBase():
+    def __init__(self):
+        self.Download = TDownload()
+
+    @staticmethod
+    def GetModName(aPath: str) -> str:
+        return os.path.basename(os.path.dirname(aPath))
+
+
+class TPluginBase():
+    def __init__(self):
+        # assigned from TPlugins class creator
+        self.Parent = None
+        self.Depends = None
+        self.Name = None
+        self.Conf = None
+        self.Depth = 0
+
+    def GetParam(self, aName: str, aDef = None) -> object:
+        return DeepGet(self.Parent.Data, aName, aDef)
+
+    def GetParamDepends(self, aName: str = '') -> dict:
+        Res = {}
+        for Depend in self.Depends:
+            Path = f'{Depend}.{aName}' if (aName) else Depend
+            Param = self.GetParam(Path)
+            if (Param):
+                Res[Depend] = Param
+        return Res
+
+    def GetParamDependsIdx(self, aName: str, aIdx: int = 0) -> object:
+        Param = self.GetParamDepends(aName)
+        Param = list(Param.values())
+        if (aIdx < len(Param)):
+            return Param[aIdx]
+        return None
+
+    def GetFile(self) -> str:
+        Res = self.Conf.GetKey('file')
+        if (not Res):
+            Split = self.Name.split('_')
+            File = '/'.join(Split[:-1]) + '.' + Split[-1]
+            Res = self.Parent.Conf.GetKey('dir_data') + '/' + File
+        return Res
+
+
 class TFileBase():
     def __init__(self, aParent):
         self.Parent = aParent
@@ -90,57 +144,3 @@ class TEngine(TFileDbl):
 
     def SetSheet(self, aName: str = ''):
         self._Sheet = aName
-
-
-class TTranslate():
-    def __init__(self):
-        self.DelMpn = ''.maketrans('', '', ' -/_.&@()#+"')
-
-    def GetMpn(self, aVal) -> str:
-        return aVal.translate(self.DelMpn).upper().strip()
-
-
-class TApiBase():
-    def __init__(self):
-        self.Download = TDownload()
-
-    @staticmethod
-    def GetModName(aPath: str) -> str:
-        return os.path.basename(os.path.dirname(aPath))
-
-
-class TPluginBase():
-    def __init__(self):
-        # assigned from TPlugins class creator
-        self.Parent = None
-        self.Depends = None
-        self.Name = None
-        self.Conf = None
-        self.Depth = 0
-
-    def GetParam(self, aName: str, aDef = None) -> object:
-        return DeepGet(self.Parent.Data, aName, aDef)
-
-    def GetParamDepends(self, aName: str = '') -> dict:
-        Res = {}
-        for Depend in self.Depends:
-            Path = f'{Depend}.{aName}' if (aName) else Depend
-            Param = self.GetParam(Path)
-            if (Param):
-                Res[Depend] = Param
-        return Res
-
-    def GetParamDependsIdx(self, aName: str, aIdx: int = 0) -> object:
-        Param = self.GetParamDepends(aName)
-        Param = list(Param.values())
-        if (aIdx < len(Param)):
-            return Param[aIdx]
-        return None
-
-    def GetFile(self) -> str:
-        Res = self.Conf.GetKey('file')
-        if (not Res):
-            Split = self.Name.split('_')
-            File = '/'.join(Split[:-1]) + '.' + Split[-1]
-            Res = self.Parent.Conf.GetKey('dir_data') + '/' + File
-        return Res
