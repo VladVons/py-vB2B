@@ -16,7 +16,7 @@ class TWebSrv(TWebSrvBase):
 
         Public = ['grafana']
         await Session.Update(aRequest)
-        if (not Session.Data.get('user_id')) and (Name != 'login') and (not Name in Public):
+        if (not Session.Data.get('user_id')) and (Name != 'login') and (Name not in Public):
             Redirect = 'login?url=%s' % (Name)
             raise web.HTTPFound(location = Redirect)
 
