@@ -3,7 +3,7 @@
 # License: GNU, see LICENSE for more details
 
 
-from Inc.Util.Str import ToInt, ToFloat
+from Inc.Util.Str import ToInt, ToFloat, ToBool
 from ..CommonDb import TDbCategory, TDbProductEx
 from ..Parser_xml import TParser_xml
 
@@ -16,7 +16,7 @@ class TCategory(TParser_xml):
         Rec = self.Dbl.RecAdd()
 
         Val = aRow.getAttribute('id')
-        Rec.SetField('category_id', ToInt(Val))
+        Rec.SetField('id', ToInt(Val))
 
         Val = aRow.getAttribute('parentId')
         Rec.SetField('parent_id', ToInt(Val))
@@ -48,10 +48,13 @@ class TProduct(TParser_xml):
         Val = aRow.getElementsByTagName('price')[0].firstChild.data
         Rec.SetField('price', ToFloat(Val))
 
-        Data = aRow.getElementsByTagName('description')[0].firstChild
-        if (Data):
-            Val = Data.data
-            Rec.SetField('descr', Val)
+        Val = aRow.getElementsByTagName('available')[0].firstChild.data
+        Rec.SetField('available', int(ToBool(Val)))
+
+        # Data = aRow.getElementsByTagName('description')[0].firstChild
+        # if (Data):
+        #    Val = Data.data
+        #    Rec.SetField('descr', Val)
 
         Data = aRow.getElementsByTagName('image')
         Val = [x.firstChild.data for x in Data]

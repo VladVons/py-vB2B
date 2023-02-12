@@ -5,10 +5,10 @@
 
 from pyexcel_ods import get_data
 #
-from .Common import TFileDbl
+from .Common import TEngine
 
 
-class TParser_ods(TFileDbl):
+class TParser_ods(TEngine):
     def _InitEngine(self, aFile: str):
         return get_data(aFile)
 

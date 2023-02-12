@@ -5,10 +5,10 @@
 
 import csv
 #
-from .Common import TFileDbl
+from .Common import TEngine
 
 
-class TParser_csv(TFileDbl):
+class TParser_csv(TEngine):
     def _InitEngine(self, aFile: str):
         return True
 

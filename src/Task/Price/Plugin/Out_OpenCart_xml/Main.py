@@ -40,7 +40,7 @@ class TMain(TFileBase):
 
         for Rec in aDbCategory:
             ParentId = Rec.GetField('parent_id')
-            ItemA = ET.SubElement(Element, 'category', ID = str(Rec.GetField('category_id')), ParentID = str(TableId.get(ParentId, ParentId)))
+            ItemA = ET.SubElement(Element, 'category', ID = str(Rec.GetField('id')), ParentID = str(TableId.get(ParentId, ParentId)))
             ItemA.text = Rec.GetField('name').translate(TableEscape)
 
             await self.Sleep.Update()

@@ -5,9 +5,9 @@
 
 from openpyxl import load_workbook
 #
-from .Common import TFileDbl
+from .Common import TEngine
 
-class TParser_xlsx(TFileDbl):
+class TParser_xlsx(TEngine):
     def _InitEngine(self, aFile: str):
         return load_workbook(aFile, read_only = True, data_only = True)
 

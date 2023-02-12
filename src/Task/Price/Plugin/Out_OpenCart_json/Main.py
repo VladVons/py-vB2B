@@ -16,7 +16,7 @@ class TMain(TFileBase):
         Category = []
         for Rec in aDbCategory:
             Data = {
-                'id': Rec.GetField('category_id'),
+                'id': Rec.GetField('id'),
                 'parent_id': Rec.GetField('parent_id'),
                 'name': Rec.GetField('name')
             }

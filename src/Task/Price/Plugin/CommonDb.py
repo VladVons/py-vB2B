@@ -19,8 +19,8 @@ class TDbListEx(TDbListSafe):
 class TDbProduct(TDbListEx):
     def __init__(self):
         super().__init__([
-            ('category_id', int),
             ('id', int),
+            ('category_id', int),
             ('code', str),
             ('mpn', str),
             ('name', str),
@@ -31,8 +31,8 @@ class TDbProduct(TDbListEx):
 class TDbProductEx(TDbListEx):
     def __init__(self):
         super().__init__([
-            ('category_id', int),
             ('id', int),
+            ('category_id', int),
             ('code', str),
             ('mpn', str),
             ('name', str),
@@ -40,14 +40,15 @@ class TDbProductEx(TDbListEx):
             ('image', list),
             ('feature', dict),
             ('vendor', str),
+            ('available', int),
             ('descr', str)
         ])
 
 class TDbPrice(TDbListEx):
     def __init__(self):
         super().__init__([
-            ('category_id', int),
             ('id', int),
+            ('category_id', int),
             ('code', str),
             ('mpn', str),
             ('name', str),
@@ -59,7 +60,7 @@ class TDbPrice(TDbListEx):
 class TDbCategory(TDbListEx):
     def __init__(self):
         super().__init__([
-            ('category_id', int),
+            ('id', int),
             ('parent_id', int),
             ('name', str)
         ])

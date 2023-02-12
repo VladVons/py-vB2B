@@ -34,12 +34,12 @@ class TPrice(TFileDbl):
             await self.Sleep.Update()
 
     def Filter_HasCategory(self, aDbCategory: TDbCategory):
-        aDbCategory.Dbl.SearchAdd('category_id')
+        aDbCategory.Dbl.SearchAdd('id')
 
         Res = self.Dbl.New()
         for Rec in self.Dbl:
-            CategoryId = Rec.GetField('category_id')
-            RecNo = aDbCategory.Dbl.Search('category_id', CategoryId)
+            CategoryId = Rec.GetField('id')
+            RecNo = aDbCategory.Dbl.Search('id', CategoryId)
             if (RecNo >= 0):
                 Res.RecAdd(Rec).Flush()
             else:

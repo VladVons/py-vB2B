@@ -22,7 +22,7 @@ class TCategoryBase(TFileDbl):
         for Rec in self.Dbl:
             ParentId = Rec.GetField('parent_id')
             Data = Res.get(ParentId, [])
-            Data.append([Rec.GetField('category_id'), 0])
+            Data.append([Rec.GetField('id'), 0])
             Res[ParentId] = Data
         return Res
 
@@ -45,9 +45,9 @@ class TCategoryBase(TFileDbl):
         TreeDepth = ToChildRecurs(Root, 0)
 
         Res = []
-        self.Dbl.SearchAdd('category_id')
+        self.Dbl.SearchAdd('id')
         for Id, Depth in TreeDepth:
-            RecNo = self.Dbl.Search('category_id', Id)
+            RecNo = self.Dbl.Search('id', Id)
             Text = '  ' * Depth + '%s, %s' % (Id, self.Dbl.RecGo(RecNo).GetField('name'))
             Res.append(Text)
         return '\n'.join(Res)
@@ -145,7 +145,7 @@ class TCategoryBase(TFileDbl):
     def ToPrice(self, aDbPrice: TDbPrice) -> dict:
         ProductsInCategory = {}
         for Rec in aDbPrice.Dbl:
-            CategoryId = Rec.GetField('category_id')
+            CategoryId = Rec.GetField('id')
             ProductsInCategory[CategoryId] = ProductsInCategory.get(CategoryId, 0) + 1
 
         _CategoryTree, CategoryCount, _Res = self.SubCount(ProductsInCategory)
@@ -156,5 +156,5 @@ class TCategoryBase(TFileDbl):
         for Rec in self.Dbl:
             Name = Rec.GetField('name').lower()
             if (any(x in Name for x in aNames)):
-                Res.append(Rec.GetField('category_id'))
+                Res.append(Rec.GetField('id'))
         return Res

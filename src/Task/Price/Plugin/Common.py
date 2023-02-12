@@ -27,11 +27,6 @@ class TFileDbl(TFileBase):
     def __init__(self, aParent, aDbl: TDbListSafe):
         super().__init__(aParent)
         self.Dbl = aDbl
-        self._Engine = None
-        self._Sheet = 'default'
-
-    def _InitEngine(self, aFile: str):
-        return False
 
     async def _Load(self):
         raise NotImplementedError()
@@ -44,17 +39,6 @@ class TFileDbl(TFileBase):
         elif (not isinstance(Val, Field[1])):
             Val = Field[1](Val)
         aRec.SetField(aName, Val)
-
-    def GetConfSheet(self) -> dict:
-        return DeepGetByList(self.Parent.Conf, ['sheet', self._Sheet])
-
-    def InitEngine(self, aEngine = None):
-        if (aEngine):
-            self._Engine = aEngine
-        else:
-            ConfFile = self.Parent.GetFile()
-            self._Engine = self._InitEngine(ConfFile)
-        return self._Engine
 
     async def Load(self):
         File = self.GetFile()
@@ -69,17 +53,44 @@ class TFileDbl(TFileBase):
                     Log.Print(1, 'e', f'File not found {SrcFile}. Skip')
                     return
 
-            if (not self._Engine):
-                raise Exception(f'InitEngine() missed while parsing {File}')
-
             await self._Load()
             if (self.Parent.Conf.get('save_cache')):
                 os.makedirs(os.path.dirname(File), exist_ok=True)
                 self.Dbl.Save(File, True)
         Log.Print(1, 'i', f'Done {File}. Records {self.Dbl.GetSize()}')
 
+
+class TEngine(TFileDbl):
+    def __init__(self, aParent, aDbl):
+        super().__init__(aParent, aDbl)
+
+        self._Engine = None
+        self._Sheet = 'default'
+
+    def _InitEngine(self, aFile: str):
+        raise NotImplementedError()
+
+    def GetConfSheet(self) -> dict:
+        return DeepGetByList(self.Parent.Conf, ['sheet', self._Sheet])
+
+    def InitEngine(self, aEngine = None):
+        if (aEngine):
+            self._Engine = aEngine
+        else:
+            ConfFile = self.Parent.GetFile()
+            self._Engine = self._InitEngine(ConfFile)
+        return self._Engine
+
+    async def Load(self):
+        if (not self._Engine):
+            File = self.GetFile()
+            raise Exception(f'InitEngine() missed while parsing {File}')
+
+        await super().Load()
+
     def SetSheet(self, aName: str = ''):
         self._Sheet = aName
+
 
 class TTranslate():
     def __init__(self):

@@ -16,13 +16,13 @@ from ..In_Price_brain_net.Api import TApi
 
 
 def DSplit(aFunc: callable):
-    def Wrapper(aData: list, aMax: int) -> list[str]:
+    def Decor(aData: list, aMax: int) -> list[str]:
         Res = []
         for Part in Parts(aData, aMax):
             Data = aFunc(Part, aMax)
             Res.append(re.sub(r'\s+', ' ', Data).strip())
         return Res
-    return Wrapper
+    return Decor
 
 
 class TLogEx(TLog):

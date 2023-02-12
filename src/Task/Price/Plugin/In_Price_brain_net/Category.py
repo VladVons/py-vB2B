@@ -48,7 +48,7 @@ class TCategory(TCategoryBase):
 
         Res = self.Dbl.New()
         for Rec in self.Dbl:
-            Id = Rec.GetField('category_id')
+            Id = Rec.GetField('id')
             if (HashFinal.get(Id, 0) > 0):
                 Res.RecAdd(Rec).Flush()
         self.Dbl = Res

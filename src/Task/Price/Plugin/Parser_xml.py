@@ -4,10 +4,10 @@
 
 import xml.dom.minidom as dom
 #
-from .Common import TFileDbl
+from .Common import TEngine
 
 
-class TParser_xml(TFileDbl):
+class TParser_xml(TEngine):
     def _InitEngine(self, aFile: str):
         return dom.parse(aFile)
 

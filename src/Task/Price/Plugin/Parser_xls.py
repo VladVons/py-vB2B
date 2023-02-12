@@ -5,10 +5,10 @@
 
 from xlrd import open_workbook
 #
-from .Common import TFileDbl
+from .Common import TEngine
 
 
-class TParser_xls(TFileDbl):
+class TParser_xls(TEngine):
     def _InitEngine(self, aFile: str):
         return open_workbook(aFile)
 
