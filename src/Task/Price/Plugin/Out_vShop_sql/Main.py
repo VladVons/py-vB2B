@@ -152,14 +152,16 @@ class TSql(TSqlBase):
                 DbRec.Data = Row
                 Name = DbRec.GetField('name').translate(self.Escape)
                 Descr = DbRec.GetField('descr', '').translate(self.Escape)
-                Value = f"({DbRec.GetField('id')}, 1, '{Name}', '{Descr}')"
+                #Feature = DbRec.GetField('feature', '')
+                Feature = ''
+                Value = f"({DbRec.GetField('id')}, 1, '{Name}', '{Descr}', '{Feature}')"
                 Values.append(Value)
 
             Res = f'''
-                insert into ref_product_lang (product_id, lang_id, title, descr)
+                insert into ref_product_lang (product_id, lang_id, title, descr, feature)
                 values {', '.join(Values)}
                 on conflict (product_id, lang_id) do update
-                set title = excluded.title, descr = excluded.descr
+                set title = excluded.title, feature = excluded.feature, descr = excluded.descr
                 ;
             '''
             return Res

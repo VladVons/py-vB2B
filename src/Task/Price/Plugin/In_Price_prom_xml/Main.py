@@ -51,6 +51,10 @@ class TProduct(TParser_xml):
         Val = aRow.getElementsByTagName('available')[0].firstChild.data
         Rec.SetField('available', int(ToBool(Val)))
 
+        Data = aRow.getElementsByTagName('vendor')
+        if (Data):
+            Rec.SetField('vendor', Data[0].firstChild.data)
+
         # Data = aRow.getElementsByTagName('description')[0].firstChild
         # if (Data):
         #    Val = Data.data
