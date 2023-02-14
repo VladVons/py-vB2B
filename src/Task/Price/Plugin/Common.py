@@ -135,12 +135,5 @@ class TEngine(TFileDbl):
             self._Engine = self._InitEngine(ConfFile)
         return self._Engine
 
-    async def Load(self):
-        if (not self._Engine):
-            File = self.GetFile()
-            raise Exception(f'InitEngine() missed while parsing {File}')
-
-        await super().Load()
-
     def SetSheet(self, aName: str = ''):
         self._Sheet = aName

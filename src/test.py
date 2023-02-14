@@ -43,4 +43,4 @@ def Test_3():
         Dict[key] = [sum(i) for i in zip(*Dict[key])]
     print(Dict)
 
-#Test_3()
+Test_3()

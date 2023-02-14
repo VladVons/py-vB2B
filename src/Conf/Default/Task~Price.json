@@ -1,127 +1,43 @@
 {
-    "dir_data": "./Data/Oster",
+    "dir_data": "./Data/Pl",
     "conf": [
-        "./Data/Oster/Conf", 
-        "./Data/Oster/In/Price.json"
+        "./Data/Pl/Conf", 
+        "./Data/Pl/In/Price.json"
     ],
-    "comment": "",
+    "comment": "Used PC Poland",
     "include": [
         "Task~Price_Vendor.json"
     ],
     "plugins": [
-        {"name": "SendMail", "enable": false},
-        {"name": "Pack_zip", "enable": false}, 
-        {"name": "Out_OpenCart_json", "enable": false},
-        {"name": "Out_OpenCart3_sql", "enable": false},
-        {"name": "Out_OpenCart_xml", "enable": false},
-        {"name": "Out_PricesJoin_xlsx", "enable": true},
+        {"name": "PricesPl", "enable": false},
         {"name": "Out_Save_txt", "enable": false},
-        {"name": "Out_Tree_txt", "enable": false},
-        {"name": "OpenCart3_DB", "enable": false}
+        {"name": "In_Price_prom_xml", "enable": false},
+        {"name": "Out_vShop_sql", "enable": true}
     ],
     "common": {
         "sleep_loop": 0.01,
-        "usd": 37.1,
         "save_cache": true
     },
     "plugin": {
-        "margin": {
-            "depends": ["In_Price_brain_net"]
-        },
-        "MiscIdle": {
-            "sleep": 1
-        },
-        "Out_Tree_txt" : {
-            "depends": ["In_Price_brain_net"]
+        "PricesPl": {
+            "depends": [
+                "In_Price_pl01_xlsx"
+            ]
         },
         "Out_Save_txt" : {
             "depends": [
-                "In_Price_kts_csv", 
-                "In_Price_kpi_xls", 
-                "In_Price_brain_net"
+                "In_Price_pl01_xlsx",
+                "In_Price_prom_xml"
             ],
-            "dir": "./Data/Oster/Save"
+            "dir": "./Data/Pl/Save"
         },
-        "OpenCart3_DB" : {
-            "depends": ["Out_OpenCart3_sql"],
-            "file_in": "./Data/Oster/Out/OpenCart3.sql",
-            "auth": {
-                "host": "127.0.0.1",
-                "db": "oc3_oster",
-                "user": "admin",
-                "password": "098iop"
-            },
-            "dir_image": "/home/vladvons/Projects/lampp/mnt/www/enabled/php81.lan/public_html/image/catalog/products",
-            "load_image": false
+        "In_Price_prom_xml": {
         },
-        "Out_OpenCart3_sql" : {
-            "depends": ["Out_OpenCart_json"],
-            "file_in": "./Data/Oster/Out/OpenCart.json",
-            "site_image":"catalog/products"
-        },
-        "Out_OpenCart_json" : {
+        "Out_vShop_sql": {
+            "site_image": "catalog/products",
             "depends": [
-                "In_Price_brain_net", 
-                "PricesJoin"
-            ],
-            "-file": "./Data/Oster/OpenCart.json"
-        },
-        "Out_OpenCart_xml" : {
-            "depends": [
-                "In_Price_brain_net", 
-                "PricesJoin"
-            ],
-            "-file": "./Data/Oster/OpenCart.xml"
-        },
-        "PricesJoin": {
-            "main": "In_Price_brain_net",
-            "depends": [
-                "In_Price_brain_net",
-                "In_Price_chip_xls", 
-                "In_Price_dclink_xlsx", 
-                "In_Price_erc_xlsx", 
-                "In_Price_kts_csv", 
-                "In_Price_tdb_xlsx",
-                "In_Price_kpi_xls"
+                "In_Price_prom_xml"
             ]
-        },
-        "Out_PricesJoin_xlsx": {
-            "depends": [
-                "PricesJoin"
-            ],
-            "-file": "./Data/Oster/PriceJoin.xlsx",
-            "prices": true,
-            "ratio": false,
-            "format": "#,#0.0",
-            "field": {
-                "width": {
-                    "product_id": 0,
-                    "category_id": 0,
-                    "available": 0,
-                    "mpn": 20,
-                    "name": 60
-                }
-            }
-        },
-        "Pack_zip": {
-            "depends": [
-                "Out_PricesJoin_xlsx",
-                "Out_OpenCart_json", 
-                "Out_OpenCart3_sql", 
-                "Out_OpenCart_xml"
-            ],
-            "files": [
-                "./Data/Oster/Out"
-            ],
-            "file": "./Data/Oster/PackAll.zip"
-        },
-        "SendMail": {
-            "depends": ["Pack_zip"],
-            "mail_from": "ua0976646510@gmail.com",
-            "mail_to": ["vladvons@gmail.com"],
-            "mail_subject": "Price list generator",
-            "mail_body": "Hello,\nYou ordered a file\n",
-            "file": ["./Data/Oster/PackAll.zip"]
         }
     }
 }

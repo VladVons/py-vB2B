@@ -10,4 +10,4 @@ from ..Common import TPluginBase
 class TOut_OpenCart3_sql(TPluginBase):
     async def Run(self):
         Main = TMain(self)
-        await Main.Run()
+        Main.Save()

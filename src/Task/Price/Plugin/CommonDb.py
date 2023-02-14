@@ -3,17 +3,17 @@
 # License: GNU, see LICENSE for more details
 
 
-from Inc.Db.DbList import TDbListSafe
+from Inc.Db.DbList import TDbListSafe, TDbList
 
 
-class TDbListEx(TDbListSafe):
-    pass
+class TDbListEx1(TDbListSafe):
+     pass
 
 
-# class TDbListEx(TDbList):
-#     def __init__(self, aFields):
-#         aFields = [Name for Name, Type in aFields]
-#         super().__init__(aFields)
+class TDbListEx(TDbList):
+    def __init__(self, aFields):
+        aFields = [Name for Name, _Type in aFields]
+        super().__init__(aFields)
 
 
 class TDbProduct(TDbListEx):

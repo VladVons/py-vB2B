@@ -12,6 +12,8 @@ class TParser_xlsx(TEngine):
         return load_workbook(aFile, read_only = True, data_only = True)
 
     async def _Load(self):
+        assert self._Engine, 'InitEngine() not invoked %s' % self.GetFile()
+
         if (self._Sheet == 'default'):
             WSheet = self._Engine.active
         else:

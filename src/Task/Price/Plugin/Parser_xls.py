@@ -13,6 +13,8 @@ class TParser_xls(TEngine):
         return open_workbook(aFile)
 
     async def _Load(self):
+        assert self._Engine, 'InitEngine() not invoked %s' % self.GetFile()
+
         if (self._Sheet == 'default'):
             WS = self._Engine.sheet_by_index(0)
         else:

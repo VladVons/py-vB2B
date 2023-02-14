@@ -13,6 +13,8 @@ class TParser_ods(TEngine):
         return get_data(aFile)
 
     async def _Load(self):
+        assert self._Engine, 'InitEngine() not invoked %s' % self.GetFile()
+
         if (self._Sheet == 'default'):
             Sheet = list(self._Engine.keys())[0]
         else:

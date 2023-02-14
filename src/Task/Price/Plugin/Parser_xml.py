@@ -12,6 +12,8 @@ class TParser_xml(TEngine):
         return dom.parse(aFile)
 
     async def _Load(self):
+        assert self._Engine, 'InitEngine() not invoked %s' % self.GetFile()
+
         Nodes = self._Engine.getElementsByTagName(self._Sheet)
         for Row in Nodes:
             self._Fill(Row)
