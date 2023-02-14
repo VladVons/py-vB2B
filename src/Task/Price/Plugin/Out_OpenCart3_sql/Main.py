@@ -26,21 +26,21 @@ class TSql(TSqlBase):
     def Product_Clear(self):
         Res = []
         Res.append('\n# Product_Clear')
-        Res.append(f'DELETE FROM {self.Conf.Prefix}product;')
-        Res.append(f'DELETE FROM {self.Conf.Prefix}product_to_category;')
-        Res.append(f'DELETE FROM {self.Conf.Prefix}product_to_store;')
-        Res.append(f'DELETE FROM {self.Conf.Prefix}seo_url WHERE query LIKE "product_%";')
-        Res.append(f'DELETE FROM {self.Conf.Prefix}module WHERE code = "featured";')
+        Res.append(f'delete from {self.Conf.Prefix}product;')
+        Res.append(f'delete from {self.Conf.Prefix}product_to_category;')
+        Res.append(f'delete from {self.Conf.Prefix}product_to_store;')
+        Res.append(f'delete from {self.Conf.Prefix}seo_url WHERE query LIKE "product_%";')
+        Res.append(f'delete from {self.Conf.Prefix}module WHERE code = "featured";')
         return '\n'.join(Res)
 
     def Category_Clear(self) -> str:
         Res = []
         Res.append('\n# Category_Clear')
-        Res.append(f'DELETE FROM {self.Conf.Prefix}category;')
-        Res.append(f'DELETE FROM {self.Conf.Prefix}category_description;')
-        Res.append(f'DELETE FROM {self.Conf.Prefix}category_to_store;')
-        Res.append(f'DELETE FROM {self.Conf.Prefix}seo_url WHERE query LIKE "category_%";')
-        Res.append(f'DELETE FROM {self.Conf.Prefix}category_path;')
+        Res.append(f'delete from {self.Conf.Prefix}category;')
+        Res.append(f'delete from {self.Conf.Prefix}category_description;')
+        Res.append(f'delete from {self.Conf.Prefix}category_to_store;')
+        Res.append(f'delete from {self.Conf.Prefix}seo_url WHERE query LIKE "category_%";')
+        Res.append(f'delete from {self.Conf.Prefix}category_path;')
         return '\n'.join(Res)
 
     def Category_Create(self, aData: list) -> str:
@@ -57,10 +57,10 @@ class TSql(TSqlBase):
                 Values.append(f'({Row["id"]}, {ParentId}, {Status}, {Top}, "{self.Now}", "{self.Now}")')
 
             return f'''
-                INSERT IGNORE INTO {self.Conf.Prefix}category (category_id, parent_id, status, top, date_added, date_modified)
-                    VALUES {", ".join(Values)}
-                    ON DUPLICATE KEY UPDATE
-                    date_modified = VALUES(date_modified);
+                insert ignore into {self.Conf.Prefix}category (category_id, parent_id, status, top, date_added, date_modified)
+                values {", ".join(Values)}
+                on duplicate key update
+                date_modified = values(date_modified);
             '''
 
         @DSplit
@@ -70,10 +70,10 @@ class TSql(TSqlBase):
                 for Row in aData
             ]
             return f'''
-                INSERT IGNORE INTO {self.Conf.Prefix}category_description (category_id, language_id, name)
-                    VALUES {", ".join(Values)}
-                    ON DUPLICATE KEY UPDATE
-                        name = VALUES(name);
+                insert ignore into {self.Conf.Prefix}category_description (category_id, language_id, name)
+                values {", ".join(Values)}
+                on duplicate key update
+                name = values(name);
             '''
 
         @DSplit
@@ -83,10 +83,11 @@ class TSql(TSqlBase):
                 for Row in aData
             ]
             return f'''
-                INSERT IGNORE INTO {self.Conf.Prefix}category_to_store (category_id, store_id)
-                    VALUES {", ".join(Values)}
-                    ON DUPLICATE KEY UPDATE
-                        store_id = VALUES(store_id);
+                insert ignore into {self.Conf.Prefix}category_to_store (category_id, store_id)
+                values {", ".join(Values)}
+                on duplicate key update
+                store_id = values(store_id)
+                ;
             '''
 
         def Category_Path(aData: list) -> str:
@@ -97,8 +98,8 @@ class TSql(TSqlBase):
                     for Row in aData
                 ]
                 return f'''
-                    INSERT INTO {self.Conf.Prefix}category_path (category_id, path_id, level)
-                        VALUES {", ".join(Values)}
+                    insert into {self.Conf.Prefix}category_path (category_id, path_id, level)
+                    values {", ".join(Values)}
                 '''
 
             def GetTree() -> dict:
@@ -132,7 +133,7 @@ class TSql(TSqlBase):
 
         Res = []
         Res.append('\n# Category')
-        Res.append(f'UPDATE {self.Conf.Prefix}category SET status = 0;')
+        Res.append(f'update {self.Conf.Prefix}category SET status = 0;')
         Res += Category(aData, self.Conf.Parts)
 
         Res.append('\n# Category_Descr')
@@ -155,11 +156,11 @@ class TSql(TSqlBase):
                 for Row in aData
             ]
             return f'''
-                INSERT IGNORE INTO {self.Conf.Prefix}product (product_id, status, quantity, price, mpn, sku, image, date_added, date_modified)
-                    VALUES {", ".join(Values)}
-                    ON DUPLICATE KEY UPDATE
-                        price = VALUES(price),
-                        date_modified = VALUES(date_modified);
+                insert ignore into {self.Conf.Prefix}product (product_id, status, quantity, price, mpn, sku, image, date_added, date_modified)
+                values {", ".join(Values)}
+                on duplicate key update
+                price = values(price), date_modified = VALUES(date_modified)
+                ;
             '''
 
         @DSplit
@@ -169,10 +170,11 @@ class TSql(TSqlBase):
                     for Row in aData
             ]
             return f'''
-                INSERT IGNORE INTO {self.Conf.Prefix}product_description (product_id, language_id, name)
-                    VALUES {", ".join(Values)}
-                    ON DUPLICATE KEY UPDATE
-                        name = VALUES(name);
+                insert ignore into {self.Conf.Prefix}product_description (product_id, language_id, name)
+                values {", ".join(Values)}
+                on duplicate key update
+                name = values(name)
+                ;
             '''
 
         @DSplit
@@ -182,10 +184,11 @@ class TSql(TSqlBase):
                 for Row in aData
             ]
             return f'''
-                INSERT IGNORE INTO {self.Conf.Prefix}product_to_category (product_id, category_id)
-                    VALUES {", ".join(Values)}
-                    ON DUPLICATE KEY UPDATE
-                        category_id = VALUES(category_id);
+                insert ignore into {self.Conf.Prefix}product_to_category (product_id, category_id)
+                values {", ".join(Values)}
+                on duplicate key update
+                category_id = values(category_id)
+                ;
             '''
 
         @DSplit
@@ -195,15 +198,16 @@ class TSql(TSqlBase):
                 for Row in aData
             ]
             return  f'''
-                INSERT IGNORE INTO {self.Conf.Prefix}product_to_store (product_id, store_id)
-                    VALUES {", ".join(Values)}
-                    ON DUPLICATE KEY UPDATE
-                        store_id = VALUES(store_id);
+                insert ignore into {self.Conf.Prefix}product_to_store (product_id, store_id)
+                values {", ".join(Values)}
+                on duplicate key update
+                store_id = values(store_id)
+                ;
             '''
 
         Res = []
         Res.append('\n# Product')
-        Res.append(f'UPDATE {self.Conf.Prefix}product SET status = 0;')
+        Res.append(f'update {self.Conf.Prefix}product SET status = 0;')
         Res += Product(aData, self.Conf.Parts)
 
         Res.append('\n# Product_Descr')
