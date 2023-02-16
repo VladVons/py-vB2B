@@ -1,4 +1,9 @@
-#https://www.codementor.io/@ufukafak/how-to-run-a-python-script-in-linux-with-systemd-1nh2x3hi0e
+# Created: 2022.10.14
+# Author: Vladimir Vons <VladVons@gmail.com>
+#
+# /etc/systemd/system/vB2B.service
+# https://www.codementor.io/@ufukafak/how-to-run-a-python-script-in-linux-with-systemd-1nh2x3hi0e
+
 
 [Unit]
 Description=vB2B service
