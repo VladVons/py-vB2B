@@ -5,10 +5,10 @@
 
 import os
 #
-from Inc.UtilP.Zip import PackFiles
-from Inc.UtilP.FS import GetFiles
+from Inc.Misc.Zip import PackFiles
+from Inc.Misc.FS import GetFiles
+from Inc.ParserX.Common import TFileBase
 from IncP.Log import Log
-from ..Common import TFileBase
 
 
 class TMain(TFileBase):

@@ -4,9 +4,9 @@
 
 
 from Inc.Util.Str import ToFloat
-from ..Common import TTranslate
+from Inc.ParserX.Parser_xls import TParser_xls
+from Inc.ParserX.Common import TTranslate
 from ..CommonDb import TDbPrice
-from ..Parser_xls import TParser_xls
 
 
 class TPrice(TParser_xls):

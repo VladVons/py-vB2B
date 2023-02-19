@@ -6,8 +6,8 @@
 import re
 #
 from Inc.Util.Str import ToFloat
+from Inc.ParserX.Parser_xlsx import TParser_xlsx
 from ..CommonDb import TDbCompPC
-from ..Parser_xlsx import TParser_xlsx
 
 
 class TPrice(TParser_xlsx):

@@ -3,8 +3,8 @@
 # License: GNU, see LICENSE for more details
 
 
+from Inc.ParserX.Common import TFileBase
 from ..Category import TCategoryBase
-from ..Common import TFileBase
 from ..CommonDb import TDbCategory
 
 

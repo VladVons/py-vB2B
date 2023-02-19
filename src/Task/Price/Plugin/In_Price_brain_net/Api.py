@@ -9,8 +9,8 @@
 import hashlib
 import aiohttp
 #
+from Inc.ParserX.Common import TApiBase
 from IncP.Download import TRecSes, TDownload
-from ..Common import TApiBase
 
 
 class TApi(TApiBase):

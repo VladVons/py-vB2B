@@ -1,4 +1,4 @@
-from Inc.UtilP.Misc import GetEnvWithWarn
+from Inc.Misc.Misc import GetEnvWithWarn
 from IncP.Log import Log
 
 
@@ -12,5 +12,3 @@ smtp_auth = {
     'port': 465,
     'use_tls': True
 }
-
-from = 'ua0976646510@gmail.com'

@@ -5,8 +5,8 @@
 
 import os
 #
+from Inc.ParserX.Common import TFileDbl
 from IncP.Log import Log
-from .Common import TFileDbl
 from .CommonDb import TDbPrice, TDbCategory
 
 

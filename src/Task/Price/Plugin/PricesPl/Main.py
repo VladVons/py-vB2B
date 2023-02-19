@@ -3,7 +3,7 @@
 # License: GNU, see LICENSE for more details
 
 
-from ..Common import TFileDbl
+from Inc.ParserX.Common import TFileDbl
 from ..CommonDb import TDbCompPricePl
 
 

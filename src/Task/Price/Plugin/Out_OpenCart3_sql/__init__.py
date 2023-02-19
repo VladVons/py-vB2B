@@ -2,9 +2,8 @@
 # Author: Vladimir Vons <VladVons@gmail.com>
 # License: GNU, see LICENSE for more details
 
-
+from Inc.ParserX.Common import TPluginBase
 from .Main import TMain
-from ..Common import TPluginBase
 
 
 class TOut_OpenCart3_sql(TPluginBase):

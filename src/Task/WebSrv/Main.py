@@ -5,7 +5,7 @@
 
 from aiohttp import web
 #
-from Inc.UtilP.WebSrv.WebSrv import TWebSrvBase
+from Inc.WebSrv.WebSrv import TWebSrvBase
 from IncP.Log import Log
 from .form.info import TForm
 from .Session import Session

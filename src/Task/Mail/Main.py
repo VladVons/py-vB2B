@@ -31,7 +31,7 @@ import asyncio
 import aiosmtplib
 #
 from Inc.DataClass import DataClass
-from Inc.UtilP.Mail import TMail, TMailSmtp, TMailSend
+from Inc.Misc.Mail import TMail, TMailSmtp, TMailSend
 from IncP.Log import Log
 
 

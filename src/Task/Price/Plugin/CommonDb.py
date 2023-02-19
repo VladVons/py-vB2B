@@ -3,11 +3,11 @@
 # License: GNU, see LICENSE for more details
 
 
-from Inc.Db.DbList import TDbListSafe, TDbList
+from Inc.DbList import TDbListSafe, TDbList
 
 
 class TDbListEx1(TDbListSafe):
-     pass
+    pass
 
 
 class TDbListEx(TDbList):
@@ -34,6 +34,7 @@ class TDbProductEx(TDbListEx):
             ('id', int),
             ('category_id', int),
             ('code', str),
+            ('barcode', str),
             ('mpn', str),
             ('name', str),
             ('price', float),

@@ -5,8 +5,8 @@
 
 import sys
 #
-from Inc.Db.DbList import TDbRecSafe
-from ..Common import TFileDbl
+from Inc.DbList import TDbRecSafe
+from Inc.ParserX.Common import TFileDbl
 from ..CommonDb import TDbPriceJoin
 
 

@@ -4,9 +4,9 @@
 
 
 from Inc.Util.Obj import GetNotNone
+from Inc.ParserX.Common import TFileDbl, TTranslate
 from IncP.Download import TCheckUrls
 from ..Category import TDbCategory
-from ..Common import TFileDbl, TTranslate
 from ..CommonDb import TDbPrice
 
 

@@ -3,8 +3,8 @@
 # License: GNU, see LICENSE for more details
 
 
+from Inc.ParserX.Common import TPluginBase
 from .Price import TPrice
-from ..Common import TPluginBase
 
 
 class TIn_Price_pl01_xlsx(TPluginBase):

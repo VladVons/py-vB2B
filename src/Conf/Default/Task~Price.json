@@ -31,12 +31,22 @@
             ],
             "dir": "./Data/Pl/Save"
         },
+        "In_Price_oster1c_xml": {
+            "encoding": "cp1251"
+        },
         "In_Price_prom_xml": {
         },
         "Out_vShop_sql": {
             "site_image": "catalog/products",
+            "sql": {
+                "parts": 25,
+                "tenant_id": 1,
+                "lang_id": 1,
+                "price_id": 1
+            },
             "depends": [
-                "In_Price_prom_xml"
+                "-In_Price_prom_xml",
+                "In_Price_oster1c_xml"
             ]
         }
     }

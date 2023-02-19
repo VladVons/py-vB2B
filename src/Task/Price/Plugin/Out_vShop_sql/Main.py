@@ -3,11 +3,13 @@
 # License: GNU, see LICENSE for more details
 
 
-from Inc.Db.DbList  import TDbList, TDbRec
+import json
+#
+from Inc.DbList  import TDbList, TDbRec
 from Inc.DataClass import DataClass
-from ..Common import TFileBase
+from Inc.ParserX.Common import TFileBase
+from Inc.ParserX.CommonSql import TSqlBase, DSplit, TLogEx, StripQuery
 from ..CommonDb import TDbCategory, TDbProductEx
-from ..CommonSql import TSqlBase, DSplit, TLogEx, StripQuery
 from ..In_Price_brain_net.Api import TApi
 
 
@@ -152,8 +154,8 @@ class TSql(TSqlBase):
                 DbRec.Data = Row
                 Name = DbRec.GetField('name').translate(self.Escape)
                 Descr = DbRec.GetField('descr', '').translate(self.Escape)
-                #Feature = DbRec.GetField('feature', '')
-                Feature = ''
+                Feature = DbRec.GetField('feature', '')
+                Feature = json.dumps(Feature, ensure_ascii=False).replace("'", '`')
                 Value = f"({DbRec.GetField('id')}, 1, '{Name}', '{Descr}', '{Feature}')"
                 Values.append(Value)
 
@@ -246,11 +248,13 @@ class TMain(TFileBase):
         self.LogEx = TLogEx()
         self.LogEx = self.LogEx.Init(ConfFile)
 
+        SqlDef = self.Parent.Conf.GetKey('sql', {})
         SqlConf = TSqlConf(
             DirImage = self.Parent.Conf.GetKey('site_image'),
-            TenantId = 1,
-            LangId = 1,
-            PriceId = 1
+            TenantId = SqlDef.get('tenant_id', 1),
+            LangId = SqlDef.get('lang_id', 1),
+            PriceId = SqlDef.get('price_id', 1),
+            Parts = SqlDef.get('parts', 25)
         )
         self.Sql = TSql(SqlConf)
 

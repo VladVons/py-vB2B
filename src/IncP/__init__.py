@@ -3,7 +3,7 @@
 # License: GNU, see LICENSE for more details
 
 
-from Inc.UtilP.Info import GetSysInfo, DictToText
+from Inc.Misc.Info import GetSysInfo, DictToText
 
 __version__ = '1.0.10'
 __date__ =  '2022.11.22'

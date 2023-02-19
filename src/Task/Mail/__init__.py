@@ -4,7 +4,7 @@
 
 
 from Inc.Util.Obj import DeepGet
-from Inc.UtilP.Mail import TMailSmtp
+from Inc.Misc.Mail import TMailSmtp
 from .Main import TEMail, TMailConf
 
 #Enable = False

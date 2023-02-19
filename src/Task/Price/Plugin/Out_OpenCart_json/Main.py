@@ -6,8 +6,8 @@
 import os
 import json
 #
+from Inc.ParserX.Common import TFileBase
 from ..Category import TDbCategory
-from ..Common import TFileBase
 from ..CommonDb import TDbPrice
 
 

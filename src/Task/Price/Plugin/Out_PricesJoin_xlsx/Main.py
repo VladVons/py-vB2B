@@ -10,8 +10,8 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font
 from openpyxl.comments import Comment
 #
+from Inc.ParserX.Common import TFileBase
 from IncP.Log import Log
-from ..Common import TFileBase
 from ..CommonDb import TDbPriceJoin, TDbPrice
 
 

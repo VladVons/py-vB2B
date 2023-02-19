@@ -6,8 +6,8 @@
 import json
 #
 from Inc.DataClass import DataClass
-from ..Common import TFileBase
-from ..CommonSql import TSqlBase, DSplit, TLogEx
+from Inc.ParserX.Common import TFileBase
+from Inc.ParserX.CommonSql import TSqlBase, DSplit, TLogEx
 from ..In_Price_brain_net.Api import TApi
 
 

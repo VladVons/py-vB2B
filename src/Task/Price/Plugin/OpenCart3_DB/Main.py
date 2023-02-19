@@ -7,10 +7,10 @@ import os
 import re
 import aiomysql
 #
-from Inc.UtilP.Db.ADb import TADb, TDbExecPool
+from Inc.Sql.ADb import TADb, TDbExecPool
+from Inc.ParserX.Common import TFileBase
 from ..In_Price_brain_net import TIn_Price_brain_net
 from ..In_Price_brain_net.Images import TImages
-from ..Common import TFileBase
 
 
 class TDbApp(TADb):

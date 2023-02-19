@@ -6,9 +6,9 @@
 import os
 import json
 #
-from IncP.Log import Log
 from Inc.Util.Obj import GetClassPath
-from ..Common import TFileBase
+from Inc.ParserX.Common import TFileBase
+from IncP.Log import Log
 
 
 class TMain(TFileBase):

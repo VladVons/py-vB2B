@@ -5,7 +5,7 @@
 
 import asyncio
 #
-from ..Common import TPluginBase
+from Inc.ParserX.Common import TPluginBase
 
 
 class TMiscIdle(TPluginBase):

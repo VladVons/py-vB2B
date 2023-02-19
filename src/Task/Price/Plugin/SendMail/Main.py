@@ -4,10 +4,10 @@
 
 
 from Inc.Util.Obj import DeepGet, Filter
-from Inc.UtilP.Mail import TMail, TMailSmtp, TMailSend
+from Inc.Misc.Mail import TMail, TMailSmtp, TMailSend
+from Inc.ParserX.Common import TFileBase
 from IncP import GetInfo
 from Task import Plugin
-from ..Common import TFileBase
 
 
 class TMain(TFileBase):

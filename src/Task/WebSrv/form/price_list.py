@@ -7,9 +7,9 @@ import os
 from wtforms.fields import StringField, FileField, SubmitField
 from wtforms.validators import DataRequired, Email
 #
-from Inc.UtilP.FS import DirRemove
-from Inc.UtilP.Zip import Extract
-from Inc.UtilP.WebSrv.Common import FileWriter
+from Inc.Misc.FS import DirRemove
+from Inc.Misc.Zip import Extract
+from Inc.WebSrv.Common import FileWriter
 from Task.Price.Main import TPrice
 from Task.Queue.Main import TCall
 from Task import Plugin
