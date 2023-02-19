@@ -102,7 +102,7 @@ class TSql(TSqlBase):
         @DSplit
         def Category_Lang(aData: list, _aMax: int) -> str:
             Values = [
-                f"({Row['id']}, 1, '{Row['name'].translate(self.Escape)}')"
+                f"({Row['id']}, {self.Conf.LangId}, '{Row['name'].translate(self.Escape)}')"
                 for Row in aData
             ]
             Res = f'''
@@ -156,7 +156,7 @@ class TSql(TSqlBase):
                 Descr = DbRec.GetField('descr', '').translate(self.Escape)
                 Feature = DbRec.GetField('feature', '')
                 Feature = json.dumps(Feature, ensure_ascii=False).replace("'", '`')
-                Value = f"({DbRec.GetField('id')}, 1, '{Name}', '{Descr}', '{Feature}')"
+                Value = f"({DbRec.GetField('id')}, {self.Conf.LangId}, '{Name}', '{Descr}', '{Feature}')"
                 Values.append(Value)
 
             Res = f'''
@@ -251,9 +251,9 @@ class TMain(TFileBase):
         SqlDef = self.Parent.Conf.GetKey('sql', {})
         SqlConf = TSqlConf(
             DirImage = self.Parent.Conf.GetKey('site_image'),
-            TenantId = SqlDef.get('tenant_id', 1),
-            LangId = SqlDef.get('lang_id', 1),
-            PriceId = SqlDef.get('price_id', 1),
+            TenantId = SqlDef.get('tenant_id'),
+            LangId = SqlDef.get('lang_id'),
+            PriceId = SqlDef.get('price_id'),
             Parts = SqlDef.get('parts', 25)
         )
         self.Sql = TSql(SqlConf)
