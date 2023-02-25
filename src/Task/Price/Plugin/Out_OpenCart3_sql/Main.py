@@ -5,13 +5,13 @@
 
 import json
 #
-from Inc.DataClass import DataClass
+from Inc.DataClass import DDataClass
 from Inc.ParserX.Common import TFileBase
 from Inc.ParserX.CommonSql import TSqlBase, DSplit, TLogEx
 from ..In_Price_brain_net.Api import TApi
 
 
-@DataClass
+@DDataClass
 class TSqlConf():
     Parts: int = 100
     DirImage: str = 'catalog/products'

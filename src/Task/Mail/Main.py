@@ -30,12 +30,12 @@ Mail.Run()
 import asyncio
 import aiosmtplib
 #
-from Inc.DataClass import DataClass
+from Inc.DataClass import DDataClass
 from Inc.Misc.Mail import TMail, TMailSmtp, TMailSend
 from IncP.Log import Log
 
 
-@DataClass
+@DDataClass
 class TMailConf():
     Sleep: int = 3
     MaxTasks: int = 5

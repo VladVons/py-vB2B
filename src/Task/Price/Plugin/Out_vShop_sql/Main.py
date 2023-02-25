@@ -6,14 +6,14 @@
 import json
 #
 from Inc.DbList  import TDbList, TDbRec
-from Inc.DataClass import DataClass
+from Inc.DataClass import DDataClass
 from Inc.ParserX.Common import TFileBase
 from Inc.ParserX.CommonSql import TSqlBase, DSplit, TLogEx, StripQuery
 from ..CommonDb import TDbCategory, TDbProductEx
 from ..In_Price_brain_net.Api import TApi
 
 
-@DataClass
+@DDataClass
 class TSqlConf():
     LangId: int
     TenantId: int

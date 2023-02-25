@@ -5,10 +5,10 @@
 
 import asyncio
 #
-from Inc.DataClass import DataClass
+from Inc.DataClass import DDataClass
 
 
-@DataClass
+@DDataClass
 class TCall():
     Func: callable
     Args: list = []
