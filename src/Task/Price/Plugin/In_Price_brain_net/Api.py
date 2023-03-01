@@ -10,7 +10,7 @@ import hashlib
 import aiohttp
 #
 from Inc.ParserX.Common import TApiBase
-from IncP.Download import TRecSes, TDownload
+from Inc.Misc.Request import RequestGet
 
 
 class TApi(TApiBase):
@@ -103,5 +103,4 @@ class TApi(TApiBase):
     async def GetPriceList(self, aTargetId: int) -> dict:
         Url = self.GetUrlPriceList(aTargetId)
         Url = await self.Send(TRecSes(Url))
-        Download = TDownload()
-        return await Download.SendOne(TRecSes(Url))
+        return TRequestGet().Send(Url)

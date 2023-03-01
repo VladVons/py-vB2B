@@ -5,7 +5,7 @@
 
 from Inc.Util.Obj import GetNotNone
 from Inc.ParserX.Common import TFileDbl, TTranslate
-from IncP.Download import TCheckUrls
+from Inc.Misc.Request import TCheckUrls
 from ..Category import TDbCategory
 from ..CommonDb import TDbPrice
 
@@ -18,7 +18,7 @@ class TPrice(TFileDbl):
     async def CheckImages(self):
         ProductCodes = self.Dbl.ExportList('Code')
         Urls = [self.Parent.Api.GetUrlImage(x) for x in ProductCodes]
-        Res = await (TCheckUrls().Run(Urls, 5, 0.1))
+        Res = await TCheckUrls().Check(Urls, 5, 0.1)
         Images = {Code: Url for Code, Url, Ok in zip(ProductCodes, Urls, Res) if Ok}
         _ImagesErr = {Code: Url for Code, Url, Ok in zip(ProductCodes, Urls, Res) if not Ok}
 

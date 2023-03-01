@@ -5,7 +5,7 @@
 
 import os
 #
-from IncP.Download import TRecSes, TDownload
+from Inc.Misc.Request import TRequestGet, TRecSes
 from IncP.Log import Log
 
 
@@ -43,11 +43,11 @@ class TImages():
             Log.Print(1, 'e', 'err %s' % (aRecSes.Url))
 
     async def LoadUrls(self, aUrls: list[str], aTasks: int = 3):
-        Download = TDownload(self._OnSend)
+        Request = TRequestGet(self._OnSend)
         RecSes = [TRecSes(x) for x in aUrls]
-        await Download.SendMany(RecSes, aTasks)
+        await Request.SendMany(RecSes, aTasks)
 
     async def LoadCodes(self, aProductCodes: list[str], aTasks: int = 3):
-        Download = TDownload(self._OnSend)
+        Request = TRequestGet(self._OnSend)
         RecSes = [TRecSes(x) for x in self._GetUrls(aProductCodes)]
-        await Download.SendMany(RecSes, aTasks)
+        await Request.SendMany(RecSes, aTasks)

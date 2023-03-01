@@ -7,7 +7,7 @@ import os
 #
 from Inc.DbList import TDbListSafe
 from Inc.Util.Obj import GetNotNone, DeepGet
-from IncP.Download import TRecSes, TDownload
+from Inc.Misc.Request import RequestGet, TRecSes
 from IncP.Log import Log
 from .Images import TImages
 from .Category import TCategory
@@ -117,5 +117,5 @@ class TProducts():
         Urls = self._GetUrls(self._CategoryId, Start, self._Count, Limit)
 
         Data = [TRecSes(x) for x in Urls]
-        Download = TDownload(self._OnSend)
-        await Download.SendMany(Data, aTasks)
+        Request = TRequestGet(self._OnSend)
+        await Request.SendMany(Data, aTasks)

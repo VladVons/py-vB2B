@@ -7,7 +7,7 @@ import os
 #
 from Inc.DbList import TDbListSafe
 from Inc.Util.Obj import GetNotNone
-from IncP.Download import TRecSes, TDownload
+from Inc.Misc.Request import TRequestGet, TRecSes
 from IncP.Log import Log
 from .Price import TPrice
 from ..CommonDb import TDbProduct
@@ -53,6 +53,6 @@ class TProduct():
 
     async def Run(self, aProductCodes: list[str]):
         self._Count = len(aProductCodes)
-        Download = TDownload(self._OnSend)
+        Request = TRequestGet(self._OnSend)
         RecSes = [TRecSes(x) for x in self._GetUrls(aProductCodes)]
-        await Download.SendMany(RecSes, 5)
+        await Request.SendMany(RecSes, 5)
