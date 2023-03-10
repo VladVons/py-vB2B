@@ -6,11 +6,11 @@
 from Inc.DbList import TDbListSafe, TDbList
 
 
-class TDbListEx1(TDbListSafe):
+class TDbListEx(TDbListSafe):
     pass
 
 
-class TDbListEx(TDbList):
+class TDbListEx1(TDbList):
     def __init__(self, aFields):
         aFields = [Name for Name, _Type in aFields]
         super().__init__(aFields)

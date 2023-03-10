@@ -4,6 +4,7 @@
 
 
 import os
+import sys
 #
 from Inc.ParserX.Common import TPluginBase
 from Inc.Misc.FS import FilesExist
@@ -27,8 +28,8 @@ class TIn_Price_brain_net(TPluginBase):
         if (sum(Files) < len(FilesCheck)):
             User, Passw = self.Conf.get('auth')
             if (not await self.Api.Auth(User, Passw)):
-                Log.Print(1, 'e', 'Auth error')
-                return
+                Log.Print(1, 'e', f'Auth error. Class {self.__class__.__name__}')
+                sys.exit()
 
         await Category.Load()
         Category.Filter_FromConfig()

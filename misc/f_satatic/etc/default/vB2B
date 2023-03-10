@@ -1,0 +1,4 @@
+# defaults for /etc/systemd/system/vB2B
+
+Env_SmtpUser=xxx
+Env_SmtpPassw=xxx

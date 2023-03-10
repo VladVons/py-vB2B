@@ -10,7 +10,7 @@ import hashlib
 import aiohttp
 #
 from Inc.ParserX.Common import TApiBase
-from Inc.Misc.Request import RequestGet
+from Inc.Misc.Request import TRequestGet, TRecSes
 
 
 class TApi(TApiBase):
@@ -62,7 +62,7 @@ class TApi(TApiBase):
         return None
 
     async def Send(self, aRecSes: TRecSes) -> dict:
-        Res = await self.Download.SendOne(aRecSes)
+        Res = await self.Request.SendOne(aRecSes)
         return self.GetResult(Res)
 
     async def Auth(self, aLogin: str, aPassw: str) -> bool:
@@ -76,7 +76,7 @@ class TApi(TApiBase):
 
     async def GetImage(self, aProductCode: str) -> bytes:
         Url = self.GetUrlImage(aProductCode)
-        Res = await self.Download.SendOne(TRecSes(Url))
+        Res = await self.Request.Send(Url)
         if (Res['status'] == 200):
             return Res['data']
 

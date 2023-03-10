@@ -3,6 +3,10 @@
 #
 # /etc/systemd/system/vB2B.service
 # https://www.codementor.io/@ufukafak/how-to-run-a-python-script-in-linux-with-systemd-1nh2x3hi0e
+#
+#systemctl daemon-reload
+#systemctl enable vB2B.service
+#systemctl start vB2B.service
 
 
 [Unit]
