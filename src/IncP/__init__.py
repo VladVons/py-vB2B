@@ -5,8 +5,8 @@
 
 from Inc.Misc.Info import GetSysInfo, DictToText
 
-__version__ = '1.0.10'
-__date__ =  '2022.11.22'
+__version__ = '1.0.11'
+__date__ =  '2022.04.07'
 
 
 def GetInfo() -> dict:

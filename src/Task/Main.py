@@ -14,7 +14,7 @@ class TTask():
         self.Info = GetInfo()
 
     async def Run(self):
-        if (Options.Info):
+        if (Options.info):
             List = [f'{Key:10} {Val}' for Key, Val in self.Info.items()]
             print('\n'.join(List))
             return
@@ -22,7 +22,7 @@ class TTask():
         Log.Print(1, 'i', 'Run() %s' % (self.Info['app_name']))
 
         TimeStart = time.time()
-        if (Options.Service):
+        if (Options.service):
             Name = 'plugins_srv'
         else:
             Name = 'plugins_app'

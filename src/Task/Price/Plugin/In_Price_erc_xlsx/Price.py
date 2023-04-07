@@ -23,7 +23,7 @@ class TPrice(TParser_xlsx):
             Val = self.Trans.GetMpn(str(aRow.get('mpn', '')))
             Rec.SetField('mpn', Val)
 
-            self.Copy('name', aRow, Rec)
+            self.CopySafe('name', aRow, Rec)
 
             Val = ToFloat(aRow.get('price'))
             if (aRow.get('currency') == 'у.о.'):

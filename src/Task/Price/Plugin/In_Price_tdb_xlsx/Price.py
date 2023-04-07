@@ -24,7 +24,7 @@ class TPrice(TParser_xlsx):
             Val = self.Trans.GetMpn(str(aRow.get('mpn', '')))
             Rec.SetField('mpn', Val)
 
-            self.Copy('name', aRow, Rec)
+            self.CopySafe('name', aRow, Rec)
 
             Val = round(ToFloat(aRow.get('price_usd')) * self.USD, 2)
             Rec.SetField('price', Val)
