@@ -8,6 +8,7 @@ import gspread
 #
 from Inc.ParserX.Common import TPluginBase
 from .Price import TPricePC, TPriceMonit
+from ..CommonDb import TDbCategory, TDbProductEx
 
 
 class TIn_Price_pl01_xlsx(TPluginBase):
@@ -27,7 +28,7 @@ class TIn_Price_pl01_xlsx(TPluginBase):
             if (not os.path.isfile(File)):
                 self.Download(Url, File)
 
-        Res = {}
+        DbProductEx = TDbProductEx()
 
         # --- Computer
         Price = TPricePC(self)
@@ -43,8 +44,13 @@ class TIn_Price_pl01_xlsx(TPluginBase):
             Avg = Rec.GetField(FieldAvg) / Rec.count
             Rec.SetField(FieldAvg, Avg)
             Rec.Flush()
-        Dbl.Sort(['model', 'cpu', 'ram_size'])
-        Res['TDbCompPC'] = Dbl
+            DbProductEx.RecAdd().SetAsDict({
+                'category_id': 1,
+                'mpn': Rec.model,
+                'name': Rec.title,
+                'price': Avg
+                })
+        #Dbl.Sort(['model', 'cpu', 'ram_size'])
 
         # --- Monitor
         Price = TPriceMonit(self)
@@ -60,7 +66,9 @@ class TIn_Price_pl01_xlsx(TPluginBase):
             Avg = Rec.GetField(FieldAvg) / Rec.count
             Rec.SetField(FieldAvg, Avg)
             Rec.Flush()
-        Dbl.Sort(['model', 'screen'])
-        Res['TDbCompMonit'] = Dbl
+        #Dbl.Sort(['model', 'screen'])
 
-        return Res
+        DbCategory = TDbCategory()
+        Rec = DbCategory.RecAdd().SetAsDict({'id': 1, 'parent_id': 0, 'name': 'Computer'})
+        Rec = DbCategory.RecAdd().SetAsDict({'id': 2, 'parent_id': 0, 'name': 'Monitor'})
+        return {'TDbCategory': DbCategory, 'TDbProductEx': DbProductEx}
