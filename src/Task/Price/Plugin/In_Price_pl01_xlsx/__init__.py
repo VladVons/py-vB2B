@@ -41,14 +41,16 @@ class TIn_Price_pl01_xlsx(TPluginBase):
         Fields.remove(FieldAvg)
         Dbl = Price.Dbl.Group(Fields, [FieldAvg])
         for Rec in Dbl:
-            Avg = Rec.GetField(FieldAvg) / Rec.count
+            Avg = round(Rec.GetField(FieldAvg) / Rec.count, 1)
             Rec.SetField(FieldAvg, Avg)
             Rec.Flush()
+
             DbProductEx.RecAdd().SetAsDict({
                 'category_id': 1,
                 'mpn': Rec.model,
                 'name': Rec.title,
-                'price': Avg
+                'price': Avg,
+                'available': Rec.count
                 })
         #Dbl.Sort(['model', 'cpu', 'ram_size'])
 
@@ -63,9 +65,17 @@ class TIn_Price_pl01_xlsx(TPluginBase):
         Fields.remove(FieldAvg)
         Dbl = Price.Dbl.Group(Fields, [FieldAvg])
         for Rec in Dbl:
-            Avg = Rec.GetField(FieldAvg) / Rec.count
+            Avg = round(Rec.GetField(FieldAvg) / Rec.count, 1)
             Rec.SetField(FieldAvg, Avg)
             Rec.Flush()
+
+            DbProductEx.RecAdd().SetAsDict({
+                'category_id': 2,
+                'mpn': Rec.model,
+                'name': Rec.title,
+                'price': Avg,
+                'available': Rec.count
+                })
         #Dbl.Sort(['model', 'screen'])
 
         DbCategory = TDbCategory()

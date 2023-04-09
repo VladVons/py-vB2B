@@ -6,7 +6,7 @@
 import os
 import json
 #
-from Inc.Util.Obj import GetClassPath
+from Inc.Util.Obj import GetClassPath, DeepGetByList
 from Inc.ParserX.Common import TFileBase
 from IncP.Log import Log
 
@@ -18,11 +18,17 @@ class TMain(TFileBase):
         os.makedirs(Dir, exist_ok=True)
 
         for PluginKey, PluginVal in aParam.items():
+            ParamExport = self.Parent.GetParamExport(PluginKey)
             for ParamKey, ParamVal in PluginVal.items():
                 Data = ''
                 ClassPath = GetClassPath(ParamVal)
                 if ('/TDbList' in ClassPath):
-                    ParamVal.OptReprLen = 40
+                    Len = DeepGetByList(self.Parent.Conf, ['db_list', 'len'], 40)
+                    Param = ParamExport.get(ParamKey)
+                    if (Param):
+                        Len = Param.get('len', Len)
+                        ParamVal = ParamVal.Clone(Param.get('fields'))
+                    ParamVal.OptReprLen = Len
                     Data = str(ParamVal)
                 elif (type(ParamVal) in [dict, list]):
                     Data = json.dumps(ParamVal, indent=2)
