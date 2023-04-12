@@ -29,8 +29,11 @@ class TPricePC(TParser_xlsx):
 
         Rec = self.Dbl.RecAdd()
 
-        for x in ['model', 'cpu', 'case', 'dvd', 'vga', 'os']:
+        for x in ['cpu', 'case', 'dvd', 'vga', 'os']:
             self.Copy(x, aRow, Rec)
+
+        Model = aRow.get('model', '') + ' ' + aRow.get('case', '')
+        Rec.SetField('model', Model.strip().lower())
 
         Val = ToFloat(aRow.get('price'))
         Rec.SetField('price', Val)
@@ -69,8 +72,11 @@ class TPriceMonit(TParser_xlsx):
 
         Rec = self.Dbl.RecAdd()
 
-        for x in ['model', 'grade', 'color']:
+        for x in ['grade', 'color']:
             self.Copy(x, aRow, Rec)
+
+        Model = aRow.get('model', '')
+        Rec.SetField('model', Model.strip().lower())
 
         Val = GetNotNone(aRow, 'screen', '').replace('"', '')
         Rec.SetField('screen', Val)
