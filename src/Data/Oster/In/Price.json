@@ -1,0 +1,19 @@
+{
+    "plugin": {
+        "In_Price_brain_net" : {
+            "usd": 37.12,
+            "categories": {
+                "include_id": [1181, 1331, 1330, 1392, 1266, 1378, 1513, 7275],
+                "-exclude_id": [8013],
+                "exclude": ["антивірус"]
+            },
+            "margin" : {
+                "default": 1.0,
+                "id": {
+                    "999999": 1.10
+                },
+                "file": "./Data/In/Margin.txt"
+            }
+        }
+    }
+}

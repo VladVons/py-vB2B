@@ -76,12 +76,12 @@ class TProducts():
     async def Load(self, aFile: str, aCategory: TCategory) -> list:
         Res = []
         for Rec in aCategory.Dbl:
-            if (Rec.GetField('parent_id') <= 1):
+            if (Rec.parent_id <= 1):
                 continue
 
-            CategoryId = Rec.GetField('category_id')
+            CategoryId = Rec.category_id
             File = f'{aFile}_{CategoryId}.dat'
-            print(f'Load {File} {Rec.GetField("name")}')
+            print(f'Load {File} {Rec.name}')
             if (os.path.exists(File)):
                 Dbl = TDbListSafe().Load(File)
                 #print('---x1', File, Dbl.GetSize())
@@ -90,7 +90,7 @@ class TProducts():
                 Products = TProducts(self.Parent)
                 await Products.Run(CategoryId, 3)
                 Dbl = Products.Dbl
-                Dbl.Tag = Rec.GetField('name')
+                Dbl.Tag = Rec.name
                 if (Dbl.GetSize() > 0):
                     Dbl.Sort(['name'])
                     Dbl.Save(File)

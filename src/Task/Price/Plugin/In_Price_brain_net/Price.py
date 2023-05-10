@@ -23,8 +23,7 @@ class TPrice(TFileDbl):
         _ImagesErr = {Code: Url for Code, Url, Ok in zip(ProductCodes, Urls, Res) if not Ok}
 
         for Rec in self.Dbl:
-            Code = Rec.GetField('code')
-            Url = Images.get(Code)
+            Url = Images.get(Rec.code)
             if (Url):
                 Rec.SetField('image', Url)
                 Rec.Flush()
@@ -38,12 +37,11 @@ class TPrice(TFileDbl):
 
         Res = self.Dbl.New()
         for Rec in self.Dbl:
-            CategoryId = Rec.GetField('id')
-            RecNo = aDbCategory.Dbl.Search('id', CategoryId)
+            RecNo = aDbCategory.Dbl.Search('id', Rec.id)
             if (RecNo >= 0):
                 Res.RecAdd(Rec).Flush()
             else:
-                #Log.Print(1, 'i', '%s, Cant find category %s %s for product %s' % (ErrCnt + 1, CategoryId, Rec.GetField('name'), Rec.GetField('id')))
+                #Log.Print(1, 'i', '%s, Cant find category %s %s for product %s' % (ErrCnt + 1, CategoryId, Rec.name, Rec.id))
                 pass
         self.Dbl = Res
 

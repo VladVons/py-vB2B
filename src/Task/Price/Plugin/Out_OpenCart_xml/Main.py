@@ -39,9 +39,9 @@ class TMain(TFileBase):
         TableId = {1: 0}
 
         for Rec in aDbCategory:
-            ParentId = Rec.GetField('parent_id')
-            ItemA = ET.SubElement(Element, 'category', ID = str(Rec.GetField('id')), ParentID = str(TableId.get(ParentId, ParentId)))
-            ItemA.text = Rec.GetField('name').translate(TableEscape)
+            ParentId = Rec.parent_id
+            ItemA = ET.SubElement(Element, 'category', ID = str(Rec.id), ParentID = str(TableId.get(ParentId, ParentId)))
+            ItemA.text = Rec.name.translate(TableEscape)
 
             await self.Sleep.Update()
 
@@ -64,14 +64,12 @@ class TMain(TFileBase):
                 ItemB = ET.SubElement(ItemA, Val)
                 ItemB.text = str(Rec.GetField(Key)).translate(TableEscape)
 
-            Mpn = Rec.GetField('mpn')
-            RecNo = BT.Search(Mpn)
+            RecNo = BT.Search(Rec.mpn)
             if (RecNo >= 0):
-                PriceMin = aDbPriceJoin.RecGo(RecNo).GetField('price')
+                PriceMin = aDbPriceJoin.RecGo(RecNo).price
             else:
-                PriceMin = Rec.GetField('price')
-            CategoryId = Rec.GetField('category_id')
-            Price = PriceMin * aCategoryMargins.get(CategoryId, 1)
+                PriceMin = Rec.price
+            Price = PriceMin * aCategoryMargins.get(Rec.category_id, 1)
 
             ItemB = ET.SubElement(ItemA, 'price_in')
             ItemB.text = str(PriceMin)

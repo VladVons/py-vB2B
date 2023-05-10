@@ -6,11 +6,12 @@
 
 
 
+import json
 import hashlib
 import aiohttp
 #
 from Inc.ParserX.Common import TApiBase
-from Inc.Misc.Request import TRequestGet, TRecSes
+from Inc.Misc.Request import TRequestGet, TRequestPost, TRecSes
 
 
 class TApi(TApiBase):
@@ -54,6 +55,7 @@ class TApi(TApiBase):
     def GetResult(aRes: dict) -> object:
         if (aRes['status'] == 200):
             Data = aRes['data']
+            Data = json.loads(Data.decode())
             if (Data.get('status', 0) == 1):
                 for x in ['result', 'url']:
                     aRes = Data.get(x)
@@ -62,17 +64,23 @@ class TApi(TApiBase):
         return None
 
     async def Send(self, aRecSes: TRecSes) -> dict:
-        Res = await self.Request.SendOne(aRecSes)
+        if (aRecSes.DataSend):
+            Res = await self.RequestJson.SendOne(aRecSes)
+        else:
+            Res = await self.RequestGet.SendOne(aRecSes)
         return self.GetResult(Res)
 
     async def Auth(self, aLogin: str, aPassw: str) -> bool:
         Passw = hashlib.md5(aPassw.encode()).hexdigest()
         FormData = aiohttp.FormData({'login': aLogin, 'password': Passw})
         Url = self.GetUrlAuth()
-        Data = await self.Send(TRecSes(Url, FormData))
-        if (Data):
-            self.Token = Data
-            return True
+        Request = TRequestPost()
+        Data = await Request.SendOne(TRecSes(Url, FormData))
+        if (Data['status'] == 200):
+            Data = json.loads(Data['data'])
+            if (Data['status'] == 1):
+                self.Token = Data['result']
+                return True
 
     async def GetImage(self, aProductCode: str) -> bytes:
         Url = self.GetUrlImage(aProductCode)
@@ -103,4 +111,7 @@ class TApi(TApiBase):
     async def GetPriceList(self, aTargetId: int) -> dict:
         Url = self.GetUrlPriceList(aTargetId)
         Url = await self.Send(TRecSes(Url))
-        return TRequestGet().Send(Url)
+        Res = await TRequestGet().Send(Url)
+        if (Res['status'] == 200):
+            Res['data'] = json.loads(Res['data'])
+        return Res

@@ -19,7 +19,7 @@ class TQueue():
         self._Queue: list[TCall] = []
 
     async def _DoPost(self, _aOwner, aMsg: dict):
-        if (aMsg.get('To') == self.__class__.__name__):
+        if (aMsg.get('to') == self.__class__.__name__):
             if (aMsg.get('type') == 'add'):
                 self.Add(aMsg.get('call'))
 

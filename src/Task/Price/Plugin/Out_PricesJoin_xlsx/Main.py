@@ -47,7 +47,7 @@ class TMain(TFileBase):
 
         ConfRatio = self.Parent.Conf.GetKey('ratio')
         for RowNo, Rec in enumerate(aDbPriceJoin, HeadRow['data']):
-            Price = Rec.GetField('price')
+            Price = Rec.price
             for FieldNo, Field in enumerate(aDbPriceJoin.Fields):
                 Value = Rec[FieldNo]
                 Cell = WS.cell(RowNo, FieldNo + 1)
@@ -67,11 +67,10 @@ class TMain(TFileBase):
                 WS = WB.create_sheet(title = Plugin)
                 self.Head(Dbl, WS, HeadRow)
                 for RowNo, Rec in enumerate(Dbl, HeadRow['data']):
-                    Mpn = Rec.GetField('mpn')
                     for FieldNo, Field in enumerate(Dbl.Fields):
                         Cell = WS.cell(RowNo, FieldNo + 1)
                         Cell.value = Rec[FieldNo]
-                        if (Field == 'price') and (aDbPriceJoin.Search('mpn', Mpn) >= 0):
+                        if (Field == 'price') and (aDbPriceJoin.Search('mpn', Rec.mpn) >= 0):
                             Cell.font = Font(bold = True)
                     await self.Sleep.Update()
 

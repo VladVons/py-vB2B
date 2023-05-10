@@ -1,0 +1,103 @@
+{
+    "plugin": {
+        "In_Price_brain_net": {
+            "auth": ["tr41@oster.com.ua", "19710819"],
+            "usd": 37.11,
+            "margin" : {
+                "default": 1.1,
+                "id": {
+                }
+            },
+            "images": {
+                "check": false,
+                "load": false
+            }
+        },
+        "In_Price_chip_xls": {
+            "-file": "./Data/Oster/Price/chip.biz.ua.xls",
+            "sheet": {
+                "default": {
+                    "skip": 30,
+                    "fields": {
+                        "mpn": 3,
+                        "code": 2,
+                        "name": 5,
+                        "price": 13,
+                        "price_usd": 12
+                    }
+                }
+            }
+        },
+        "In_Price_dclink_xlsx": {
+            "-file": "./Data/Oster/Price/dclink.ua.xlsx",
+            "sheet": {
+                "default": {
+                    "skip": 3,
+                    "fields": {
+                        "mpn": 4,
+                        "code": 5,
+                        "name": 6,
+                        "price": 9
+                    }
+                }
+            }
+        },
+        "In_Price_erc_xlsx": {
+            "-file": "./Data/Oster/Price/erc.ua.kiev.xlsx",
+            "sheet": {
+                "default": {
+                    "skip": 2,
+                    "fields": {
+                        "mpn": 4,
+                        "name": 5,
+                        "rice": 7,
+                        "currency": 10
+                    }
+                }
+            }
+        },
+        "In_Price_kpi_xls": {
+            "-file": "./Data/Oster/Price/kpi-market.com.xls",
+            "sheet": {
+                "default": {
+                    "skip": 11,
+                    "fields": {
+                        "mpn": 1,
+                        "name": 2,
+                        "price_usd": 3
+                    }
+                }
+            }
+        },
+        "In_Price_kts_csv": {
+            "-file": "./Data/Oster/Price/kts.ua.csv",
+            "encoding": "cp1251",
+            "sheet": {
+                "default": {
+                    "skip": 1,
+                    "fields": {
+                        "mpn": 2,
+                        "code": 1,
+                        "name": 4,
+                        "price": 5,
+                        "price_usd": 6
+                    }
+                }
+            }
+        },
+        "In_Price_tdb_xlsx": {
+            "-file": "./Data/Oster/Price/tdb.ua.xlsx",
+            "sheet": {
+                "default": {
+                    "skip": 3,
+                    "fields": {
+                        "mpn": 4,
+                        "code": 1,
+                        "name": 5,
+                        "price_usd": 7
+                    }
+                }
+            }
+        }
+    }
+}

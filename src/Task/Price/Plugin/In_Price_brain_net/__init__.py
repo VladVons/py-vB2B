@@ -29,6 +29,7 @@ class TIn_Price_brain_net(TPluginBase):
             User, Passw = self.Conf.get('auth')
             if (not await self.Api.Auth(User, Passw)):
                 Log.Print(1, 'e', f'Auth error. Class {self.__class__.__name__}')
+                assert(False), f'Auth error {User}, {Passw}'
                 sys.exit()
 
         await Category.Load()

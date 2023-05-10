@@ -28,7 +28,7 @@ class TPrice(TParser_xls):
             Price = aRow.get('price')
             PriceUSD = aRow.get('price_usd')
             if (Price):
-                Rec.SetField('price', ToFloat(Val))
+                Rec.SetField('price', ToFloat(Price))
             else:
                 Val = round(ToFloat(PriceUSD) * self.USD, 2)
                 Rec.SetField('price', Val)

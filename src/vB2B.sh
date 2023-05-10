@@ -32,5 +32,6 @@ Log "PWD: $(pwd)"
 #env python3 -V
 #/usr/bin/env python -B vB2B.py -s
 #/home/vladvons/VirtEnv/python3.10/bin/python3 -B vB2B.py -s
-python3 -V
-/home/vladvons/VirtEnv/python3.10/bin/python3 -B vB2B.py -s
+#python3 -V
+#/home/vladvons/VirtEnv/python3.10/bin/python3 -B vB2B.py -s
+python3 -B vB2B.py --conf=Oster

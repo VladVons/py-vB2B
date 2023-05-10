@@ -1,6 +1,10 @@
 # Created: 2023.02.08
 # Author: Vladimir Vons <VladVons@gmail.com>
 # License: GNU, see LICENSE for more details
+#
+# https://prom.ua/ua/c3498848-comel-ukrayina.html
+# https://comel-it.com.ua/ua/about_us
+# https://timedetector.comel-it.com/ukportals/Promua.xml
 
 
 from Inc.Util.Str import ToInt, ToFloat, ToBool

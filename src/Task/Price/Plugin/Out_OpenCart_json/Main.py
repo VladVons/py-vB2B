@@ -16,9 +16,9 @@ class TMain(TFileBase):
         Category = []
         for Rec in aDbCategory:
             Data = {
-                'id': Rec.GetField('id'),
-                'parent_id': Rec.GetField('parent_id'),
-                'name': Rec.GetField('name')
+                'id': Rec.id,
+                'parent_id': Rec.parent_id,
+                'name': Rec.name
             }
             Category.append(Data)
             await self.Sleep.Update()
@@ -46,8 +46,7 @@ class TMain(TFileBase):
             Data = {}
             for Key, Val in TransField.items():
                 Data[Val] = Rec.GetField(Key)
-            CategoryId = Rec.GetField('category_id')
-            Data['price_out'] = round(Rec.GetField('price') * aCategoryMargins.get(CategoryId, 1), 1)
+            Data['price_out'] = round(Rec.price * aCategoryMargins.get(Rec.category_id, 1), 1)
             Data['quantity'] = 1
             Products.append(Data)
 

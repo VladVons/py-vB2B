@@ -21,7 +21,7 @@ class TMain(TFileDbl):
         for Name, DbPrice in self.Prices.items():
             RecNo = DbPrice.Search('mpn', aMpn)
             if (RecNo >= 0):
-                Price = DbPrice.RecGo(RecNo).GetField('price')
+                Price = DbPrice.RecGo(RecNo).price
                 if (Price > 0):
                     Match += 1
                     MinPrice = min(MinPrice, Price)
@@ -39,9 +39,9 @@ class TMain(TFileDbl):
         for RecNo, Rec in enumerate(DblMain):
             RecNew = self.Dbl.RecAdd()
             RecNew.SetAsRec(Rec, ['id', 'code', 'mpn', 'name'])
-            Mpn = Rec.GetField('mpn')
+            Mpn = Rec.mpn
             if (Mpn):
-                self.MinPrice(Rec.GetField('mpn'), RecNew)
+                self.MinPrice(Mpn, RecNew)
                 DblMain.RecNo = RecNo
             RecNew.Flush()
             await self.Sleep.Update()
