@@ -27,7 +27,7 @@ class TFiller():
             self.Parent.Copy(x, aRow, Rec)
 
         Model = [str(aRow.get(x, '')) for x in self.ConfModel]
-        Rec.SetField('model', ToHashW(''.join(Model)))
+        Rec.SetField('model', ToHashW(' '.join(Model)))
 
         Title = [str(aRow[x]) for x in self.ConfTitle]
         Rec.SetField('title', '/'.join(Title))
