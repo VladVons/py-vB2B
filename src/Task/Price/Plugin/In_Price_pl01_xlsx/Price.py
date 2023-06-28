@@ -6,7 +6,7 @@
 import re
 #
 from Inc.DbList import TDbRec
-from Inc.Util.Str import ToFloat, ToHashW
+from Inc.Util.Str import ToFloat, ToHashWM
 from Inc.Util.Obj import GetNotNone
 from Inc.ParserX.Parser_xlsx import TParser_xlsx
 from ..CommonDb import TDbCompPC, TDbCompMonit
@@ -26,11 +26,13 @@ class TFiller():
         for x in aFieldsCopy:
             self.Parent.Copy(x, aRow, Rec)
 
-        Model = [str(aRow.get(x, '')) for x in self.ConfModel]
-        Rec.SetField('model', ToHashW(' '.join(Model)))
+        Arr = [str(aRow.get(x, '')) for x in self.ConfModel]
+        Model = ToHashWM(' '.join(Arr))
+        Rec.SetField('code', Model)
 
-        Title = [str(aRow[x]) for x in self.ConfTitle]
-        Rec.SetField('title', '/'.join(Title))
+        Arr = [str(aRow[x]) for x in self.ConfTitle]
+        Title = '/'.join(Arr).replace('"', '')
+        Rec.SetField('title', Title)
 
         Val = ToFloat(aRow.get('price'))
         Rec.SetField('price', Val)
