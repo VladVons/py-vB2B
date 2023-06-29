@@ -9,7 +9,7 @@ import os
 import gspread
 #
 from Inc.ParserX.Common import TPluginBase
-from .Price import TPricePC, TPriceMonit
+from .Price import TPricePC, TPriceMonit, TPriceMonitInd
 from ..CommonDb import TDbCategory, TDbProductEx
 
 
@@ -25,7 +25,7 @@ class TIn_Price_pl01_xlsx(TPluginBase):
             F.write(Data)
             return True
 
-    async def ToDbProductEx(self, aParser, aDbProductEx: TDbProductEx, aCategoryId):
+    def ToDbProductEx(self, aParser, aDbProductEx: TDbProductEx, aCategoryId):
         FieldAvg = 'price'
         Fields =  aParser.Dbl.GetFields()
         Fields.remove(FieldAvg)
@@ -59,7 +59,7 @@ class TIn_Price_pl01_xlsx(TPluginBase):
                 'parser': TPriceMonit,'category_id': 2, 'category': 'Монітор'
             },
             'INDUSTRIAL MONITORS': {
-                'parser': TPriceMonit, 'category_id': 3, 'category': 'Монітор індустрійний'
+                'parser': TPriceMonitInd, 'category_id': 3, 'category': 'Монітор індустрійний'
             }
         }
 
@@ -74,7 +74,7 @@ class TIn_Price_pl01_xlsx(TPluginBase):
                 Engine = Parser.InitEngine()
             Parser.SetSheet(xKey)
             await Parser.Load()
-            self.ToDbProductEx(DbProductEx, Parser, xVal['category_id'])
+            self.ToDbProductEx(Parser, DbProductEx, xVal['category_id'])
             DbCategory.RecAdd().SetAsDict({'id': xVal['category_id'], 'parent_id': 0, 'name': xVal['category']})
 
         return {'TDbCategory': DbCategory, 'TDbProductEx': DbProductEx}

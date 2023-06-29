@@ -81,8 +81,11 @@ class TPriceMonit(TParser_xlsx):
     def _OnLoad(self):
         self.Filler = TFiller(self)
 
+    def _Filter(self, aRow: dict):
+        return (not aRow.get('price')) or (aRow.get('stand', '').lower() != 'yes')
+
     def _Fill(self, aRow: dict):
-        if (not aRow.get('price')) or (aRow.get('stand', '').lower() != 'yes'):
+        if (self._Filter(aRow)):
             return
 
         Rec = self.Filler.Add(aRow, ['grade', 'color'])
@@ -91,3 +94,8 @@ class TPriceMonit(TParser_xlsx):
         Rec.SetField('screen', Val)
 
         Rec.Flush()
+
+
+class TPriceMonitInd(TPriceMonit):
+    def _Filter(self, aRow: dict):
+        return (not aRow.get('price'))
