@@ -3,8 +3,8 @@
         "editor.formatOnType": true
     },
     "tabnine.experimentalAutoImports": true,
-    "python.defaultInterpreterPath": "/home/vladvons/VirtEnv/python3.10/bin/python3.10",
-    "python.linting.pylintArgs": [
+    "python.defaultInterpreterPath": "/home/vladvons/VirtEnv/python3.12/bin/python3.12",
+    "pylint.args": [
         "--disable=invalid-name",
         "--disable=missing-function-docstring",
         "--disable=missing-module-docstring",
@@ -21,5 +21,18 @@
         "--disable=consider-using-f-string",
         "--disable=broad-except"
     ],
-    "window.zoomLevel": 1
+    "window.zoomLevel": 2,
+    "workbench.tree.indent": 16,
+    "workbench.editor.titleScrollbarSizing": "large",
+    "workbench.colorCustomizations": {
+        "editor.lineHighlightBackground": "#E0FFE020",
+        "tab.activeBorder": "#33FF33"
+    },
+    "files.associations": {
+        "*.j2": "html"
+    },
+    "[j2]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
+    }
 }
