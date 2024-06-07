@@ -14,7 +14,7 @@ from IncP.Log import Log
 class TMain(TFileBase):
     async def Save(self, aParam: dict):
         ConfFile = self.Parent.GetFile()
-        Dir = ConfFile.replace('.txt', '')
+        Dir = ConfFile.rsplit('.', maxsplit=1)[0]
         os.makedirs(Dir, exist_ok=True)
 
         for PluginKey, PluginVal in aParam.items():

@@ -9,7 +9,7 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font
 #
 from Inc.DbList import TDbList
-from Inc.Util.Obj import GetClassPath, DeepGetByList
+from Inc.Util.Obj import GetClassPath
 from Inc.ParserX.Common import TFileBase
 from IncP.Log import Log
 
@@ -43,6 +43,10 @@ class TMain(TFileBase):
         return WB
 
     async def Save(self, aParam: dict):
+        ConfFile = self.Parent.GetFile()
+        Dir = ConfFile.rsplit('.', maxsplit=1)[0]
+        os.makedirs(Dir, exist_ok=True)
+
         for PluginKey, PluginVal in aParam.items():
             ParamExport = self.Parent.GetParamExport(PluginKey)
             Dbls = []
@@ -58,7 +62,6 @@ class TMain(TFileBase):
                 await self.Sleep.Update()
 
             if (Dbls):
-                Dir = self.Parent.Conf.GetKey('dir')
                 File = f'{Dir}/{PluginKey}.xlsx'
                 WB = self.DblCreateXlsx(Dbls)
                 WB.save(File)
