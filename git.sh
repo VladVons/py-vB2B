@@ -2,9 +2,11 @@
 # Created: 28.09.2016
 # Vladimir Vons, VladVons@gmail.com
 
+
+cProject="py-vB2B"
 User="vladvons"
 Mail="vladvons@gmail.com"
-Url="https://github.com/$User/py-vB2B.git"
+cUrl="https://github.com/$User/$cProject.git"
 
 
 Log()
@@ -51,7 +53,7 @@ GitCreate()
   GitAuth
 
   # remote git server location
-  git remote add origin $Url
+  git remote add origin $cUrl
 
 }
 
@@ -60,7 +62,7 @@ GitClone()
   Log "$0->$FUNCNAME"
 
   # restore clone copy fromserver to disk 
-  git clone $Url
+  git clone $cUrl
   GitAuth
 
   #web admin access here
@@ -139,6 +141,7 @@ Diff(){
 #GitUpdate
 
 clear
+echo "Repository: $cUrl"
 case $1 in
     Clean)              "$1"        "$2" "$3" ;;
     GitAuth)            "$1"        "$2" "$3" ;;
