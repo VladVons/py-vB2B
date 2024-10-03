@@ -1,0 +1,16 @@
+{
+    "dir_data": "./Data/fwUpload",
+    "comment": "Export schemas to DB",
+    "plugins": [
+        "Out_vCrawlerSchema_db"
+    ],
+    "plugin": {
+        "Out_vCrawlerSchema": {
+            "sql": {
+                "parts": 10,
+                "lang": "ua"
+            },
+            "auth": "{% file_json Conf/Task.SrvModel.Api.json:db_auth %}"
+        }
+    }
+}

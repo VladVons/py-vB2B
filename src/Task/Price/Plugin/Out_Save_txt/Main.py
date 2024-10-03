@@ -6,7 +6,8 @@
 import os
 import json
 #
-from Inc.Util.Obj import GetClassPath, DeepGetByList
+from Inc.Var.Obj import GetClassPath
+from Inc.Var.Dict import DeepGetByList
 from Inc.ParserX.Common import TFileBase
 from IncP.Log import Log
 

@@ -9,7 +9,7 @@ from openpyxl.utils import get_column_letter
 from openpyxl.styles import Font
 #
 from Inc.DbList import TDbList
-from Inc.Util.Obj import GetClassPath
+from Inc.Var.Obj import GetClassPath
 from Inc.ParserX.Common import TFileBase
 from IncP.Log import Log
 
